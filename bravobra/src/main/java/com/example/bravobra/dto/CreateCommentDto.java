@@ -1,16 +1,19 @@
 package com.example.bravobra.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Builder
 @Getter
 @AllArgsConstructor
+@ToString
 public class CreateCommentDto {
-   @NotBlank
+   @NotNull(message = "글 번호를 입력하세요")
    private Long helpId;
 
    @NotBlank(message = "닉네임을 입력하세요")
@@ -18,6 +21,6 @@ public class CreateCommentDto {
    private String cNickname;
 
    @NotBlank(message = "내용을 입력하세요")
-   @Size(max = 500, message = "내용은 최대 500자 이하로 입력하세요")
+   @Size(max = 300, message = "내용은 최대 300자 이하로 입력하세요")
    private String cContent;
 }
