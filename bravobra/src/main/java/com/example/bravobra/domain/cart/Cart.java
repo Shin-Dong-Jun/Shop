@@ -1,15 +1,14 @@
-package com.example.bravobra.domain;
+package com.example.bravobra.domain.cart;
 
 import com.example.bravobra.domain.product.Option;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@Getter
 @AllArgsConstructor
 public class Cart {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +28,7 @@ public class Cart {
     @Column(name = "p_option")
     private String optionValues;
 
+    public void increaseQnt(Option option) {
+        qnt = option.getQnt();
+    }
 }
