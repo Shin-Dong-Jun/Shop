@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface OptionRepository extends JpaRepository<Option, OptionId> {
 
 
-    @Query("select o from Option o where o.color = :color and o.size = :size and o.optionId.ProductId = :productId")
+    @Query("select o from Option o where o.color = :color and o.size = :size and o.optionId.productId = :productId")
     Optional<Option> findByOptionId(@Param("color") String color, @Param("size") String size, @Param("productId")Long productId);
 }

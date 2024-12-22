@@ -27,18 +27,18 @@ public class Members {
     private String password;
 
     private LocalDateTime createdAt;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "members")
-    private List<Session> sessions = new ArrayList<>();
-
-    public Session addSession() {
-        Session session = Session.builder()
-                .members(this)
-                .build();
-        sessions.add(session);
-
-        return session;
-    }
+//
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "members")
+//    private List<Session> sessions = new ArrayList<>();
+//
+//    public Session addSession() {
+//        Session session = Session.builder()
+//                .members(this)
+//                .build();
+//        sessions.add(session);
+//
+//        return session;
+//    }
 
     @Builder
     public Members(String name, String email, String password) {
