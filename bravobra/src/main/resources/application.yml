@@ -1,6 +1,10 @@
 server:
   port: 80
 spring:
+
+  profiles:
+    default: devh
+
   thymeleaf:
     prefix: classpath:templates/
     check-template-location: true
@@ -26,10 +30,13 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+
     properties:
       hibernate:
         format_sql: true
+
+    defer-datasource-initialization: false
 
 logging:
   level:
