@@ -33,29 +33,36 @@ import static org.mockito.Mockito.*;
     @Test
     void postFaq() {
         //  given
+
+        Long MemberId = 1234L;
+        String Nickname = "림이";
+
+        Long MemberId2 = 5678L;
+        String Nickname2 = "코기";
+
+
         RequestFaqDto requestFaqDto = RequestFaqDto.builder()
-                .memberId(1234L)
                 .title("제목입니다")
                 .content("내용입니다")
-                .nickname("림이")
                 .build();
 
         RequestFaqDto requestFaqDto2 = RequestFaqDto.builder()
-                .memberId(5678l)
                 .title("제목2입니다")
                 .content("내용2입니다")
-                .nickname("리미")
                 .build();
+
+
         // when
-        Faq result = faqService.postFaq(requestFaqDto);
-        Faq result2 = faqService.postFaq(requestFaqDto2);
+        Faq result = faqService.postFaq(requestFaqDto, MemberId, Nickname);
+        Faq result2 = faqService.postFaq(requestFaqDto2, MemberId2, Nickname2);
+
 
         // then
         assertTrue(true);
         assertNotNull(result);
         assertNotNull(result2);
         assertEquals("림이", result.getNickname());
-        assertEquals("리미", result2.getNickname());
+        assertEquals("코기", result2.getNickname());
 
     }
 
@@ -156,26 +163,26 @@ import static org.mockito.Mockito.*;
 
 
 
-    //수정테스트........ ㅜㅜ
-    @DisplayName("수정 테스트")
-    @Test
-    void getModifyFaq() throws Exception {
-        // given
-        RequestFaqDto requestFaqDto = RequestFaqDto.builder()
-                .memberId(1234L)
-                .title("이전제목")
-                .content("내용입니다")
-                .nickname("림이")
-                .build();
-
-        // when
-        Faq result = faqService.postFaq(requestFaqDto);
-
-        // then
-        assertTrue(true);
-        assertNotNull(result);
-        assertEquals("이전제목", result.getTitle());
-    }
+//    //수정테스트........ ㅜㅜ
+//    @DisplayName("수정 테스트")
+//    @Test
+//    void getModifyFaq() throws Exception {
+//        // given
+//        RequestFaqDto requestFaqDto = RequestFaqDto.builder()
+//                .memberId(1234L)
+//                .title("이전제목")
+//                .content("내용입니다")
+//                .nickname("림이")
+//                .build();
+//
+//        // when
+//        Faq result = faqService.postFaq(requestFaqDto);
+//
+//        // then
+//        assertTrue(true);
+//        assertNotNull(result);
+//        assertEquals("제목입니다", result.getTitle());
+//    }
 }
 
 

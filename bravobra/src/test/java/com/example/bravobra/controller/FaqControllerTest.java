@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -31,23 +32,26 @@ class FaqControllerTest {
     @Test
     public void postFaq() throws Exception {
         //given
+
+        Long MemberId = 1234L;
+        String Nickname = "림이";
+
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("memberId", MemberId);
+        session.setAttribute("nickname", Nickname);
+
         RequestFaqDto requestFaqDto = RequestFaqDto.builder()
-                .memberId(1234l)
                 .title("제목입니다")
                 .content("내용입니다")
-                .nickname("림이")
                 .build();
 
 
-        //가짜 시뮬레이션 돌린다.
+        //가짜 시뮬레이션 돌리기.
             mockMvc.perform(MockMvcRequestBuilders.post("/faq")
                             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                            .param("memberId",Long.toString(requestFaqDto.getMemberId()))
                             .param("title",requestFaqDto.getTitle())
                             .param("content",requestFaqDto.getContent())
-                            .param("nickname",requestFaqDto.getNickname())
                     )
-
                     //then
                     .andExpect(status().isCreated());
 
