@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 등록</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+</head>
+    <body>
+    <h1>상품 등록</h1>
+        <form id="form" method="post" action="/product/registerProduct">
+            <input type="hidden" name="productId" th:value="${product.productId}">
+            <!-- 상품명 -->
+            <div>
+                <label for="productName">상품명</label>
+                <input type="text" id="productName" th:field="${product.productName}" required>
+            </div>
+            <!-- 상품 영어 이름 -->
+            <div>
+                <label for="productEnglishName">상품 영어 이름</label>
+                <input type="text" id="productEnglishName" th:field="${product.productEnglishName}">
+            </div>
+
+            <!-- 상품 상세 설명 -->
+            <div>
+                <label for="productContent">상품 설명</label>
+                <textarea id="productContent" th:field="${product.productContent}" required></textarea>
+            </div>
+
+            <!-- 썸네일 이미지 -->
+            <div>
+                <label for="thumbnail">썸네일 이미지 URL</label>
+                <input type="text" id="thumbnail" th:field="${product.thumbnail}">
+            </div>
+
+            <!-- 추가 이미지 -->
+            <div>
+                <label for="image1">이미지1</label>
+                <input type="text" id="image1" th:field="${product.image1}">
+            </div>
+            <div>
+                <label for="image2">이미지2</label>
+                <input type="text" id="image2" th:field="${product.image2}">
+            </div>
+            <div>
+                <label for="image3">이미지3</label>
+                <input type="text" id="image3" th:field="${product.image3}">
+            </div>
+            <div>
+                <label for="image4">이미지4</label>
+                <input type="text" id="image4" th:field="${product.image4}">
+            </div>
+
+            <!-- 상품 정가 -->
+            <div>
+                <label for="fixedPrice">상품 정가</label>
+                <input type="number" id="fixedPrice" th:field="${product.fixedPrice}" required>
+            </div>
+
+            <!-- 상품 판매가 -->
+            <div>
+                <label for="salePrice">상품 판매가</label>
+                <input type="number" id="salePrice" th:field="${product.salePrice}" required>
+            </div>
+
+            <!-- 해시태그 -->
+            <div>
+                <label for="hashTag">상품 해시태그</label>
+                <input type="text" id="hashTag" th:field="${product.hashTag}">
+            </div>
+
+            <!-- 품절 여부 -->
+            <div>
+                <label for="isSoldOut">품절 여부</label>
+                <input type="checkbox" id="isSoldOut" th:field="${product.isSoldOut}">
+            </div>
+
+            <!-- 할인율 -->
+            <div>
+                <label for="discountRate">할인율</label>
+                <input type="number" id="discountRate" th:field="${product.discountRate}">
+            </div>
+
+            <!-- 제출 버튼 -->
+            <div>
+                <button type="submit" id="writeBtn">등록</button>
+<!--                <button type="button" id="updateBtn">수정</button>-->
+                <button type="button" id="listBtn">상품목록</button>
+            </div>
+        </form>
+    <script>
+        let formCheck = function () {
+            let productName = document.getElementById("productName").value;
+            let productContent = document.getElementById("productContent").value;
+
+            if (productName.trim() === "") {
+                alert("상품명을 입력해 주세요.");
+                document.getElementById("productName").focus();
+                return false;
+            }
+
+            if (productContent.trim() === "") {
+                alert("상품 설명을 입력해 주세요.");
+                document.getElementById("productContent").focus();
+                return false;
+            }
+            return true;
+        };
+
+        $("#writeBtn").on("click", function () {
+           let form = $("#form");
+           form.attr("action", "[[@{/product/registerProduct}]]");
+           form.attr("method", "post");
+
+           if(formCheck())
+               form.submit();
+        });
+
+        $("#listBtn").on("click", function () {
+            location.href = "/product/list";
+        });
+
+    </script>
+    </body>
+</html>
