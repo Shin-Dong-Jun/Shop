@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layouts/mainLayout}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -7,8 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
-<h1>index.html</h1>
-<a href="/members/login">Login</a>
-</body>
+<div layout:fragment="content">
+    <h1>환영합니다.</h1>
+
+
+</div>
 </html>

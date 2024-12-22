@@ -13,7 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByEmail(String email);
 
-    boolean existsByEmail(String email);
+    boolean existsByEmail(String email); //쿼리 메서드
 
     List<Member> findAllByEmail(String email); // 조회할때 필요.
 

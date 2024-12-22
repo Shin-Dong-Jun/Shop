@@ -1,9 +1,18 @@
 package com.example.bravobra.controller;
 
 
+import com.example.bravobra.domain.Member;
+import com.example.bravobra.dto.LoginDto;
+import com.example.bravobra.service.LoginService;
+import com.example.bravobra.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,29 +22,54 @@ import java.net.URLEncoder;
 
 @Controller
 @RequestMapping("/members")
+@RequiredArgsConstructor
 public class LoginController {
 
+    private final LoginService loginService;
+    private final MemberService memberService;
 
+
+    // Login 화면 호출
     @GetMapping("/login")
-    public String showLogin(){
-        return "login"; //
+    public String showLogin() {
+        return "login";
     }
-    @PostMapping("/login")
-    public String login(String id, String pwd, Model model) throws Exception{
-        //1. id, pw 확인
 
-        if(loginCheck(id, pwd)){
-            model.addAttribute("id", id);
-            model.addAttribute("pwd", pwd);
-            return "userInfo"; //userInfo.html
-        }else {
-            //2, 일치하면 userinfo.html을 보여주고
-            String msg = URLEncoder.encode("id 또는 pwd가 일치하지 않습니다.", "utf-8");
-            return "redirect:/members/login?msg="+msg; // GET URL 뒤에다가 쿼리스트링 URL 다시쓰기.
+    @PostMapping("/login")
+    public String login(@Valid LoginDto loginDto, BindingResult result, String redirectURL
+                        , HttpServletRequest request) throws Exception {
+        //1. id, pw 확인
+        if(result.hasErrors()) {
+            return "login";
+        }
+        Member loginMember = loginService.login(loginDto.getEmail(), loginDto.getPassword());
+        // loginMember가 null이면 로그인 실패
+        if(loginMember == null){
+            result.reject("로그인에 실패하였습니다.", "이메일 또는 비밀번호가 맞지 않습니다.");
+            return "login";
+        }
+        // null이 아니면
+        String memberName = loginMember.getEmail();
+        HttpSession session = request.getSession();
+        session.setAttribute("loginEmail", loginDto.getEmail());
+        session.setAttribute("memberName", memberName);
+
+        if (redirectURL == null || redirectURL.isEmpty()) {
+            redirectURL = "/";
         }
 
+        return "redirect:" + redirectURL;
     }
-    private boolean loginCheck(String id, String pwd) {
-        return id.equals("asdf") && pwd.equals("1234");
+        /*
+        result.reject(String errorCode)
+         */
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
+        return "redirect:/";
     }
 }
