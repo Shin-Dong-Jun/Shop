@@ -19,8 +19,9 @@ public class Help {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long helpId;
 
-   @JoinColumn(nullable = false)
-   private Long userId;  //회원번호(아이디x)
+   @ManyToOne
+   @JoinColumn(name="member_id", nullable = false)
+   private Member member;  //회원번호(아이디x)
 
    @Column(length = 100)
    private String title;
@@ -38,9 +39,9 @@ public class Help {
    @Column(columnDefinition = "int default 0")
    private int viewCnt;
 
-   public static Help toHelpEntity(CreateHelpDto dto) {
+   public static Help toHelpEntity(CreateHelpDto dto, Member member) {
       return Help.builder()
-              .userId(dto.getUserId())
+              .member(member) // 수정: Member 객체 주입
               .title(dto.getTitle())
               .content(dto.getContent())
               .nickname(dto.getNickname())

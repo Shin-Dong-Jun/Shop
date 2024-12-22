@@ -19,8 +19,9 @@ public class Comment {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long commentId;
 
-   @JoinColumn(nullable = false)
-   private Long helpId;
+   @ManyToOne
+   @JoinColumn(name="help_id", nullable = false)
+   private Help help;
 
    @Column(length = 25)
    private String cNickname;
@@ -32,9 +33,9 @@ public class Comment {
    @Column(length = 300)
    private String cContent;
 
-   public static Comment toCommentEntity(CreateCommentDto dto){
+   public static Comment toCommentEntity(CreateCommentDto dto, Help help){
       return Comment.builder()
-              .helpId(dto.getHelpId())
+              .help(help)
               .cNickname(dto.getCNickname())
               .cContent(dto.getCContent())
               .build();

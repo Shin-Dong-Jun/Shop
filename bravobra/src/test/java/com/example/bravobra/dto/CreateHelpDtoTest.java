@@ -1,49 +1,69 @@
 package com.example.bravobra.dto;
 
 import com.example.bravobra.domain.Help;
+import com.example.bravobra.domain.Member;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
+
 class CreateHelpDtoTest {
 
-   @Autowired
    private Validator validator;
 
-//테스트 코드에서는 Validation이 동작X, Validator를 수동 생성 필요
-//   @BeforeEach
-//   void setUp() {
-//      validator = Validation.buildDefaultValidatorFactory().getValidator();
-//   }
+   private static final Logger logger = LoggerFactory.getLogger(CreateHelpDtoTest.class);
+
+   @Mock
+   private Member mockMember;
+
+   @InjectMocks
+   private Help help;
+
+   //테스트 코드에서는 Validation이 동작X, Validator를 수동 생성 필요
+   @BeforeEach
+   void setUp() {
+      validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+      MockitoAnnotations.openMocks(this);
+      when(mockMember.getMemberId()).thenReturn(1L);
+   }
 
    @Test
    @DisplayName("Dto에서 Entity로 변환한다")
    void testToHelpEntity() {
       // Given
       CreateHelpDto validDto = CreateHelpDto.builder()
-              .userId(1L)
+              .memberId(1L)
               .title("title")
               .content("content")
               .nickname("닉네임")
               .build();
 
       // When
-      Help help = Help.toHelpEntity(validDto);
+      Help help = Help.toHelpEntity(validDto, mockMember);
 
       // Then
       assertNotNull(help);
-      assertEquals(validDto.getUserId(), help.getUserId());
+      assertEquals(validDto.getMemberId(), help.getMember().getMemberId());
       assertEquals(validDto.getTitle(), help.getTitle());
       assertEquals(validDto.getContent(), help.getContent());
       assertEquals(validDto.getNickname(), help.getNickname());
+
+      logger.info("-----> Help: {}", help);
+      logger.info("-----> Member ID: {}", help.getMember().getMemberId());
    }
 
    @Test
@@ -51,7 +71,7 @@ class CreateHelpDtoTest {
    void createHelpDtoNullValidation() {
       // Given: DTO 객체 생성
       CreateHelpDto invalidDto = CreateHelpDto.builder()
-              .userId(null)
+              .memberId(null)
               .title("")
               .nickname("")
               .build();
@@ -74,7 +94,7 @@ class CreateHelpDtoTest {
       String overContent = "a".repeat(501);
 
       CreateHelpDto invalidDto = CreateHelpDto.builder()
-              .userId(1L)
+              .memberId(1L)
               .title(overTitle)
               .nickname(overContent)
               .build();

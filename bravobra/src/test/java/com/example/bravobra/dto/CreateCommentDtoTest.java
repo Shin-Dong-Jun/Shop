@@ -1,21 +1,43 @@
 package com.example.bravobra.dto;
 
 import com.example.bravobra.domain.Comment;
+import com.example.bravobra.domain.Help;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
 class CreateCommentDtoTest {
-   @Autowired
+
    private Validator validator;
+
+   private static final Logger logger = LoggerFactory.getLogger(CreateCommentDto.class);
+
+   @Mock
+   private Help mockHelp;
+
+   @InjectMocks
+   private Comment comment;
+
+   @BeforeEach
+   void setUp() {
+      validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+      MockitoAnnotations.openMocks(this);
+      when(mockHelp.getHelpId()).thenReturn(1L);
+   }
 
    @Test
    @DisplayName("dto에서 Comment Entity로 변환한다")
@@ -28,15 +50,18 @@ class CreateCommentDtoTest {
               .build();
 
       //when
-      Comment comment = Comment.toCommentEntity(validCommentDto);
+      Comment comment = Comment.toCommentEntity(validCommentDto, mockHelp);
 
       //then
       assertNotNull(comment);
       System.out.println(comment);
 
-      assertEquals(validCommentDto.getHelpId(), comment.getHelpId());
+      assertEquals(validCommentDto.getHelpId(), comment.getHelp().getHelpId());
       assertEquals(validCommentDto.getCNickname(), comment.getCNickname());
       assertEquals(validCommentDto.getCContent(), comment.getCContent());
+
+      logger.info("-----> comment: {}", comment);
+      logger.info("-----> comment ID: {}", comment.getHelp().getHelpId());
    }
 
    @Test
