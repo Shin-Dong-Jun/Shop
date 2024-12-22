@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>브라보브라 상품</title>
+    <link rel="stylesheet" href="/css/productList.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <form action="/product/write" method="get">
+        <button type="submit" value="상품등록">상품등록</button>
+      </form>
+      <button type="submit" value="allSelect" name="allSelect">전체선택</button>
+      <button type="submit" value="removeSelected" name="removeSelected">선택삭제</button>
+      <table>
+        <thead>
+        <tr>
+          <th>상품번호</th>
+          <th>썸네일</th>
+          <th>제목</th>
+          <th>정가</th>
+          <th>할인율</th>
+          <th>판매가</th>
+          <th>해시태그</th>
+          <th>수정</th>
+          <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${list}">
+          <!-- 상품번호에 링크 -->
+          <td>
+            <a th:href="@{/product/detail(productId=${product.productId})}"
+               th:text="${product.productId}">
+              상품번호
+            </a>
+          </td>
+          <!-- 썸네일에 링크 -->
+          <td>
+            <a th:href="@{/product/detail(productId=${product.productId})}">
+              <img th:src="${product.thumbnail}" alt="썸네일 이미지" style="width:100px;">
+            </a>
+          </td>
+          <!-- 제목에 링크 -->
+          <td>
+            <a th:href="@{/product/detail(productId=${product.productId})}"
+               th:text="${product.productName}">
+              상품명
+            </a>
+          </td>
+          <td th:text="${product.fixedPrice}"></td>
+          <td th:text="${product.discountRate}"></td>
+          <td th:text="${product.salePrice}"></td>
+          <td th:text="${product.hashTag}"></td>
+          <td>
+            <a th:href="@{/product/modify(productId=${product.productId})}">수정</a>
+          </td>
+          <td>
+            <a th:href="@{/product/delete(productId=${product.productId})}">삭제</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="pagination">
+      <ul>
+        <!-- 이전 버튼 -->
+        <li th:if="${pageHandler.showPrev}">
+          <a th:href="@{(page=${pageHandler.beginPage - 1})}">이전</a>
+        </li>
+
+        <!-- 페이지 번호 -->
+        <li th:each="i : ${#numbers.sequence(pageHandler.beginPage, pageHandler.endPage)}">
+          <a th:href="@{(page=${i})}" th:classappend="${i == pageHandler.page} ? 'active'"
+             th:text="${i}"></a>
+        </li>
+
+        <!-- 다음 버튼 -->
+        <li th:if="${pageHandler.showNext}">
+          <a th:href="@{(page=${pageHandler.endPage + 1})}">다음</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
