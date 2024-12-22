@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ 목록</title>
+</head>
+<body>
+<h1>FAQ 목록</h1>
+
+<!-- FAQ 목록 테이블 -->
+<table border="1">
+  <thead>
+  <tr>
+    <th>글번호</th>
+    <th>글제목</th>
+    <th>작성일</th>
+    <th>작성자</th>
+    <th>조회수</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Thymeleaf를 사용하여 FAQ 목록을 반복해서 출력 -->
+  <tr th:each="faq : ${faqList}">
+    <td th:text="${faq.faqId}">1</td>
+    <td th:text="${faq.title}">제목 예시</td>
+    <td th:text="${faq.wDate}">2024-12-20</td>
+    <td th:text="${faq.nickname}">작성자</td>
+    <td th:text="${faq.viewCnt}">100</td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- 글쓰기 버튼 -->
+<button onclick="window.location.href='/faq/post'">글쓰기</button>
+
+<!-- 페이지 네비게이션 -->
+<div>
+  <button th:if="${pageNumber > 1}" th:onclick="'window.location.href=\'/faq/list?page=' + ${pageNumber - 1} + '\''">이전</button>
+  <span th:text="${pageNumber}">1</span>
+  <button th:if="${pageNumber < totalPages}" th:onclick="'window.location.href=\'/faq/list?page=' + ${pageNumber + 1} + '\''">다음</button>
+</div>
+</body>
+</html>
