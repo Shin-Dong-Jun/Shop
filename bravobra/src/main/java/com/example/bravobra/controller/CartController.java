@@ -18,9 +18,10 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("/list")
-    public String getCartList(Model model) {
+    public String getCartList(Model model, HttpServletRequest request) {
 
-        List<ItemCartDtoResponse> cartlist = cartService.getCartList();
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        List<ItemCartDtoResponse> cartlist = cartService.getCartList(userId);
         model.addAttribute("cartlist", cartlist);
         return "/cart/list";
     }
@@ -37,13 +38,16 @@ public class CartController {
     }
 
     @PutMapping
-    public String updateCart(List<ItemCartDtoRequest> itemCartDtoRequests) {
-
+    public String updateCart(ItemCartDtoRequest itemCartDtoRequests , HttpServletRequest httpServletRequest) {
+        System.out.println(itemCartDtoRequests);
+        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        cartService.updateCart(itemCartDtoRequests, userId);
         return "/cart/list";
     }
 
     @DeleteMapping
-    public String deleteCart(List<Long> cardIds) {
+    public String deleteCart(List<Long> cartIds){
+        cartService.deleteCart(cartIds);
         return "/cart/list";
     }
 }

@@ -17,7 +17,7 @@ public class Cart {
     // 유저 fk
     private Long userId;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "option_id", referencedColumnName = "optionId"),
             @JoinColumn(name = "product_id", referencedColumnName ="p_id" )

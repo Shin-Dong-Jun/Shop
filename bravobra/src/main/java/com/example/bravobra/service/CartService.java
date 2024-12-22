@@ -40,8 +40,22 @@ public class CartService {
                 });
     }
 
+    public void updateCart(ItemCartDtoRequest request, Long userId ) {
+        cartRepository.deleteById(request.cartId());
+        addCart(request, userId);
+    }
 
-    public List<ItemCartDtoResponse> getCartList() {
-        return null;
+
+
+    public List<ItemCartDtoResponse> getCartList(Long userId) {
+        var itemCartDtoResponses = cartRepository.findbyCartListDto(userId);
+
+        return itemCartDtoResponses;
+    }
+
+    public void deleteCart(List<Long> cartIds) {
+        cartIds.stream().forEach(cartId -> {
+            cartRepository.deleteById(cartId);
+        });
     }
 }

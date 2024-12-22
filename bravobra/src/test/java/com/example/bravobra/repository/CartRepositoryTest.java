@@ -1,6 +1,5 @@
 package com.example.bravobra.repository;
-
-import com.example.bravobra.domain.OptionId;
+ import com.example.bravobra.domain.OptionId;
 import com.example.bravobra.domain.product.Option;
 import com.example.bravobra.domain.state.Category;
 import org.junit.jupiter.api.DisplayName;

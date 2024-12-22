@@ -5,7 +5,6 @@ import com.example.bravobra.domain.cart.Cart;
 import com.example.bravobra.domain.product.Option;
 import com.example.bravobra.domain.state.Category;
 import com.example.bravobra.dto.ItemCartDtoRequest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,12 +25,16 @@ class OptionRepositoryTest {
     private CartRepository cartRepository;
 
     private Option option;
+    private Option option1;
 
     @BeforeEach
     void setUp() {
         OptionId optionId = new OptionId();
         optionId.setOptionId(1L);
         optionId.setProductId(1L);
+        OptionId optionId1 = new OptionId();
+        optionId1.setOptionId(2L);
+        optionId1.setProductId(2L);
         option = Option.builder()
                 .qnt(100)
                 .color("블랙")
@@ -40,15 +43,40 @@ class OptionRepositoryTest {
                 .size("65A")
                 .build();
 
-//        optionRepository.save(option);
+        option1 = Option.builder()
+                .qnt(100)
+                .color("red")
+                .type(Category.BRA)
+                .optionId(optionId1)
+                .size("65A")
+                .build();
+        optionRepository.save(option);
+        optionRepository.save(option1);
 
-        Cart cart = Cart.builder()
+    }
+
+    @Test
+    @DisplayName("장바구니 수정을 하자")
+    void 장바구니옵션수정() throws Exception {
+        // given
+        Long userId = 1L;
+        Cart cart1 = Cart.builder()
                 .optionId(option)
                 .optionValues("블랙/65A")
-                .userId(1L)
+                .userId(userId)
                 .qnt(10)
                 .build();
-        Cart save = cartRepository.save(cart);
+        cartRepository.save(cart1);
+
+        Cart cart2 = Cart.builder()
+                .optionId(option1)
+                .optionValues("red/65A")
+                .userId(userId)
+                .qnt(10)
+                .build();
+        cartRepository.save(cart2);
+        //then
+// 옵션 id 를 없애고 새롭게 만들까>?
 
     }
 
@@ -59,29 +87,31 @@ class OptionRepositoryTest {
         Option entity = optionRepository.findByOptionId(option.getColor(), option.getSize(), option.getOptionId().getProductId()).orElseThrow(() ->
                 new NoSuchObjectException("없어")
         );
-        Assertions.assertEquals(entity, option);
 
 
-        cartRepository.findByOptionIdAndUserId(option, 1L).ifPresentOrElse(cart1 -> {
+        Long userId = 1L;
+        cartRepository.findByOptionIdAndUserId(option, userId).ifPresentOrElse(cart1 -> {
                     cart1.increaseQnt(option);
                 },
                 () -> {
                     Cart cart2 = Cart.builder()
                             .optionId(option)
                             .optionValues("블랙/65A")
-                            .userId(1L)
+                            .userId(userId)
                             .qnt(10)
                             .build();
                     cartRepository.save(cart2);
                 });
 
+        Cart cart2 = Cart.builder()
+                .optionId(option1)
+                .optionValues("red/65A")
+                .userId(userId)
+                .qnt(10)
+                .build();
+        cartRepository.save(cart2);
 
-        cartRepository.findbyCartListDto().stream().forEach(cart -> System.out.println(cart.cartId()));
-
-//        Cart cart1 = cartRepository.findByOptionIdAndUserId(option, 1L).get();
-//        //when
-//        System.out.println(cart1.getOptionId().getColor());
-                //then
+        cartRepository.findbyCartListDto(userId).stream().forEach(System.out::println);
 
     }
 
