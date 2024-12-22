@@ -1,5 +1,6 @@
 server:
-  port: 80
+  port: 8080
+
 spring:
   thymeleaf:
     prefix: classpath:templates/
@@ -8,24 +9,25 @@ spring:
     mode: HTML
     cache: false
 
-  h2:
-    console:
-      enabled: true  # H2 Console? ???? ?? (H2 Console? H2 Database? UI? ????? ??)
-      path: /h2-console  # H2 Console? Path
+  #  h2:
+  #    console:
+  #      enabled: true  # H2 Console UI를 사용할 수 있도록 설정
+  #      path: /h2-console  # H2 Console의 URL 경로
+
   datasource:
-    url: 'jdbc:h2:mem:testdb'
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/springboot_basic # MySQL 연결
+    username: "boseok"
+    password: "iotiot"
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL 드라이버
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update  # 애플리케이션 실행 시 데이터베이스 스키마를 생성
     properties:
       hibernate:
-        format_sql: true
+        format_sql: true  # SQL 쿼리를 보기 좋게 출력
 
 logging:
   level:
-    org.hibernate.SQL: debug
-    org.hibernate.type: trace
+    org.hibernate.SQL: debug  # Hibernate에서 실행되는 SQL 로그 출력
+    org.hibernate.type: trace  # Hibernate의 타입 관련 로그도 출력

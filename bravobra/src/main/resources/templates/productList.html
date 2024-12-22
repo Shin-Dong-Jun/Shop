@@ -25,6 +25,7 @@
           <th>해시태그</th>
           <th>수정</th>
           <th>삭제</th>
+          <th>선택</th>
         </tr>
         </thead>
         <tbody>
@@ -59,6 +60,9 @@
           <td>
             <a th:href="@{/product/delete(productId=${product.productId})}">삭제</a>
           </td>
+          <td>
+            <input type="checkbox" class="productCheckbox" th:value="${product.productId}" name="checkbox">
+          </td>
         </tr>
         </tbody>
       </table>
@@ -83,5 +87,6 @@
         </li>
       </ul>
     </div>
+
   </body>
 </html>

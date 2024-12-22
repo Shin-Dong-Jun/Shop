@@ -31,7 +31,7 @@ public class ProductService {
 
     // 상품 등록 메서드 // Create
     public void register(Product product) {
-        log.info(" 인얼ㄹㅇ {}" , product);
+        log.info(" 인얼ㄹㅇ  {}" , product);
         productRepository.save(product);
     }
 
