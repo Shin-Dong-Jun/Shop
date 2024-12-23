@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문의글 상세보기</title>
+  <link rel="stylesheet" href="/css/styles.css"> <!-- 스타일시트 파일 -->
+</head>
+<body>
+<div class="container">
+  <h1>문의글 상세보기</h1>
+
+  <div class="help-detail">
+    <div class="help-header">
+      <h2 th:text="${help.title}">문의글 제목</h2>
+      <p>작성자: <span th:text="${help.nickname}">닉네임</span></p>
+      <p th:text="${#temporals.format(help.wDate, 'yyyy-MM-dd HH:mm')}"></p>
+      <p>조회수: <span th:text="${help.viewCnt}">0</span></p>
+    </div>
+
+    <div class="help-content">
+      <h3>내용</h3>
+      <p th:text="${help.content}">문의글 내용</p>
+    </div>
+
+    <div class="help-footer">
+      <a href="/help" class="btn-back">목록으로 돌아가기</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
