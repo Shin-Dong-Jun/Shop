@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/productDelete.css">
+</head>
+    <body>
+        <div id="wrap">
+            <h1>상품 삭제</h1>
+            <form method="post" name="form" action="/product/delete">
+                <input type="hidden" name="productId" th:value="${product.productId}"/>
+                <!--            <input type="hidden" />         -->
+                <table>
+                    <tr>
+                        <td>
+                            <span th:if="${product.thumbnail == null}">이미지가 없습니다.</span>
+                            <img th:if="${product.thumbnail != null}" th:src="@{/images/${product.thumbnail}}" alt="상품 이미지">
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <th>상품명</th>
+                                    <td th:text="${product.productName}"></td>
+                                </tr>
+                                <tr>
+                                    <th>가격</th>
+                                    <td th:text="${product.salePrice}"></td>
+                                </tr>
+                                <tr>
+                                    <th>설명</th>
+                                    <td th:text="${product.productContent}"></td>
+                                </tr>
+                                <tr>
+                                    <th>상품담당자</th>
+                                    <td>상품담당자이름</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <input type="submit" value="삭제">
+                <input type="button" value="목록" onclick="location.href='/product/list'">
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>상품상세</title>
+        <link rel="stylesheet" href="../css/product.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+        </head>
+    <body>
+    <div class="container">
+        <div class="product-detail">
+            <!-- 상품 썸네일 -->
+            <div class="product-image">
+                <img th:src="${product.thumbnail}" alt="상품 썸네일" style="width: 300px;">
+            </div>
+            <!-- 상품 기본 정보 -->
+            <div class="product-info">
+                <input type="hidden" th:value="${product.productId}"/>
+                <h1 th:text="${product.productName}"></h1>
+                <h3 th:text="${product.productEnglishName}"></h3>
+                <p class="description" th:text="${product.productContent}"></p>
+                <!-- 판매가 -->
+                <div class="price">
+                    <span th:text="'₩ ' + ${product.salePrice}"></span>
+                </div>
+            </div>
+            <!-- 옵션 선택 -->
+            <div class="options">
+                <div class="color-options">
+                    <label>Color:</label>
+                    <div class="color-picker">
+                        <div class="color color-a"></div>
+                        <div class="color color-b"></div>
+                    </div>
+                    <span>COLOR: <span id="color-name">BLUES / 2V5</span></span>
+                </div>
+                <div class="size-picker">
+                    <label>Size:</label>
+                    <div class="size-range">
+                        <option>
+                            <select>A65</select>
+                            <select>A70</select>
+                            <select>A75</select>
+                            <select>A80</select>
+                            <select>A65</select>
+                            <select>A65</select>
+                            <select>A65</select>
+                            <select>A65</select>
+                            <select>A65</select>
+                        </option>
+    <!--                    <div>A65</div>-->
+    <!--                    <div></div>-->
+    <!--                    <div>48</div>-->
+    <!--                    <div class="active">50</div>-->
+    <!--                    <div>52</div>-->
+    <!--                    <div>54</div>-->
+                    </div>
+                    <a href="#">VIEW SIZE CHART</a>
+                </div>
+            </div>
+
+            <div class="purchase-info">
+                <button type="button" class="add-to-cart">ADD TO CART</button>
+            </div>
+        </div>
+        <!-- 버튼들 -->
+        <form id="form" method="post">
+            <input type="hidden" name="productId" th:value="${product.productId}">
+
+            <div class="buttons">
+                <button type="button" value="목록" onclick="location.href='/product/list'">목록</button>
+            </div>
+        </form>
+    </div>
+    </body>
+</html>
