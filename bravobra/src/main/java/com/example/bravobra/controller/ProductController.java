@@ -169,6 +169,4 @@ public class ProductController {
     private void logSessionInfo(String loginEmail, String memberName, boolean isAdmin) {
         System.out.printf("loginEmail: %s, memberName: %s, isAdmin: %b%n", loginEmail, memberName, isAdmin);
     }
-
-
 }

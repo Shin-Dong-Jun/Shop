@@ -19,9 +19,11 @@
         <form th:if="${isAdmin}" action="/product/write" method="get">
           <button type="submit" value="상품등록">상품등록</button>
         </form>
-      <button type="submit" value="selectAll" id="selectAll">전체선택</button>
-      <button type="submit" value="removeSelected" id="removeSelected">선택해제</button>
-      <button type="submit" value="delete" id="delete">선택상품삭제</button>
+      <div class="buttons">
+        <button type="submit" value="selectAll" id="selectAll">전체선택</button>
+        <button type="submit" value="removeSelected" id="removeSelected">선택해제</button>
+        <button type="submit" value="delete" id="delete">선택상품삭제</button>
+      </div>
       <table>
         <thead>
         <tr>
@@ -80,19 +82,17 @@
       <ul>
         <!-- 이전 버튼 -->
         <li th:if="${ph.showPrev}">
-          <a th:href="@{/product/list(page=${ph.beginPage - ph.naviSize})}">이전</a>
+          <a th:href="@{/product/list(page=${ph.beginPage - 1})}">이전</a>
         </li>
-
         <!-- 페이지 번호 -->
         <li th:each="i : ${#numbers.sequence(ph.beginPage, ph.endPage)}">
           <a th:href="@{/product/list(page=${i})}" th:classappend="${i == ph.page} ? 'active'">
             <span th:text="${i+1}"></span>
           </a>
         </li>
-
         <!-- 다음 버튼 -->
         <li th:if="${ph.showNext}">
-          <a th:href="@{/product/list(page=${ph.endPage+1})}">다음</a>
+          <a th:href="@{/product/list(page=${ph.endPage + 1})}">다음</a>
         </li>
       </ul>
     </div>

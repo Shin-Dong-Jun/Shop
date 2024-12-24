@@ -28,8 +28,9 @@ public class Faq {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long faqId;
 
-    @Column(nullable = false)
-    private long memberId;
+    @JoinColumn
+    @ManyToOne
+    private Member member;
 
 
     @Column(nullable = false)
