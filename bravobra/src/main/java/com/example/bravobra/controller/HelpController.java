@@ -6,6 +6,8 @@ import com.example.bravobra.dto.CreateHelpDto;
 import com.example.bravobra.dto.UpdateHelpDto;
 import com.example.bravobra.service.HelpService;
 import com.example.bravobra.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,17 +36,13 @@ public class HelpController {
     * @param model
     */
    @GetMapping("/add")
-   public String showHelpForm(Model model) {
-      //TODO: Session으로 수정하기
-      /*Member member = (Member) session.getAttribute("loggedInMember");
+   public String showHelpForm(Model model, HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      String email = (String) session.getAttribute("loginEmail");
+      Member member = memberService.findOne(email);
       if (member == null) {
-         // 로그인된 사용자가 없으면 로그인 페이지로 리다이렉트
-         return "redirect:/login";
-      }*/
-
-      //임의 설정
-      String memberEmail = "growth207@naver.com";
-      Member member = memberService.findOne(memberEmail);
+         return "redirect:/";
+      }
 
       CreateHelpDto createHelpDto = CreateHelpDto.builder()
               .memberId(member.getId())
@@ -93,10 +91,17 @@ public class HelpController {
     * @return
     */
    @GetMapping("/detail/{helpId}")
-   public String getHelp(@PathVariable Long helpId, Model model) {
+   public String getHelp(@PathVariable Long helpId, Model model, HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      String sessionNickname = (String) session.getAttribute("nickName");
+
       Help help = helpService.getHelp(helpId);
       helpService.increaseViewCnt(helpId);
+
+      boolean isAuthor = sessionNickname != null && sessionNickname.equals(help.getNickname());
+
       model.addAttribute("help", help);
+      model.addAttribute("isAuthor", isAuthor);
 
       return "help/getHelp";
    }
@@ -110,14 +115,14 @@ public class HelpController {
     */
    @PostMapping("/detail/{helpId}")
    public String editHelp(@PathVariable Long helpId, UpdateHelpDto updateHelpDto) {
-      //TODO : 세션 사용자 ID = memberId 시에만 수정버튼 보이기
+
       helpService.editHelp(helpId, updateHelpDto);
       return "redirect:/help/detail/" + helpId;
    }
 
    @PostMapping("/{helpId}")
    public String deleteHelp(@PathVariable Long helpId){
-      //TODO : 세션 사용자 ID = memberId 시에만 수정버튼 보이기
+
       helpService.deleteHelp(helpId);
       return "redirect:/help";
    }

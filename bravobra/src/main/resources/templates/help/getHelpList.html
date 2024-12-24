@@ -19,9 +19,11 @@
     </thead>
     <tbody>
 
-    <tr th:each="help : ${helpList}" th:href="@{/help/detail/{id}(id=${help.helpId})}" style="cursor: pointer;">
+    <tr th:each="help : ${helpList}">
         <td th:text="${help.helpId}">1</td>
-        <td th:text="${help.title}">제목</td>
+        <td>
+            <a th:href="@{/help/detail/{id}(id=${help.helpId})}" th:text="${help.title}">제목</a>
+        </td>
         <td th:text="${help.nickname}">작성자</td>
         <td th:text="${#temporals.format(help.wDate, 'yyyy-MM-dd HH:mm')}">2024-12-22</td>
         <td th:text="${help.viewCnt}">0</td>

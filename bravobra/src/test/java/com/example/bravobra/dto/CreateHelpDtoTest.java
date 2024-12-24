@@ -1,6 +1,6 @@
 package com.example.bravobra.dto;
 
-import com.example.bravobra.domain.Help;
+import com.example.bravobra.domain.help.Help;
 import com.example.bravobra.domain.Member;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -38,7 +38,7 @@ class CreateHelpDtoTest {
       validator = Validation.buildDefaultValidatorFactory().getValidator();
 
       MockitoAnnotations.openMocks(this);
-      when(mockMember.getMemberId()).thenReturn(1L);
+      when(mockMember.getId()).thenReturn(1L);
    }
 
    @Test
@@ -57,13 +57,13 @@ class CreateHelpDtoTest {
 
       // Then
       assertNotNull(help);
-      assertEquals(validDto.getMemberId(), help.getMember().getMemberId());
+      assertEquals(validDto.getMemberId(), help.getMember().getId());
       assertEquals(validDto.getTitle(), help.getTitle());
       assertEquals(validDto.getContent(), help.getContent());
       assertEquals(validDto.getNickname(), help.getNickname());
 
       logger.info("-----> Help: {}", help);
-      logger.info("-----> Member ID: {}", help.getMember().getMemberId());
+      logger.info("-----> Member ID: {}", help.getMember().getId());
    }
 
    @Test
