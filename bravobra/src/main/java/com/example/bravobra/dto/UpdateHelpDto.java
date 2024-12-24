@@ -12,7 +12,10 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @ToString
-public class CreateHelpDto {
+public class UpdateHelpDto {
+   @NotNull(message = "존재하지 않는 게시판입니다")
+   private Long helpId;
+
    @NotNull(message = "회원번호를 입력하세요")
    private Long memberId;
 
@@ -22,8 +25,4 @@ public class CreateHelpDto {
 
    @Size(max = 500, message = "500자 이하로 입력하세요")
    private String content;
-
-   @NotBlank(message = "닉네임을 입력하세요")
-   @Size(max = 25, message = "닉네임은 25자 이하로 입력해주세요")
-   private String nickname;
 }
