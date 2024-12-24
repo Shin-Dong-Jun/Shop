@@ -9,9 +9,9 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 @Getter
-public class RequestFaqDto {
+public class RequestNoticeDto {
 
-    private Long faqId;
+    private Long noticeId;
 
     @NotBlank(message = "제목을 입력하세요.")
     private String title;

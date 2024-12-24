@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 자동 증가 설정
-    private Long productId;  // 기본 키
+    private long productId;  // 기본 키
     private int categoryBigCode; // 소
     private int categoryMediumCode; // 중
     private int categoryTopCode; // 대

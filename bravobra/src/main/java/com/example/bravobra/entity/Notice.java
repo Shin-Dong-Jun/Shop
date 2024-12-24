@@ -1,18 +1,13 @@
 package com.example.bravobra.entity;
 
-
-import com.example.bravobra.domain.Member;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 @Builder
@@ -21,16 +16,15 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table
-public class Faq {
+public class Notice {
 
     @Id
-    @Column(name = "faq_id")
+    @Column(name = "notice_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long faqId;
+    private long noticeId;
 
-    @Column(nullable = false)
+    @Column(name = "member_id", nullable = false)
     private long memberId;
-
 
     @Column(nullable = false)
     private String title;
@@ -38,31 +32,33 @@ public class Faq {
     @Column(nullable = false)
     private String content;
 
-
     @Column(name = "w_date", nullable = false)
     @CreationTimestamp
     private LocalDateTime wDate;
 
-
     @Column(name = "view_cnt", columnDefinition = "integer default 0")
     private long viewCnt;
+
+//    @ColumnDefault("N")
+//    @Column(name = "is_pin", columnDefinition = "varchar(1)")
+//    private String isPin;
+
 
     @Column(nullable = false)
     private String writer = "관리자";
 
-    public void incrementViewCnt() {
+    void incrementViewCnt() {
         this.viewCnt++;
     }
 
-
-
-
-//    @Builder
-//    public Faq(String title, String content) {
-//        this.title = title;
-//        this.content = content;
-//        this.writer = "관리자"; // 기본값 설정
-//        this.wDate = LocalDateTime.now(); // 작성 시간 설정
+//    void urgent(){
+//    if(this.getIsPin().equals('Y')){
+//
+//    }
+//
 //    }
 
+
+
 }
+
