@@ -1,4 +1,4 @@
-package com.example.bravobra.domain;
+package com.example.bravobra.domain.help;
 
 import com.example.bravobra.dto.CreateCommentDto;
 import jakarta.persistence.*;

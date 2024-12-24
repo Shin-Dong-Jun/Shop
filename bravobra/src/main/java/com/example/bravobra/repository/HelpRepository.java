@@ -1,6 +1,6 @@
 package com.example.bravobra.repository;
 
-import com.example.bravobra.domain.Help;
+import com.example.bravobra.domain.help.Help;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

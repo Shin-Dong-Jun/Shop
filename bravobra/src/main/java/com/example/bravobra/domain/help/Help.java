@@ -1,5 +1,6 @@
-package com.example.bravobra.domain;
+package com.example.bravobra.domain.help;
 
+import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.CreateHelpDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,10 +42,19 @@ public class Help {
 
    public static Help toHelpEntity(CreateHelpDto dto, Member member) {
       return Help.builder()
-              .member(member) // 수정: Member 객체 주입
+              .member(member)
               .title(dto.getTitle())
               .content(dto.getContent())
               .nickname(dto.getNickname())
               .build();
+   }
+
+   public void increaseViewCnt() {
+      this.viewCnt++;
+   }
+
+   public void update(String title, String content) {
+      this.title = title;
+      this.content = content;
    }
 }
