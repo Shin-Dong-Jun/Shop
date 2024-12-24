@@ -1,7 +1,28 @@
-#wrap{
-    width:900px;
-    margin:0 auto;
+#wrap {
+    width: 900px;
+    margin: 0 auto;
 }
+
+form, button{
+    display: inline-block;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: yellowgreen;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
 h1{
     color:green;
 }
@@ -28,4 +49,47 @@ a{
 a:hover{
     text-decoration:underline;
     color:green;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    display: inline-block;
+}
+
+.pagination ul li {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.pagination ul li a {
+    text-decoration: none;
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    color: #333;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.pagination ul li a:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.pagination ul li a.active {
+    background-color: #4CAF50;
+    color: white;
+    pointer-events: none;
+}
+
+.pagination ul li a:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
 }

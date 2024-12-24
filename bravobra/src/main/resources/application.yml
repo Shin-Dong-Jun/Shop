@@ -3,7 +3,7 @@ server:
 spring:
 
   profiles:
-    default: devh
+    default: bs
 
   thymeleaf:
     prefix: classpath:templates/

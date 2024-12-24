@@ -7,12 +7,14 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
   </head>
   <body>
+<!--  관리자(admin@admin.com) 화면에만 상품등록, 전체선택, 수정, 삭제 가 보여야 한다.-->
     <div id="wrap">
-      <form action="/product/write" method="get">
-        <button type="submit" value="상품등록">상품등록</button>
-      </form>
-      <button type="submit" value="allSelect" name="allSelect">전체선택</button>
-      <button type="submit" value="removeSelected" name="removeSelected">선택삭제</button>
+        <form th:if="${isAdmin}" action="/product/write" method="get">
+          <button type="submit" value="상품등록">상품등록</button>
+        </form>
+      <button type="submit" value="selectAll" id="selectAll">전체선택</button>
+      <button type="submit" value="removeSelected" id="removeSelected">선택해제</button>
+      <button type="submit" value="delete" id="delete">선택상품삭제</button>
       <table>
         <thead>
         <tr>
@@ -23,8 +25,8 @@
           <th>할인율</th>
           <th>판매가</th>
           <th>해시태그</th>
-          <th>수정</th>
-          <th>삭제</th>
+          <th th:if="${isAdmin}">수정</th>
+          <th th:if="${isAdmin}">삭제</th>
           <th>선택</th>
         </tr>
         </thead>
@@ -54,10 +56,10 @@
           <td th:text="${product.discountRate}"></td>
           <td th:text="${product.salePrice}"></td>
           <td th:text="${product.hashTag}"></td>
-          <td>
+          <td th:if="${isAdmin}">
             <a th:href="@{/product/modify(productId=${product.productId})}">수정</a>
           </td>
-          <td>
+          <td th:if="${isAdmin}">
             <a th:href="@{/product/delete(productId=${product.productId})}">삭제</a>
           </td>
           <td>
@@ -66,27 +68,46 @@
         </tr>
         </tbody>
       </table>
-
     </div>
     <div class="pagination">
       <ul>
         <!-- 이전 버튼 -->
-        <li th:if="${pageHandler.showPrev}">
-          <a th:href="@{(page=${pageHandler.beginPage - 1})}">이전</a>
+        <li th:if="${ph.showPrev}">
+          <a th:href="@{/product/list(page=${ph.beginPage - ph.naviSize})}">이전</a>
         </li>
 
         <!-- 페이지 번호 -->
-        <li th:each="i : ${#numbers.sequence(pageHandler.beginPage, pageHandler.endPage)}">
-          <a th:href="@{(page=${i})}" th:classappend="${i == pageHandler.page} ? 'active'"
-             th:text="${i}"></a>
+        <li th:each="i : ${#numbers.sequence(ph.beginPage, ph.endPage)}">
+          <a th:href="@{/product/list(page=${i})}" th:classappend="${i == ph.page} ? 'active'">
+            <span th:text="${i+1}"></span>
+          </a>
         </li>
 
         <!-- 다음 버튼 -->
-        <li th:if="${pageHandler.showNext}">
-          <a th:href="@{(page=${pageHandler.endPage + 1})}">다음</a>
+        <li th:if="${ph.showNext}">
+          <a th:href="@{/product/list(page=${ph.endPage+1})}">다음</a>
         </li>
       </ul>
     </div>
+    <script>
 
+        let selectAll = document.getElementById('selectAll');
+        let removeSelected = document.getElementById('removeSelected');
+        let checkBox = document.getElementsByName('checkbox');
+        let delSend = document.getElementById('delete');
+        let arr = [];
+
+        selectAll.onclick = function() {
+          for (let i = 0; i < checkBox.length; i++) {
+            checkBox[i].checked = true;
+          }
+        };
+
+        removeSelected.onclick = function() {
+          for (let i = 0; i < checkBox.length; i++) {
+            checkBox[i].checked = false;
+          }
+        };
+    </script>
   </body>
 </html>
