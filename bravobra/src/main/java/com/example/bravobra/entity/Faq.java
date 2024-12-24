@@ -28,8 +28,7 @@ public class Faq {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long faqId;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
+    @Column(nullable = false)
     private long memberId;
 
 
@@ -45,8 +44,6 @@ public class Faq {
     private LocalDateTime wDate;
 
 
-
-
     @Column(name = "view_cnt", columnDefinition = "integer default 0")
     private long viewCnt;
 
@@ -57,12 +54,15 @@ public class Faq {
         this.viewCnt++;
     }
 
-    @Builder
-    public Faq(String title, String content) {
-        this.title = title;
-        this.content = content;
-        this.writer = "관리자"; // 기본값 설정
-        this.wDate = LocalDateTime.now(); // 작성 시간 설정
-    }
+
+
+
+//    @Builder
+//    public Faq(String title, String content) {
+//        this.title = title;
+//        this.content = content;
+//        this.writer = "관리자"; // 기본값 설정
+//        this.wDate = LocalDateTime.now(); // 작성 시간 설정
+//    }
 
 }

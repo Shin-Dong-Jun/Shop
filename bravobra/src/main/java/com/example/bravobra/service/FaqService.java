@@ -1,5 +1,6 @@
 package com.example.bravobra.service;
 
+import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
 import com.example.bravobra.repository.FaqRepository;
@@ -24,7 +25,6 @@ public class FaqService {
 
     //1.쓰기 등록
     public Faq postFaq(RequestFaqDto requestFaqDto, Long memberId) {
-        System.out.println("RequestFaqDto: " + requestFaqDto);
 
         Faq faq = Faq.builder()
                 .memberId(memberId)
@@ -37,7 +37,6 @@ public class FaqService {
 
         Faq save = faqRepository.save(faq);
 
-        System.out.println("Saved Faq: " + save);
         return faq;
     }
 

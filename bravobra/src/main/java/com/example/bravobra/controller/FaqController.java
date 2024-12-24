@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 //화면요청에서 받아서 서비스에게 줘야함
@@ -40,8 +42,29 @@ public class FaqController {
     //1.게시글 등록
     @PostMapping("/post")
     public String postFaq(@ModelAttribute RequestFaqDto requestFaqDto, HttpSession httpSession) {
-        Long memberId = 1234l;
-       faqService.postFaq(requestFaqDto, memberId);
+        Long memberId = 1234L;
+//      Long memberId = (Long) httpSession.getAttribute("memberId");
+//      Character type = (Character) httpSession.getAttribute("type");
+//
+//        if (memberId == null || type == null) {
+//            throw new Exception("세션 값이 없습니다.");
+//        }
+//
+//        if (type != 'y') {
+//            throw new Exception("관리자만 접근 할 수 있습니다.");
+//        }
+//
+//        Faq faq = Faq.builder()
+//                .title(requestFaqDto.getTitle())
+//                .content(requestFaqDto.getContent())
+//                .member(member)
+//                .writer("관리자")
+//                .viewCnt(0)
+//                .wDate(LocalDateTime.now())
+//                .build();
+//
+//
+        faqService.postFaq(requestFaqDto, memberId);
         return "redirect:/faq/list";
     }
 
