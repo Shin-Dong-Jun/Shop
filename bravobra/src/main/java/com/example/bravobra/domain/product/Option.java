@@ -2,6 +2,7 @@ package com.example.bravobra.domain.product;
 
 import com.example.bravobra.domain.OptionId;
 import com.example.bravobra.domain.state.Category;
+import com.example.bravobra.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -17,6 +18,11 @@ public class Option {
 
     @EmbeddedId
     private OptionId optionId;
+
+    @MapsId("productId")
+    @ManyToOne
+    @JoinColumn(name = "p_id")
+    private Product product;
 
     private String color;
     private String size;

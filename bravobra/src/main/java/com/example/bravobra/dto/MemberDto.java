@@ -1,13 +1,13 @@
 package com.example.bravobra.dto;
 
 
+import com.example.bravobra.domain.MemberType;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @Builder

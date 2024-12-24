@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../css/header.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+        a {
+            all: unset;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        .left {
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        * {
+            font-family: "SUIT-Regular", "Montserrat", Verdana, Dotum, AppleGothic,
+            "Sans-serif";
+            letter-spacing: -0.25px;
+        }
+
+        p {
+            margin: 50px 0;
+            text-align: center;
+            font-weight: bold;
+            color: #707070;
+            isplay: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            unicode-bidi: isolate;
+        }
+
+        table th {
+            padding: 13px 0 12px;
+            background-color: #f8f8f8;
+            border-bottom: 3px solid #f2f2f2;
+        }
+
+        table th,
+        table td {
+            text-align: center;
+        }
+
+        .btnNormal {
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 2px 8px;
+            border: 1px solid #d1d1d1;
+            font-size: 13px;
+            line-height: 24px;
+            font-weight: normal;
+            text-decoration: none;
+            vertical-align: middle;
+            word-spacing: -0.5px;
+            letter-spacing: 0;
+            text-align: center;
+            white-space: nowrap;
+            color: #222;
+            background-color: #fff;
+        }
+
+        .btnSubmit {
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 2px 8px;
+            border: 1px solid transparent;
+            font-size: 13px;
+            line-height: 24px;
+            font-weight: normal;
+            text-decoration: none;
+            vertical-align: middle;
+            word-spacing: -0.5px;
+            letter-spacing: 0;
+            text-align: center;
+            white-space: nowrap;
+            color: #fff;
+            background-color: #2a2a2a;
+        }
+
+        .ec-base-qty input[type="text"] {
+            width: 22px;
+            height: 23px;
+            padding: 0 0 0 5px;
+            line-height: 25px;
+            border: 1px solid #d4d8d9;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .ec-base-qty {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            margin: 0 1px 0 0;
+            text-align: left;
+        }
+
+        .up {
+            height: 15px
+        }
+
+        .up > img,
+        .down > img {
+            height: 15px;
+            width: 15px;
+        }
+
+        img {
+            width: 80px;
+            height: 106px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #28a745;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <th:block th:replace="fragments/header :: header"></th:block>
+</div>
+<div class="container">
+    <h1>장바구니</h1>
+    <form id="cartForm" th:if="${!cartlist.isEmpty()}">
+        <table>
+            <colgroup>
+                <col style="width: 27px"/>
+                <col style="width: 92px"/>
+                <col style="width: auto"/>
+                <col style="width: 88px"/>
+                <col style="width: 110px"/>
+                <col style="width: 88px"/>
+                <col style="width: 85px"/>
+                <col style="width: 98px"/>
+                <col style="width: 110px"/>
+            </colgroup>
+            <thead>
+            <tr>
+                <th scope="col">
+                    <input
+                            type="checkbox"
+
+                    />
+                </th>
+                <th scope="col">이미지</th>
+                <th scope="col">상품정보</th>
+                <th scope="col">수량</th>
+                <th scope="col">상품구매금액</th>
+                <th scope="col">할인금액</th>
+                <th scope="col">배송구분</th>
+                <th scope="col">배송비</th>
+                <th scope="col">선택</th>
+            </tr>
+            </thead>
+            <tbody id="cart-items">
+            <tr class="xans-record-" th:each="item , itemStat: ${cartlist}">
+                <input type="hidden" id="cartIds" th:value="${item.cartId()}">
+                <!--    체크 박스 -->
+                <td>
+                    <input
+                            type="checkbox"
+                            id="basket_chk_id_0"
+                            name="basket_product_normal_type_normal"
+                            th:value="${item.cartId()}"
+                    />
+                </td>
+
+                <td class="thumb gClearLine">
+                    <!--                <a href="/product/detail.html?product_no=2874&cate_no=24">-->
+                    <img
+                            th:src="@{${item.image()}}"
+                            onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';"
+                    />
+                    <!--                </a>-->
+                </td>
+
+                <td class="left gClearLine">
+                    <strong class="name">
+                        <a th:text="${item.productName()}" class="ec-product-name"> dfdf </a>
+                    </strong>
+
+                    <ul class="xans-element- xans-order xans-order-optionall option">
+                        <li class="xans-record-">
+                            <strong class="displaynone" th:text="|옵션: ${item.optionValues()}|">ㄴㅇㄹㄴㅇㄹ</strong>
+                            <span class="displaynone" th:text="|(${item.qnt()}개)|">(1개)</span></br>
+                        </li>
+                    </ul>
+                </td>
+                <td class="right">
+       <span class="">
+            <span style="display: flex; height:30px">
+              <input th:id="'quantity_id_0-' + ${itemStat.index}" name="quantity_name_0" class="quantity_cnt" size="2"
+                     th:value="${item.qnt()}" type="type"/>
+              <div style="display: flex; flex-direction: column; gap:0;justify-content: flex-start; align-items: stretch">
+                  <a class="up" th:onclick="|increase(${itemStat.index},${item.fixedPrice()})|">
+                    <img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_up.gif" alt="수량증가"/>
+                  </a>
+                  <a class="down" th:onclick="|decrease(${itemStat.index},${item.fixedPrice()})|">
+                    <img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_down.gif" alt="수량감소"/>
+                  </a>
+              </div>
+            </span>
+            <button class="btnNormal" id="updateBtn">변경</button>
+      </span>
+                </td>
+                <td>
+                    <strong th:id="'totalPrice-' + ${itemStat.index}"
+                            th:text="|${item.fixedPrice()*item.qnt()}원|"></strong>
+                </td>
+                <td rowspan="1" class="">
+                    <span>-</span>
+                    <div id="" class="displaynone">
+                        <strong
+                        >-<span id="product_discount_price_front0">0</span>원</strong
+                        >
+                        <p class="displaynone"></p>
+                    </div>
+                </td>
+                <td class="right">
+                    <div class="txtInfo">기본배송<br/></div>
+                </td>
+                <td rowspan="1" class="">
+                    <p class="displaynone">
+                        0원<span class="displaynone"><br/></span><br/>
+                    </p>
+                    무료
+                </td>
+
+                <td class="button">
+                    <button type="submit" class="btnSubmit" th:onclick="|orderForm('/order', ${item.cartId()})|">주문하기
+                    </button>
+                    <button type="submit" class="btnNormal" th:onclick="|deleteForm('/cart', ${item.cartId()})|">삭제
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+        <button type="button" class="btnSubmit" onclick="selectFormDelete()">선택삭제</button>
+    </form>
+
+    <p th:if="${cartlist.isEmpty()}">장바구니가 비었습니다.</p>
+</div>
+
+<script th:inline="javascript">
+    // document.querySelectorAll('.updateBtn').forEach(button => {
+    //     button.addEventListener('click', function () {
+    //         // 클릭된 버튼의 부모 행(row) 찾기
+    //         const row = this.closest('tr');
+    //
+    //         console.log(row)
+            // 행에서 필요한 값 추출
+            // const quantity = row.querySelector('#quantity_cnt').value;          // 수량
+            // const cartId = row.querySelector('.cartIds').value;
+            // console.log(cartId);
+            // console.log(quantity);
+ // // 데이터 준비/
+ //            const data = {
+ //                productName: productName,
+ //                quantity: quantity,
+ //                price: price
+ //            };
+ //
+ //            // Ajax 요청 보내기
+ //            fetch('/updateProductQuantity', {
+ //                method: 'POST',
+ //                headers: {
+ //                    'Content-Type': 'application/json'
+ //                },
+ //                body: JSON.stringify(data)
+ //            })
+ //                .then(response => response.json())
+ //                .then(result => {
+ //                    if (result.success) {
+ //                        alert(`${productName}의 수량이 성공적으로 변경되었습니다.`);
+ //                    } else {
+ //                        alert(`${productName}의 수량 변경에 실패했습니다.`);
+ //                    }
+ //                })
+ //                .catch(error => {
+ //                    console.error('에러 발생:', error);
+ //                    alert('서버와 통신 중 문제가 발생했습니다.');
+ //                });
+ //        });
+ //    });
+
+    function increase(index, money) {
+        var input = document.getElementById('quantity_id_0-' + index);
+        var value = parseInt(input.value);
+        value++;
+        input.value = value;
+        updatePrice(value, index, money);
+    }
+
+    function decrease(index, money) {
+        var input = document.getElementById('quantity_id_0-' + index);
+        var value = parseInt(input.value);
+        if (value > 1) {
+            value--;
+            input.value = value;
+        } else {
+            input.value = 1;
+        }
+        updatePrice(value, index, money);
+    }
+
+    function updatePrice(cnt, index, money) {
+        var totalPrice = cnt * money;
+        const formattedPrice = new Intl.NumberFormat('ko-KR', {
+            style: 'currency',
+            currency: 'KRW',
+        }).format(totalPrice);
+        document.getElementById('totalPrice-' + index).innerHTML = formattedPrice.replace('₩', '') + '원';
+    }
+
+    function selectFormDelete() {
+        var array = new Array();
+        $('input:checkbox:checked[name="basket_product_normal_type_normal"]').each(function () {
+            array.push($(this).val());
+        });
+        $.ajax({
+            type: 'DELETE',  // 'delete' should be 'DELETE' (uppercase for HTTP method)
+            url: '/cart/list',
+            data: JSON.stringify(array),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+                location.href = '/cart/list';  // Redirect to homepage upon success
+                console.log("성공적으로 처리되었습니다.");
+            },
+            error: function (xhr, status, error) {  // Add parameters for error handling
+                console.error("Error: " + status + " - " + error);
+                alert("Request failed: " + error);  // Show alert or other error handling actions
+            }
+        });
+
+
+    }
+
+    function orderForm(actionUrl, cartId) {
+        const form = document.getElementById('cartForm');
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'cartId';
+        hiddenInput.value = cartId;
+        hiddenInput.formMethod = 'post';
+        form.appendChild(hiddenInput);
+        form.setAttribute('action', actionUrl);
+        alert(actionUrl);
+        form.submit();
+    }
+
+    function deleteForm(actionUrl, cartId) {
+        $.ajax({
+            type: 'DELETE',  // 'delete' should be 'DELETE' (uppercase for HTTP method)
+            url: actionUrl,
+            data: JSON.stringify(cartId),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+                location.href = '/cart/list';  // Redirect to homepage upon success
+                console.log("성공적으로 처리되었습니다.");
+            },
+            error: function (xhr, status, error) {  // Add parameters for error handling
+                console.error("Error: " + status + " - " + error);
+                alert("Request failed: " + error);  // Show alert or other error handling actions
+            }
+        });
+
+
+    }
+
+    function updateForm(actionUrl) {
+        submitForm('update');
+    }
+</script>
+</body>
+</html>
+

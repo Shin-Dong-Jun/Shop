@@ -3,12 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>상품상세</title>
-        <link rel="stylesheet" href="../css/product.css">
+        <link rel="stylesheet" href="../css/header.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
         </head>
     <body>
     <div class="container">
+        <div>
+            <th:block th:replace="fragments/header :: header"></th:block>
+        </div>
         <div class="product-detail">
             <!-- 상품 썸네일 -->
             <div class="product-image">
@@ -61,7 +64,7 @@
             </div>
 
             <div class="purchase-info">
-                <button type="button" class="add-to-cart">ADD TO CART</button>
+                <button type="button" class="add-to-cart" onclick="location.href='/cart/list'">ADD TO CART</button>
             </div>
         </div>
         <!-- 버튼들 -->
