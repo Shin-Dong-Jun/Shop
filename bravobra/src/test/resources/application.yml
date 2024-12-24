@@ -1,9 +1,7 @@
 server:
   port: 80
+
 spring:
-  config:
-    activate:
-      on-profile: test
   thymeleaf:
     prefix: classpath:templates/
     check-template-location: true

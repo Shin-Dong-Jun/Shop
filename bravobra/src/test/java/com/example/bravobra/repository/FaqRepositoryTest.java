@@ -10,7 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 
 
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(locations = "classpath:application.yml")
 class FaqRepositoryTest {
 
     @Autowired
