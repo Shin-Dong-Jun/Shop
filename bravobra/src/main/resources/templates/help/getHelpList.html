@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문의 게시판</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- 필요에 따라 CSS 경로 추가 -->
+</head>
+<body>
+<h1>문의 게시판</h1>
+
+<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; text-align: center;">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 문의글 데이터 반복 출력 -->
+    <tr th:each="help : ${helpList}">
+        <td th:text="${help.helpId}">1</td> <!-- 문의글 ID -->
+        <td>
+            <a th:href="@{/help/detail/{id}(id=${help.helpId})}" th:text="${help.title}">제목</a>
+        </td> <!-- 제목 -->
+        <td th:text="${help.nickname}">작성자</td> <!-- 작성자 닉네임 -->
+        <td th:text="${#temporals.format(help.wDate, 'yyyy-MM-dd HH:mm')}">2024-12-22</td> <!-- 작성일 -->
+        <td th:text="${help.viewCnt}">0</td> <!-- 조회수 -->
+    </tr>
+
+    <!-- 데이터가 없을 경우 -->
+    <tr th:if="${#lists.isEmpty(helpList)}">
+        <td colspan="5">등록된 문의글이 없습니다.</td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="margin-top: 20px;">
+    <a href="/help/create" style="text-decoration: none; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">문의 작성</a>
+</div>
+</body>
+</html>

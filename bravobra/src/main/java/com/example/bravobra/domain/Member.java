@@ -1,21 +1,18 @@
 package com.example.bravobra.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,5 +30,9 @@ public class Member {
     private LocalDateTime registerDate; // 계정 생성일시
 
     private LocalDateTime lastLoginDate; // 마지막 로그인 일시
+
+
+    @Enumerated(EnumType.STRING) // 문자열로 저장.
+    private MemberType memberType; // 사용자 유형
 
 }
