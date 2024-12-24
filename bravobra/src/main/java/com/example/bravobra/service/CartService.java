@@ -10,7 +10,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.rmi.NoSuchObjectException;
 import java.util.List;
 
 @Service
@@ -40,11 +39,10 @@ public class CartService {
                 });
     }
 
-    public void updateCart(ItemCartDtoRequest request, Long userId ) {
-        cartRepository.deleteById(request.cartId());
+    public void updateCart(ItemCartDtoRequest request, Long cartId, Long userId) {
+        cartRepository.deleteById(cartId);
         addCart(request, userId);
     }
-
 
 
     public List<ItemCartDtoResponse> getCartList(Long userId) {
@@ -53,9 +51,11 @@ public class CartService {
         return itemCartDtoResponses;
     }
 
-    public void deleteCart(List<Long> cartIds) {
-        cartIds.stream().forEach(cartId -> {
-            cartRepository.deleteById(cartId);
-        });
+    public void deleteCart(Long cartId) {
+        cartRepository.deleteById(cartId);
+    }
+
+    public void deleteListCart(List<Long> cartIds) {
+        cartRepository.deleteAllById(cartIds);
     }
 }

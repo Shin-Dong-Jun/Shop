@@ -5,10 +5,12 @@ import com.example.bravobra.dto.ItemCartDtoResponse;
 import com.example.bravobra.service.CartService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -20,34 +22,43 @@ public class CartController {
     @GetMapping("/list")
     public String getCartList(Model model, HttpServletRequest request) {
 
-        Long userId = (Long) request.getSession().getAttribute("userId");
+        Long userId = 1L;
+//        Long userId = (Long) request.getSession().getAttribute("userId");
         List<ItemCartDtoResponse> cartlist = cartService.getCartList(userId);
         model.addAttribute("cartlist", cartlist);
-        return "/cart/list";
+
+        return "cart/list";
     }
 
     @PostMapping
     public String addCart(ItemCartDtoRequest itemCartDtoRequests, HttpServletRequest httpServletRequest) {
-        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
-
+//        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        Long userId = 1L;
         if (userId == null) return "redirect:/cart/list";
 
         cartService.addCart(itemCartDtoRequests, userId);
 
-        return "/";
+        return "index";
     }
 
     @PutMapping
-    public String updateCart(ItemCartDtoRequest itemCartDtoRequests , HttpServletRequest httpServletRequest) {
-        System.out.println(itemCartDtoRequests);
-        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
-        cartService.updateCart(itemCartDtoRequests, userId);
-        return "/cart/list";
+    public String updateCart(ItemCartDtoRequest itemCartDtoRequests, @RequestParam("cartId") Long cartId, HttpServletRequest httpServletRequest) {
+//        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        Long userId = 1L;
+        cartService.updateCart(itemCartDtoRequests, cartId, userId);
+        return "redirect:/";
     }
 
     @DeleteMapping
-    public String deleteCart(List<Long> cartIds){
-        cartService.deleteCart(cartIds);
-        return "/cart/list";
+    public String deleteCart(@RequestBody Long cartId, HttpServletRequest httpServletRequest) {
+        cartService.deleteCart(cartId);
+        return "redirect:/cart/list";
+    }
+
+    @DeleteMapping("/list")
+    public  ResponseEntity<?> deleteCart(@RequestBody List<Long> cartIds) {
+        System.out.println(Arrays.toString(cartIds.toArray()));
+        cartService.deleteListCart(cartIds);
+        return ResponseEntity.ok().body("{}");
     }
 }

@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="header">
-    <div id="header">
-        <ul>
-            <li><a href="">Home</a></li><li>
-            <a href="/members/join">회원가입</a></li><li>
-            <a href="/members/list">회원조회</a></li><li>
-            <a href="/members/login">로그인</a></li>
-        </ul>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<div id="wrap" th:fragment="header">
+    <div class="header">
+        <div class="top">
+            <div class="left">
+                <a href="@{/}">Bra vo Bra</a>
+                <a th:href="@{/product/list}">팬티</a>
+                <a th:href="@{/product/list}">브라</a>
+                <a th:href="@{/product/list}">게시판</a>
+                <!--                <a href="#">Insights</a>-->
+                <!--                <a href="#">About Us</a>-->
+            </div>
+            <div class="right">
+                <!-- 로그인 상태에 따라 링크 및 텍스트 변경 -->
+                <!--                <a th:href="@{${loginOutLink}}">-->
+                <a th:href="@{/members/login}"
+                >로그인
+                    <!--                    <span>로그인</span>-->
+                    <!--                    <span th:text="${loginOut}">Sign in</span>-->
+                </a>
+                <a th:href="@{/members/join}">회원가입</a>
+                <a th:href="@{/order/list}">주문조회</a>
+                <a th:href="@{/cart/list}">장바구니</a>
+            </div>
+        </div>
     </div>
 </div>
 </html>
