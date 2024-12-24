@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>공지사항 관리</title>
+</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<body>
+<h1>공지사항 관리</h1>
+<form th:action="@{/notice}" th:method="post">
+    <!-- 글 제목 -->
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" th:value="${notice?.title}" required>
+    <br><br>
+
+    <!-- 내용 -->
+    <label for="content">내용:</label>
+    <textarea id="content" name="content" rows="5" cols="30" th:text="${notice?.content}" required></textarea>
+    <br><br>
+
+    <!-- 긴급 공지 체크박스 -->
+    <label for="urgent">긴급 공지:</label>
+    <input type="checkbox" id="urgent" name="urgent" th:checked="${notice?.isPin}">
+    <br><br>
+
+    <!-- 버튼들 -->
+    <button type="submit">등록</button>
+    <button type="submit" th:if="${notice != null}" th:formaction="@{/notice/edit}">수정</button>
+    <button type="button" onclick="location.href='/'">취소</button>
+</form>
+</body>
+</html>
