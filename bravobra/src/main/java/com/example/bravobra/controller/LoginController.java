@@ -4,9 +4,7 @@ package com.example.bravobra.controller;
 import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.LoginDto;
 import com.example.bravobra.service.LoginService;
-import com.example.bravobra.service.MemberService;
 import com.example.bravobra.session.SessionConst;
-import com.example.bravobra.session.SessionManager;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,18 +12,13 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Request;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.URLEncoder;
-import java.util.UUID;
 
 @Slf4j
 @Controller
