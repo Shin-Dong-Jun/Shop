@@ -7,7 +7,6 @@ import lombok.*;
 
 @Builder
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class CreateHelpDto {
