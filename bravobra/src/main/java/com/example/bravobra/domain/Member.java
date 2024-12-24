@@ -7,12 +7,12 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
