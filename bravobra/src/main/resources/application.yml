@@ -3,10 +3,8 @@ server:
 spring:
 
   profiles:
-    default: devhU
-  sql:
-    init:
-      mode: never
+    default: bs
+
   thymeleaf:
     prefix: classpath:templates/
     check-template-location: true

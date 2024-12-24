@@ -6,6 +6,7 @@ import com.example.bravobra.dto.CreateHelpDto;
 import com.example.bravobra.dto.UpdateHelpDto;
 import com.example.bravobra.service.HelpService;
 import com.example.bravobra.service.MemberService;
+import com.example.bravobra.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -38,8 +39,8 @@ public class HelpController {
    @GetMapping("/add")
    public String showHelpForm(Model model, HttpServletRequest request) {
       HttpSession session = request.getSession();
-      String email = (String) session.getAttribute("loginEmail");
-      Member member = memberService.findOne(email);
+      Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
       if (member == null) {
          return "redirect:/";
       }

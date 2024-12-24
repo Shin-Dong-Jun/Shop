@@ -36,7 +36,7 @@ public class FaqService {
                 .build();
 
         Faq save = faqRepository.save(faq);
-
+        System.out.println(save);
         return faq;
     }
 

@@ -64,7 +64,8 @@ public class FaqController {
 //                .build();
 //
 //
-        faqService.postFaq(requestFaqDto, memberId);
+        Faq faq = faqService.postFaq(requestFaqDto, memberId);
+        System.out.println(faq.toString());
         return "redirect:/faq/list";
     }
 

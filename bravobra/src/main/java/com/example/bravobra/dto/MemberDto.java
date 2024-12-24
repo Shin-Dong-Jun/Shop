@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @Builder
@@ -25,10 +24,8 @@ public class MemberDto {
 
     private String nickname;
 
-    @Pattern(regexp = "^(\\d{2,3})-(\\d{3,4})-(\\d{4})$",message = "000-0000-0000 양식을 맞춰주세요.")
+    @Pattern(regexp = "^(\\d{2,3})-(\\d{3,4})-(\\d{4})$",message = "000-0000-0000 양식을 맞춰주세용")
     private String phoneNumber;
 
     private LocalDateTime registerDate;
-
-    private MemberType memberType;
 }
