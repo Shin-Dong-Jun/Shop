@@ -8,30 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
+
 
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.yml")
 class FaqRepositoryTest {
-
-    @Autowired
-    private FaqRepository faqRepository;
-
-
-    @Test
-    @DisplayName("글쓰기 테스트")
-    public void createFaq() {
-
-
-        Mockito.when(faqRepository.save(Mockito.any(Faq.class))).thenReturn(new Faq());
-
-        Faq faq;
-
-//        createFaq(Faq faq){
-//          this.faqRepository.save(faq);
-//
-//        };
-
-    }
 
 
 }

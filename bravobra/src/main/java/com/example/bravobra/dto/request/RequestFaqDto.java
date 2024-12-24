@@ -1,15 +1,13 @@
 package com.example.bravobra.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 public class RequestFaqDto {
 
