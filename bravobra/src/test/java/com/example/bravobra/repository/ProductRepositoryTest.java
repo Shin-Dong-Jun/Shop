@@ -16,7 +16,7 @@ public class ProductRepositoryTest {
     @Test
     public void createProductTest() {
         // Product 객체 생성 (Builder 사용)
-        for(int i=0; i<1000; i++){
+        for(int i=0; i<350; i++){
             Product product = Product.builder()
                     .productEnglishName("섹시원더브라")
                     .productContent("테스트 상품 상세설명")

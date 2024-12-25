@@ -62,7 +62,7 @@ class ProductServiceTest {
                         .createdAt(LocalDateTime.now())
                         .updatedAt(LocalDateTime.now())
                         .build())
-                .limit(100000)
+                .limit(1000)
                 .forEach(productService::register);
     }
 

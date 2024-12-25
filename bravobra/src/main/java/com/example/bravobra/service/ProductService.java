@@ -68,7 +68,8 @@ public class ProductService {
 //
 //        return productPage.getContent();
 //    }
-    public Page<Product> getPage(int page, int pageSize) {
+    public Page<Product> getPage(Integer page, Integer pageSize) {
+
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("productId").ascending());
         return productRepository.findAll(pageable);
     }
