@@ -2,10 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>문의글 작성</title>
+    <link rel="stylesheet" href="/css/header.css"/>
     <link rel="stylesheet" href="/css/addHelp.css">
+    <title>문의글 작성</title>
 </head>
 <body>
+<div>
+    <th:block th:replace="fragments/header :: header"></th:block>
+</div>
 <div class="container">
     <h1>문의글 작성</h1>
 
@@ -16,7 +20,6 @@
         <div class="form-group">
             <label for="title">제목:</label>
             <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력하세요" required />
-            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message"></div>
         </div>
 
         <div class="form-group">

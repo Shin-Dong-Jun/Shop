@@ -15,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -92,17 +89,20 @@ public class HelpController {
     * @return
     */
    @GetMapping("/detail/{helpId}")
-   public String getHelp(@PathVariable Long helpId, Model model, HttpServletRequest request) {
+   public String getHelp(@PathVariable Long helpId, Model model
+           , HttpServletRequest request) {
       HttpSession session = request.getSession();
       String sessionNickname = (String) session.getAttribute("nickName");
 
       Help help = helpService.getHelp(helpId);
+      //TODO : 수정완료로 넘어오는건 조회수증가 안되게
       helpService.increaseViewCnt(helpId);
 
       boolean isAuthor = sessionNickname != null && sessionNickname.equals(help.getNickname());
 
       model.addAttribute("help", help);
       model.addAttribute("isAuthor", isAuthor);
+      //TODO : isAuthor로 수정및삭제버튼 보이기 여부
 
       return "help/getHelp";
    }
