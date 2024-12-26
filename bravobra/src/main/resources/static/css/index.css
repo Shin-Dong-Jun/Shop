@@ -20,12 +20,12 @@
     height : 100%;
     background-size : cover;
 }
-.A { background-image: url(../img/bg.jpeg); }
-.B { background-image: url(../img/bg2.jpeg); }
+.A { background-image: url(../img/img1.png); }
+.B { background-image: url(../img/img2.png); }
 .C { background-image: url(../img/bg3.webp); }
-.D { background-image: url(../img/bg1.jpeg); }
-.E { background-image: url(../img/bg4.jpg); }
-.F { background-image: url(../img/bg5.jpeg); }
+.D { background-image: url(../img/bg.jpeg); }
+.E { background-image: url(../img/bg1.jpeg); }
+.F { background-image: url(../img/bg2.jpeg); }
 
 
 .navi{

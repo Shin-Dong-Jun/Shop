@@ -1,7 +1,7 @@
 package com.example.bravobra.dto;
 
-import com.example.bravobra.domain.Comment;
-import com.example.bravobra.domain.Help;
+import com.example.bravobra.domain.help.Comment;
+import com.example.bravobra.domain.help.Help;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

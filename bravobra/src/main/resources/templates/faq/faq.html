@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/header.css"/>
+  <title>FAQ 목록</title>
+  <style>
+    body {
+      background-color: white;
+      color: #333;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      text-align: center;
+      color: #000000; /* 연핑크 */
+      margin: 20px 0;
+    }
+    .search-container {
+      text-align: right;
+      margin: 20px;
+    }
+    .search-container label {
+      font-size: 1.2em;
+      color: #f4c9cf; /* 연핑크 */
+    }
+    .search-container input[type="text"] {
+      padding: 5px;
+      border: 1px solid #f4c9cf; /* 연핑크 */
+      border-radius: 5px;
+    }
+    .search-container button {
+      padding: 5px 10px;
+      background-color: #f4c9cf; /* 연핑크 */
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    .faq-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .faq-table th, .faq-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    .faq-table th {
+      background-color: #f4c9cf; /* 연핑크 */
+      color: white;
+    }
+    .button-container {
+      text-align: left;
+      margin: 20px;
+    }
+    .button-container button {
+      padding: 10px 20px;
+      background-color:#f4c9cf; /* 연핑크 */
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    .pagination {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .pagination button {
+      padding: 5px 10px;
+      background-color: #f4c9cf; /* 연핑크 */
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    .pagination span {
+      padding: 5px 10px;
+      color: #f4c9cf; /* 연핑크 */
+    }
+  </style>
+</head>
+<body>
+<div>
+  <th:block th:replace="fragments/header :: header"></th:block>
+</div>
+<h1 class="header">FAQ 목록</h1>
+
+<div class="search-container">
+  <form th:action="@{/faq/search}" method="get">
+    <label for="search">검색:</label>
+    <input type="text" id="search" name="title" placeholder="제목으로 검색" />
+    <button type="submit">검색</button>
+  </form>
+</div>
+
+
+
+<table class="faq-table">
+  <thead>
+  <tr>
+    <th>글번호</th>
+    <th>작성일</th>
+    <th>글제목</th>
+    <th>작성자</th>
+    <th>조회수</th>
+    <th>관리</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="faq : ${faqlist}">
+    <td th:text="${faq.faqId}">1</td>
+
+    <td th:text="${faq.wDate}">2024-12-20</td>
+    <td><a th:href="@{/faq/get/{faqId}(faqId=${faq.faqId})}" th:text="${faq.title}">제목 예시</a></td>
+    <td th:text="'관리자'">작성자</td>
+    <td th:text="${faq.viewCnt}">100</td>
+    <td th:if="${faq.writer == '관리자'}">
+      <a th:href="@{/faq/modify/{faqId}(faqId=${faq.faqId})}">수정</a> |
+      <a th:href="@{/faq/modify/{faqId}(faqId=${faq.faqId})}">삭제</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="button-container">
+  <button onclick="window.location.href='/faq/write'">글쓰기</button>
+</div>
+
+<div class="pagination">
+  <button th:if="${pageNumber > 1}" th:onclick="'window.location.href=\'/faq/list?page=' + (${pageNumber} - 1) + '\''">이전</button>
+  <button th:if="${pageNumber < totalPages}" th:onclick="'window.location.href=\'/faq/list?page=' + (${pageNumber} + 1) + '\''">다음</button>
+
+</div>
+</body>
+</html>
+
+

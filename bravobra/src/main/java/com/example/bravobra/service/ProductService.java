@@ -6,9 +6,14 @@ import com.example.bravobra.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
@@ -51,5 +56,21 @@ public class ProductService {
         Product product = productRepository.findById(productId).orElse(null);
         if (product != null)
             productRepository.deleteById(productId);
+    }
+
+//    public List<Product> getPage(Map<String, Object> map) {
+//        int page = (int)map.get("page") - 1;
+//        int pageSize = (int)map.get("pageSize");
+//
+//        Pageable pageable = PageRequest.of(page, pageSize);
+//
+//        Page<Product> productPage = productRepository.findAll(pageable);
+//
+//        return productPage.getContent();
+//    }
+    public Page<Product> getPage(Integer page, Integer pageSize) {
+
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("productId").ascending());
+        return productRepository.findAll(pageable);
     }
 }

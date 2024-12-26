@@ -3,29 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/header.css"/>
+  <link rel="stylesheet" href="/css/getHelp.css"/>
   <title>문의글 상세보기</title>
-  <link rel="stylesheet" href="/css/styles.css"> <!-- 스타일시트 파일 -->
+  <script>
+    let originalTitle = "";
+    let originalContent = "";
+    let titleElem = "";
+    let contentElem = "";
+
+    window.onload = function () {
+      titleElem = document.getElementById("titleInput");
+      contentElem = document.getElementById("contentInput");
+      originalTitle = document.getElementById("titleInput").value;
+      originalContent = document.getElementById("contentInput").value;
+    }
+
+    function toggleEditing(isEditing) {
+      titleElem.readOnly = !isEditing;
+      contentElem.readOnly = !isEditing;
+      document.getElementById("submitButton").style.display = isEditing ? "inline" : "none";
+      document.getElementById("cancelButton").style.display = isEditing ? "inline" : "none";
+      document.getElementById("editButton").style.display = isEditing ? "none" : "inline";
+    }
+
+    function enableEditing() {
+      toggleEditing(true);
+    }
+
+    function cancelEditing() {
+      titleElem.value = originalTitle;
+      contentElem.value = originalContent;
+      toggleEditing(false);
+    }
+
+    function validate() {
+      const title = titleElem.value.trim();
+      const content = contentElem.value.trim();
+
+      if (!title) {
+        alert("제목을 입력하세요");
+        return false;
+      }
+      if (title.length > 100) {
+        alert("제목은 100자 이하로 입력하세요.");
+        return false;
+      }
+      if (!content) {
+        alert("내용을 입력하세요");
+        return false;
+      }
+      if(content.length > 500) {
+        alert("내용은 500자 이하로 입력하세요.")
+        return false;
+      }
+
+      document.getElementById("editMode").value = "true";
+      return true;
+    }
+  </script>
 </head>
+<div>
+  <th:block th:replace="fragments/header :: header"></th:block>
+</div>
 <body>
 <div class="container">
-  <h1>문의글 상세보기</h1>
-
+  <a href="/help" class="btn-back">목록으로 돌아가기</a>
   <div class="help-detail">
-    <div class="help-header">
-      <h2 th:text="${help.title}">문의글 제목</h2>
-      <p>작성자: <span th:text="${help.nickname}">닉네임</span></p>
-      <p th:text="${#temporals.format(help.wDate, 'yyyy-MM-dd HH:mm')}"></p>
-      <p>조회수: <span th:text="${help.viewCnt}">0</span></p>
-    </div>
+    <form th:action="@{/help/detail/{helpId}(helpId=${help.helpId})}" method="post" onsubmit="return validate()">
+      <input type="hidden" id="helpId" name="helpId" th:value="${help.helpId}" />
+      <input type="hidden" id="memberId" name="memberId" th:value="${help.member.id}" />
+      <input type="hidden" id="editMode" name="editMode" value="false" />
 
-    <div class="help-content">
-      <h3>내용</h3>
-      <p th:text="${help.content}">문의글 내용</p>
-    </div>
+      <div class="help-header">
+        <h3>제목</h3>
+        <input type="text" id="titleInput" name="title" th:value="${help.title}" readonly/>
+        <p>작성자: <span th:text="${help.nickname}">닉네임</span></p>
+        <p th:text="${#temporals.format(help.wDate, 'yyyy-MM-dd HH:mm')}"></p>
+        <p>조회수: <span th:text="${help.viewCnt}">0</span></p>
+      </div>
 
-    <div class="help-footer">
-      <a href="/help" class="btn-back">목록으로 돌아가기</a>
-    </div>
+      <div class="help-content">
+        <h3>내용</h3>
+        <textarea id="contentInput" name="content" readonly th:text="${help.content}"></textarea>
+      </div>
+
+      <div class="help-footer">
+        <button type="button" id="editButton" onclick="enableEditing()">수정</button>
+        <button type="submit" id="submitButton" style="display: none;">수정 완료</button>
+        <button type="button" id="cancelButton" onclick="cancelEditing()" style="display: none;">취소</button>
+      </div>
+    </form>
+
+    <form class="btn-delete-form" th:action="@{/help/{helpId}(helpId=${help.helpId})}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+      <button type="submit">삭제</button>
+    </form>
   </div>
 </div>
 </body>
