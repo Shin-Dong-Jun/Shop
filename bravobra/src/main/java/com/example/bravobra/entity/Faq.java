@@ -28,8 +28,11 @@ public class Faq {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long faqId;
 
-    @Column(nullable = false)
-    private long memberId;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
 
 
     @Column(nullable = false)
@@ -57,12 +60,12 @@ public class Faq {
 
 
 
-//    @Builder
-//    public Faq(String title, String content) {
-//        this.title = title;
-//        this.content = content;
-//        this.writer = "관리자"; // 기본값 설정
-//        this.wDate = LocalDateTime.now(); // 작성 시간 설정
-//    }
+    @Builder
+    public Faq(String title, String content) {
+        this.title = title;
+        this.content = content;
+        this.writer = "관리자"; // 기본값 설정
+        this.wDate = LocalDateTime.now(); // 작성 시간 설정
+    }
 
 }

@@ -22,27 +22,38 @@ public class NoticeController {
 
     //글목록 페이지
     @GetMapping
-    //dto로 변환 // 엔티티에다가 조회수 +1 되는 메서드를 만들고, 메서드를 불러온다
     public String notice(Model model) {
         List<Notice> noticeList = noticeService.getAllNotice();
         model.addAttribute("noticelist", noticeList);
-        return "faq/faq";
+        return "notice/notice";
     }
 
 
     // 글쓰기 페이지
     @GetMapping("/post")
     public String getWritePage() {
-        return "faq/write";
+        return "notice/write";
     }
 
 
     //1.게시글 등록
     @PostMapping("/post")
     public String postNotice(@ModelAttribute RequestNoticeDto requestNoticeDto, HttpSession httpSession) {
-        Long memberId = 1234L;
+
+        Long memberId = (Long) httpSession.getAttribute("memberId");
+        String type = (String) httpSession.getAttribute("type");
+
+
+        try {
+            if (!type.equals("admin")) {
+                throw new Exception("관리자만 접근할 수 있습니다.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
         noticeService.postNotice(requestNoticeDto, memberId);
-        return "redirect:/faq";
+        return "redirect:/notice";
     }
 
 
@@ -51,7 +62,7 @@ public class NoticeController {
     public String getAllNotice(Model model) {
         List<Notice> noticelist = noticeService.getAllNotice();
         model.addAttribute("noticelist", noticelist);
-        return "/faq/faq";
+        return "/notice/notice";
     }
 
 
@@ -59,7 +70,7 @@ public class NoticeController {
     @GetMapping("/get/{noticeId}")
     public String getNotice(@PathVariable Long noticeId) {
         noticeService.getNoticeById(noticeId);
-        return "/faq/faq";
+        return "/notice/notice";
 
     }
 
@@ -69,7 +80,7 @@ public class NoticeController {
     public String searchNotice(@RequestParam String title, Model model) {
         List<Notice> notices = noticeService.findByTitle(title);
         model.addAttribute("notices", notices);
-        return "/faq/faq";
+        return "/notice/notice";
 
     }
 

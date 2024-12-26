@@ -1,8 +1,12 @@
 package com.example.bravobra.controller;
 
+import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
 import com.example.bravobra.service.FaqService;
+import com.example.bravobra.service.MemberService;
+import com.example.bravobra.session.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,6 +24,7 @@ public class FaqController {
 
 
     private final FaqService faqService;
+    private final MemberService memberService;
 
 
     //글목록 페이지
@@ -39,33 +44,12 @@ public class FaqController {
     }
 
 
+
     //1.게시글 등록
     @PostMapping("/post")
-    public String postFaq(@ModelAttribute RequestFaqDto requestFaqDto, HttpSession httpSession) {
-        Long memberId = 1234L;
-//      Long memberId = (Long) httpSession.getAttribute("memberId");
-//      Character type = (Character) httpSession.getAttribute("type");
-//
-//        if (memberId == null || type == null) {
-//            throw new Exception("세션 값이 없습니다.");
-//        }
-//
-//        if (type != 'y') {
-//            throw new Exception("관리자만 접근 할 수 있습니다.");
-//        }
-//
-//        Faq faq = Faq.builder()
-//                .title(requestFaqDto.getTitle())
-//                .content(requestFaqDto.getContent())
-//                .member(member)
-//                .writer("관리자")
-//                .viewCnt(0)
-//                .wDate(LocalDateTime.now())
-//                .build();
-//
-//
-        Faq faq = faqService.postFaq(requestFaqDto, memberId);
-        System.out.println(faq.toString());
+    public String postFaq(@ModelAttribute RequestFaqDto requestFaqDto, HttpServletRequest request, Long memberId) {
+        memberId =1234l;
+       faqService.postFaq(requestFaqDto , memberId);
         return "redirect:/faq/list";
     }
 
@@ -96,9 +80,22 @@ public class FaqController {
         return "/faq/faq";
     }
 
+
+
     //5.삭제
     @PostMapping("/remove/{faqId}")
-    public String removeFaq(@PathVariable Long faqId) {
+    public String removeFaq(@PathVariable Long faqId, HttpSession httpSession) {
+        Long memberId = (Long) httpSession.getAttribute("memberId");
+        String type = (String) httpSession.getAttribute("type");
+
+        try {
+            if (!type.equals("admin")) {
+                throw new Exception("관리자만 접근할 수 있습니다.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
         faqService.removeFaq(faqId);
         return "redirect:/faq/list";
     }
@@ -111,9 +108,21 @@ public class FaqController {
         return "redirect:/faq/list";
     }
 
+
     //6-1 수정 폼
     @GetMapping("/modify/{faqId}")
-    public String modifyFaqForm(@PathVariable Long faqId, Model model) {
+    public String modifyFaqForm(@PathVariable Long faqId, Model model, HttpSession httpSession) {
+        Long memberId = (Long) httpSession.getAttribute("memberId");
+        String type = (String) httpSession.getAttribute("type");
+
+        try {
+            if (!type.equals("admin")) {
+                throw new Exception("관리자만 접근할 수 있습니다.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
             Faq faq = faqService.getFaqById(faqId);
             model.addAttribute("faq", faq);
         return "/faq/modify";

@@ -1,5 +1,6 @@
 package com.example.bravobra.entity;
 
+import com.example.bravobra.domain.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +24,9 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long noticeId;
 
-    @Column(name = "member_id", nullable = false)
-    private long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(nullable = false)
     private String title;
@@ -39,9 +41,9 @@ public class Notice {
     @Column(name = "view_cnt", columnDefinition = "integer default 0")
     private long viewCnt;
 
-//    @ColumnDefault("N")
-//    @Column(name = "is_pin", columnDefinition = "varchar(1)")
-//    private String isPin;
+    @ColumnDefault("N")
+    @Column(name = "is_pin", columnDefinition = "varchar(1)")
+    private String isPin;
 
 
     @Column(nullable = false)
@@ -51,12 +53,13 @@ public class Notice {
         this.viewCnt++;
     }
 
-//    void urgent(){
-//    if(this.getIsPin().equals('Y')){
-//
-//    }
-//
-//    }
+    void isPin(String isPin, Notice notice) {
+        this.isPin = isPin;
+        if(isPin.equals("Y")){
+            noticeId = 1;
+        }
+    }//정렬을 글쓴순서 반대로? 암튼 뭐 다르게 하면 되고, 글번호는 상단고정으로 간다리!
+
 
 
 
