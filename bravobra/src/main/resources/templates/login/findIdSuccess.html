@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디 찾기</title>
+    <link rel="stylesheet" href="/css/findIdSuccess.css">
+</head>
+<body>
+<div class="login-container">
+    <h1 class="title">아이디 찾기</h1>
+    <p>
+        <span th:text="'회원님의 아이디는 '"></span><br>
+        <span th:text="${findSuccess}"></span><br>
+        <span th:text="' 입니다.'"></span>
+    </p>
+    <a href="/members/login" class="login-btn">로그인</a>
+    <a href="/members/find-password" class="password-btn">비밀번호 찾기</a>
+
+</div>
+
+
+</body>
+</html>

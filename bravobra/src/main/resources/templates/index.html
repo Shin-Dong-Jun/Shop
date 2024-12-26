@@ -22,7 +22,13 @@
           <div class="right">
             <!-- 로그인 상태에 따라 링크 및 텍스트 변경 -->
             <!--                <a th:href="@{${loginOutLink}}">-->
-            <a th:href="@{/members/login}">로그인
+
+
+              <!-- 로그인하지 않은 상태 -->
+              <a th:if="${!loginMember}" th:href="@{/members/login}">로그인</a>
+
+              <!-- 로그인한 상태 -->
+              <a th:if="${loginMember}" th:href="@{/members/logout}">로그아웃</a>
               <!--                    <span>로그인</span>-->
               <!--                    <span th:text="${loginOut}">Sign in</span>-->
             </a>

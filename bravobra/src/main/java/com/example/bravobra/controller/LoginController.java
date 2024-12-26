@@ -3,10 +3,10 @@ package com.example.bravobra.controller;
 
 import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.LoginDto;
+import com.example.bravobra.dto.request.FindIdDto;
 import com.example.bravobra.service.LoginService;
 import com.example.bravobra.service.MemberService;
 import com.example.bravobra.session.SessionConst;
-import com.example.bravobra.session.SessionManager;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,10 +18,7 @@ import org.apache.coyote.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.URLEncoder;
@@ -42,8 +39,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid LoginDto loginDto, BindingResult result, String redirectURL
-            , HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String login(@Valid LoginDto loginDto, BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
         //1. 유효성 검사
         if (result.hasErrors()) {
             return "login";
@@ -72,11 +68,6 @@ public class LoginController {
         //4. 응답할 때 쿠키 추가.
         response.addCookie(loginCookie);
 
-        if (redirectURL == null || redirectURL.isEmpty()) {
-            redirectURL = "/";
-        }
-        String msg = URLEncoder.encode(loginMember.toString(), "UTF-8");
-
         return "redirect:/";
     }
         /*
@@ -98,5 +89,35 @@ public class LoginController {
 
         log.info("로그아웃: 세션 및 쿠키 삭제 완료");
         return "redirect:/";
+    }
+
+    @GetMapping("/find-id")
+    public String showFindIdForm() {
+        return "login/findIdForm";
+    }
+
+    @PostMapping("/find-id")
+    public String findId(@Valid FindIdDto findIdDto, BindingResult result, HttpServletRequest request, HttpServletResponse response, Model model
+    ) throws Exception {
+
+
+        //1. 유효성 검사.
+        if (result.hasErrors()) {
+            return "findIdForm";
+        }
+
+        //2. 이메일이 있는지 확인하기 위해서 전화번호랑 이름을 입력받음.
+        String memberId = loginService.findEmailByPhoneAndName(findIdDto.getPhoneNumber(), findIdDto.getName());
+
+        //3. 일치하는 이메일이 없으면.
+        if (memberId == null) {
+            result.reject("findIdFail", "입력하신 정보와 일치하는 이메일이 없습니다.");
+            return "login/findIdForm";
+        }
+
+        //4. 일치하는 이메일이 있으면 아이디를 보여주는 창으로 넘어가야 함.
+        model.addAttribute("findSuccess", memberId);
+
+        return "login/findIdSuccess";
     }
 }

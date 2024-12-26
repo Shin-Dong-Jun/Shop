@@ -17,5 +17,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findAllByEmail(String email); // 조회할때 필요.
 
+    Optional<Member> findByPhoneNumberAndName(String phoneNumber, String name);
+
+    boolean existsByPhoneNumber(String phoneNumber); // 휴대폰 번호 중복 체크
+
+    boolean existsByNickName(String nickName);
 
 }

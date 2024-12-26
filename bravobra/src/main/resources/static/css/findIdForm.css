@@ -1,4 +1,4 @@
-/* styles.css */
+/* 공통 스타일 */
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
@@ -10,6 +10,7 @@ body {
     height: 100vh;
 }
 
+/* 컨테이너 스타일 */
 .login-container {
     width: 350px;
     padding: 20px;
@@ -19,16 +20,28 @@ body {
     text-align: center;
 }
 
-.hidden {
-    display: none;
+.login-form h1.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333333;
+    text-align: center;
 }
 
+/* 폼 그룹 */
 .form-group {
     margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333333;
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="email"] {
     width: calc(100% - 20px);
     padding: 10px;
     margin-top: 5px;
@@ -43,6 +56,7 @@ input:focus {
     outline: none;
 }
 
+/* 버튼 스타일 */
 .login-btn {
     width: 100%;
     background-color: #333333;
@@ -57,47 +71,4 @@ input:focus {
 
 .login-btn:hover {
     background-color: #444444;
-}
-
-.options {
-    text-align: left;
-    margin-bottom: 15px;
-}
-
-.options label {
-    font-size: 14px;
-    color: #333;
-}
-
-.links {
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-.links a {
-    text-decoration: none;
-    color: #666666;
-    margin: 0 5px;
-    transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-.links a:hover {
-    text-decoration: underline;
-    color: #333333;
-}
-
-.guest {
-    margin-top: 20px;
-    font-size: 14px;
-}
-
-.guest a {
-    text-decoration: none;
-    color: #333333;
-    transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-.guest a:hover {
-    text-decoration: underline;
-    color: #444444;
 }
