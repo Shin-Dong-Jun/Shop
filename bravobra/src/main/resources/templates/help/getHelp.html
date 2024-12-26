@@ -3,13 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/header.css"/>
+  <link rel="stylesheet" href="/css/getHelp.css"/>
   <title>문의글 상세보기</title>
-  <style>
-    input[readonly], textarea[readonly] {
-      background-color: #f2f2f2;
-      cursor: not-allowed;
-    }
-  </style>
   <script>
     let originalTitle = "";
     let originalContent = "";
@@ -41,7 +37,6 @@
       toggleEditing(false);
     }
 
-    //내용 검증
     function validate() {
       const title = titleElem.value.trim();
       const content = contentElem.value.trim();
@@ -54,24 +49,34 @@
         alert("제목은 100자 이하로 입력하세요.");
         return false;
       }
+      if (!content) {
+        alert("내용을 입력하세요");
+        return false;
+      }
       if(content.length > 500) {
         alert("내용은 500자 이하로 입력하세요.")
         return false;
       }
+
+      document.getElementById("editMode").value = "true";
       return true;
     }
   </script>
 </head>
+<div>
+  <th:block th:replace="fragments/header :: header"></th:block>
+</div>
 <body>
 <div class="container">
   <a href="/help" class="btn-back">목록으로 돌아가기</a>
-
   <div class="help-detail">
     <form th:action="@{/help/detail/{helpId}(helpId=${help.helpId})}" method="post" onsubmit="return validate()">
       <input type="hidden" id="helpId" name="helpId" th:value="${help.helpId}" />
       <input type="hidden" id="memberId" name="memberId" th:value="${help.member.id}" />
+      <input type="hidden" id="editMode" name="editMode" value="false" />
 
       <div class="help-header">
+        <h3>제목</h3>
         <input type="text" id="titleInput" name="title" th:value="${help.title}" readonly/>
         <p>작성자: <span th:text="${help.nickname}">닉네임</span></p>
         <p th:text="${#temporals.format(help.wDate, 'yyyy-MM-dd HH:mm')}"></p>
@@ -90,7 +95,7 @@
       </div>
     </form>
 
-    <form th:action="@{/help/{helpId}(helpId=${help.helpId})}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+    <form class="btn-delete-form" th:action="@{/help/{helpId}(helpId=${help.helpId})}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
       <button type="submit">삭제</button>
     </form>
   </div>
