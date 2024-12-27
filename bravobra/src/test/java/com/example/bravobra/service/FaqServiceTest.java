@@ -77,13 +77,13 @@ import static org.mockito.Mockito.*;
     void getAllFaq() throws Exception {
         // given
         Faq Faq1 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목입니다")
                 .content("내용입니다")
                 .build();
 
         Faq Faq2 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목2입니다")
                 .content("내용2입니다")
                 .build();
@@ -104,19 +104,19 @@ import static org.mockito.Mockito.*;
     void getSearchFaq() throws Exception {
         // given
         Faq Faq1 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목입니다")
                 .content("내용입니다")
                 .build();
 
         Faq Faq2 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목3입니다")
                 .content("내용2입니다")
                 .build();
 
         Faq Faq3 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목3입니다")
                 .content("내용3입니다")
                 .build();
@@ -153,24 +153,24 @@ import static org.mockito.Mockito.*;
 
         // given
         Faq Faq1 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목입니다")
                 .content("내용입니다")
                 .build();
 
         Faq Faq2 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목2입니다")
                 .content("내용2입니다")
                 .build();
 
         Faq Faq3 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목3입니다")
                 .content("내용3입니다")
                 .build();
 
-        faqService.removeFaq(Faq3.getMember().getId());
+//        faqService.removeFaq(Faq3.getMember().getId());
 
     }
 

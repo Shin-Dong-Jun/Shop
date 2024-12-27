@@ -20,7 +20,7 @@ public class Option {
     private OptionId optionId;
 
     @MapsId("productId")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "p_id")
     private Product product;
 
@@ -32,9 +32,10 @@ public class Option {
 
     private int qnt;
 
+    @Builder.Default
     @ColumnDefault("'N'")
     @Column(name = "is_soldout", columnDefinition = "varchar(1)")
-    private String soldout;
+    private String soldout = "N";
 
 //    @PrePersist
 //    public void prePersist() {

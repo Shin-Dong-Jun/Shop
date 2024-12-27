@@ -39,9 +39,12 @@ public class CartService {
                 });
     }
 
-    public void updateCart(ItemCartDtoRequest request, Long cartId, Long userId) {
-        cartRepository.deleteById(cartId);
-        addCart(request, userId);
+    public void updateCart(int qnt, Long cartId, Long userId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() ->
+                new IllegalStateException("장바구니가 없습니다.")
+        );
+
+        cart.updateQnt(qnt);
     }
 
 

@@ -3,14 +3,12 @@ package com.example.bravobra.domain.order;
 import com.example.bravobra.domain.product.Option;
 import com.example.bravobra.domain.state.OrderState;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
 @AllArgsConstructor
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProduct {
     @Id
@@ -22,7 +20,7 @@ public class OrderProduct {
     private Order order;
 
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY )
     @JoinColumns({
             @JoinColumn(name = "option_id", referencedColumnName = "optionId"),
             @JoinColumn(name = "product_id", referencedColumnName = "p_id")
@@ -35,4 +33,8 @@ public class OrderProduct {
     @Enumerated
     @Column(name = "op_status")
     private OrderState orderState;
+
+    public void addOrder(Order order) {
+        this.order = order;
+    }
 }

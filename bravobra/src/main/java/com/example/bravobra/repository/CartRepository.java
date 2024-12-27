@@ -15,4 +15,8 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Query("select new com.example.bravobra.dto.ItemCartDtoResponse(o.color, c.id, o.optionId.optionId, o.optionId.productId, p.image1, c.qnt, p.productName, p.fixedPrice, c.optionValues) from Cart c join  c.optionId o join o.product p where c.userId = :userId")
     List<ItemCartDtoResponse> findbyCartListDto(@Param("userId") Long userId);
+
+    @Query("select c from Cart c join fetch c.optionId o  where c.id = :cartId")
+    Optional<Cart> findByCartIdWithOptionAndProduct(@Param("cartId") Long cartId);
+
 }

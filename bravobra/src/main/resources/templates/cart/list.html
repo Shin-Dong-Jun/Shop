@@ -221,8 +221,7 @@
             </tr>
             </thead>
             <tbody id="cart-items">
-            <tr class="xans-record-" th:each="item , itemStat: ${cartlist}">
-                <input type="hidden" id="cartIds" th:value="${item.cartId()}">
+            <tr class="xans-record-" th:each="item , itemStat: ${cartlist}" th:id="${item.cartId()}">
                 <!--    체크 박스 -->
                 <td>
                     <input
@@ -258,7 +257,7 @@
        <span class="">
             <span style="display: flex; height:30px">
               <input th:id="'quantity_id_0-' + ${itemStat.index}" name="quantity_name_0" class="quantity_cnt" size="2"
-                     th:value="${item.qnt()}" type="type"/>
+                     th:value="${item.qnt()}" type="type" readonly="readonly">
               <div style="display: flex; flex-direction: column; gap:0;justify-content: flex-start; align-items: stretch">
                   <a class="up" th:onclick="|increase(${itemStat.index},${item.fixedPrice()})|">
                     <img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_up.gif" alt="수량증가"/>
@@ -268,12 +267,13 @@
                   </a>
               </div>
             </span>
-            <button class="btnNormal" id="updateBtn">변경</button>
+            <button class="btnNormal updateBtn" type="button">변경</button>
       </span>
                 </td>
                 <td>
                     <strong th:id="'totalPrice-' + ${itemStat.index}"
-                            th:text="|${item.fixedPrice()*item.qnt()}원|"></strong>
+                            th:text="|${#numbers.formatInteger(item.fixedPrice()*item.qnt(), 3, 'COMMA')}원|">
+                    ></strong>
                 </td>
                 <td rowspan="1" class="">
                     <span>-</span>
@@ -311,46 +311,43 @@
 </div>
 
 <script th:inline="javascript">
-    // document.querySelectorAll('.updateBtn').forEach(button => {
-    //     button.addEventListener('click', function () {
-    //         // 클릭된 버튼의 부모 행(row) 찾기
-    //         const row = this.closest('tr');
-    //
-    //         console.log(row)
-            // 행에서 필요한 값 추출
-            // const quantity = row.querySelector('#quantity_cnt').value;          // 수량
-            // const cartId = row.querySelector('.cartIds').value;
-            // console.log(cartId);
-            // console.log(quantity);
- // // 데이터 준비/
- //            const data = {
- //                productName: productName,
- //                quantity: quantity,
- //                price: price
- //            };
- //
- //            // Ajax 요청 보내기
- //            fetch('/updateProductQuantity', {
- //                method: 'POST',
- //                headers: {
- //                    'Content-Type': 'application/json'
- //                },
- //                body: JSON.stringify(data)
- //            })
- //                .then(response => response.json())
- //                .then(result => {
- //                    if (result.success) {
- //                        alert(`${productName}의 수량이 성공적으로 변경되었습니다.`);
- //                    } else {
- //                        alert(`${productName}의 수량 변경에 실패했습니다.`);
- //                    }
- //                })
- //                .catch(error => {
- //                    console.error('에러 발생:', error);
- //                    alert('서버와 통신 중 문제가 발생했습니다.');
- //                });
- //        });
- //    });
+    document.querySelectorAll('.updateBtn').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // 폼 제출 방지
+
+            // 클릭된 버튼의 부모 행(row) 찾기
+            const row = this.closest('tr');
+            const quantity = row.querySelector('.quantity_cnt').value;
+            const cartId = row.querySelector('input[type="checkbox"]').value;
+
+            // Ajax로 데이터 전송
+            const data = {
+                cartId: cartId,
+                quantity: quantity
+            };
+
+            fetch('/cart', {  // 실제 URL은 서버의 경로에 맞게 조정
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        alert(result.message);
+                        location.href = '/cart/list';
+                    } else {
+                        alert('수량 업데이트에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('에러 발생:', error);
+                    alert('서버와 통신 중 문제가 발생했습니다.');
+                });
+        });
+    });
 
     function increase(index, money) {
         var input = document.getElementById('quantity_id_0-' + index);
@@ -407,14 +404,15 @@
 
     function orderForm(actionUrl, cartId) {
         const form = document.getElementById('cartForm');
+        form.method = 'POST'; // 폼의 메서드를 POST로 설정
+        form.action = actionUrl;
+
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.name = 'cartId';
         hiddenInput.value = cartId;
-        hiddenInput.formMethod = 'post';
+
         form.appendChild(hiddenInput);
-        form.setAttribute('action', actionUrl);
-        alert(actionUrl);
         form.submit();
     }
 
@@ -436,10 +434,6 @@
         });
 
 
-    }
-
-    function updateForm(actionUrl) {
-        submitForm('update');
     }
 </script>
 </body>
