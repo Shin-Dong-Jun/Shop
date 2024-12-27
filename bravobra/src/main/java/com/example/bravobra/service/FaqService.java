@@ -3,11 +3,15 @@ package com.example.bravobra.service;
 import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
+import com.example.bravobra.entity.Product;
 import com.example.bravobra.repository.FaqRepository;
 import com.example.bravobra.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -99,7 +103,12 @@ public class FaqService {
     public Member findById(Long memberId){
         return memberRepository.findById(memberId).orElseThrow();
 
-
     }
+
+
+
+
+
+
 
 }

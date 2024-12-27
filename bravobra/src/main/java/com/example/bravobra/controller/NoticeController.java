@@ -1,9 +1,12 @@
 package com.example.bravobra.controller;
 
 
+import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestNoticeDto;
 import com.example.bravobra.entity.Notice;
 import com.example.bravobra.service.NoticeService;
+import com.example.bravobra.session.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -30,7 +33,7 @@ public class NoticeController {
 
 
     // 글쓰기 페이지
-    @GetMapping("/post")
+    @GetMapping("/write")
     public String getWritePage() {
         return "notice/write";
     }
@@ -38,18 +41,17 @@ public class NoticeController {
 
     //1.게시글 등록
     @PostMapping("/post")
-    public String postNotice(@ModelAttribute RequestNoticeDto requestNoticeDto, HttpSession httpSession) {
+    public String postNotice(@ModelAttribute RequestNoticeDto requestNoticeDto, HttpServletRequest request) {
 
-        Long memberId = (Long) httpSession.getAttribute("memberId");
-        String type = (String) httpSession.getAttribute("type");
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
+        Long memberId = member.getId();
 
-        try {
-            if (!type.equals("admin")) {
-                throw new Exception("관리자만 접근할 수 있습니다.");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+     //   MemberType memberType = member.getMemberType();
+
+        if (member == null) {
+            return "redirect:/";
         }
 
         noticeService.postNotice(requestNoticeDto, memberId);
@@ -68,34 +70,71 @@ public class NoticeController {
 
     //3.단일 조회
     @GetMapping("/get/{noticeId}")
-    public String getNotice(@PathVariable Long noticeId) {
+    public String getNotice(@PathVariable Long noticeId, Model model) {
         noticeService.getNoticeById(noticeId);
-        return "/notice/notice";
+        model.addAttribute("notice", noticeService.getNoticeById(noticeId));
+        return "/notice/get";
 
     }
+
+
 
 
     //4.검색 조회
     @GetMapping("/search")
     public String searchNotice(@RequestParam String title, Model model) {
-        List<Notice> notices = noticeService.findByTitle(title);
-        model.addAttribute("notices", notices);
-        return "/notice/notice";
+        List<Notice> noticelist = noticeService.findByTitle(title);
+        model.addAttribute("noticelist", noticelist);
+        return "notice/notice";
 
     }
 
     //5.삭제
-    @DeleteMapping("/remove/{noticeId}")
-    public void removeNotice(@PathVariable Long noticeId) {
+    @PostMapping("/remove/{noticeId}")
+    public String removeNotice(@PathVariable Long noticeId) {
         noticeService.removeNotice(noticeId);
+        return "redirect:/notice/list";
     }
 
 
-    //6.수정
-    @PatchMapping("/modify/{noticeId}")
-    public void modifyFaq(@ModelAttribute RequestNoticeDto requestNoticeDto, @PathVariable Long noticeId) {
-        noticeService.modifyFaq(requestNoticeDto, noticeId);
+//    //6.수정 (긴급)
+//    @PostMapping("/urgency/{noticeId}")
+//    public String urgencyNotice( @PathVariable Long noticeId) {
+//        Notice updatedNotice = noticeService.urgencyNotice(noticeId);
+//
+//        return "redirect:/notice/list";
+//    }
+
+
+    //7.긴급
+
+
+
+    //6-1 삭제 폼
+    @GetMapping("/controll/{noticeId}")
+    public String modifyNoticeForm(@PathVariable Long noticeId, Model model) {
+
+//        HttpSession session = request.getSession();
+//        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+//
+//        MemberType memberType = member.getMemberType();
+//
+//        if(memberType != MemberType.ADMIN) {
+//            model.addAttribute("errorMessage","관리자만 가능합니다");
+//            return "redirect:/notice/list";
+//        }
+
+        Notice notice = noticeService.getNoticeById(noticeId);
+        model.addAttribute("notice", notice);
+
+        return "/notice/controll";
+
+
     }
+
+
+
+
 
 
 }

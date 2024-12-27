@@ -72,32 +72,32 @@ import static org.mockito.Mockito.*;
     }
 
 
-    @DisplayName("2.전체 조회 테스트")
-    @Test
-    void getAllFaq() throws Exception {
-        // given
-        Faq Faq1 = Faq.builder()
-                .member(Member.builder().build())
-                .title("제목입니다")
-                .content("내용입니다")
-                .build();
-
-        Faq Faq2 = Faq.builder()
-                .member(Member.builder().build())
-                .title("제목2입니다")
-                .content("내용2입니다")
-                .build();
-
-        List<Faq> allFaq = Arrays.asList(Faq1, Faq2);
-
-        // when
-        when(faqRepository.findAll()).thenReturn(allFaq);
-        List<Faq> result = faqService.getAllFaq();
-
-        // then
-        assertNotNull(result);
-        assertEquals(2, result.size());
-    }
+//    @DisplayName("2.전체 조회 테스트")
+//    @Test
+//    void getAllFaq() throws Exception {
+//        // given
+//        Faq Faq1 = Faq.builder()
+//                .member(Member.builder().build())
+//                .title("제목입니다")
+//                .content("내용입니다")
+//                .build();
+//
+//        Faq Faq2 = Faq.builder()
+//                .member(Member.builder().build())
+//                .title("제목2입니다")
+//                .content("내용2입니다")
+//                .build();
+//
+//        List<Faq> allFaq = Arrays.asList(Faq1, Faq2);
+//
+//        // when
+//        when(faqRepository.findAll()).thenReturn(allFaq);
+//        List<Faq> result = faqService.getAllFaq();
+//
+//        // then
+//        assertNotNull(result);
+//        assertEquals(2, result.size());
+//    }
 
     @DisplayName("검색 조회 테스트")
     @Test

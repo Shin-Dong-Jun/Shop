@@ -19,4 +19,7 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
     List<Faq> findAll(Sort sort);
 
 
+
+
+
 }

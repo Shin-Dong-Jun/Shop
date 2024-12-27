@@ -2,17 +2,14 @@ package com.example.bravobra.entity;
 
 
 import com.example.bravobra.domain.Member;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 
 @Builder
@@ -34,11 +31,11 @@ public class Faq {
     private Member member;
 
 
-
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
 

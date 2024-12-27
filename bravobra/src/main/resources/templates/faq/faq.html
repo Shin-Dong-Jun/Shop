@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/header.css"/>
   <title>FAQ 목록</title>
   <style>
     body {
@@ -84,9 +83,6 @@
   </style>
 </head>
 <body>
-<div>
-  <th:block th:replace="fragments/header :: header"></th:block>
-</div>
 <h1 class="header">FAQ 목록</h1>
 
 <div class="search-container">
@@ -97,6 +93,9 @@
   </form>
 </div>
 
+<!--<div th:if="${errorMessage}">-->
+<!--  <p th:text="${errorMessage}" style="color: red;"></p>-->
+<!--</div>-->
 
 
 <table class="faq-table">
@@ -111,10 +110,12 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="faq : ${faqlist}">
-    <td th:text="${faq.faqId}">1</td>
+  <tr th:each="faq , status:${faqlist}">
+    <!-- <td th:text="${status.index+1}"></td> -->
 
-    <td th:text="${faq.wDate}">2024-12-20</td>
+   <td th:text="${faq.faqId}">1</td>
+
+    <td th:text="${#temporals.format(faq.wDate, 'yyyy-MM-dd HH:mm')}">2024-12-20</td>
     <td><a th:href="@{/faq/get/{faqId}(faqId=${faq.faqId})}" th:text="${faq.title}">제목 예시</a></td>
     <td th:text="'관리자'">작성자</td>
     <td th:text="${faq.viewCnt}">100</td>
@@ -130,11 +131,7 @@
   <button onclick="window.location.href='/faq/write'">글쓰기</button>
 </div>
 
-<div class="pagination">
-  <button th:if="${pageNumber > 1}" th:onclick="'window.location.href=\'/faq/list?page=' + (${pageNumber} - 1) + '\''">이전</button>
-  <button th:if="${pageNumber < totalPages}" th:onclick="'window.location.href=\'/faq/list?page=' + (${pageNumber} + 1) + '\''">다음</button>
 
-</div>
 </body>
 </html>
 
