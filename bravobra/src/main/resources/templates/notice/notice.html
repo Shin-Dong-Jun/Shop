@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/header.css"/>
-  <title>FAQ 목록</title>
+  <link rel="stylesheet" href="../css/header.css"/>
+  <title>공지사항</title>
   <style>
     body {
       background-color: white;
@@ -31,6 +31,17 @@
       border: 1px solid #aaa; /* 연핑크 */
       border-radius: 5px;
     }
+
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #a59898; /* 연핑크 */
+      border-radius: 5px;
+      margin-bottom: 15px;
+      white-space: pre-wrap;  /* 줄바꿈을 제대로 처리 */
+      word-wrap: break-word;  /* 긴 단어도 자동으로 줄바꿈 */
+    }
+
     .search-container button {
       padding: 5px 10px;
       background-color: #aaa; /* 연핑크 */
@@ -39,18 +50,18 @@
       color: white;
       cursor: pointer;
     }
-    .faq-table {
+    .notice-table {
       width: 100%;
       border-collapse: collapse;
       margin: 20px 0;
     }
-    .faq-table th, .faq-table td {
+    .notice-table th, .notice-table td {
       border: 1px solid #ddd;
       padding: 8px;
       text-align: center;
-        min-width: 150px;
+      min-width: 150px;
     }
-    .faq-table th {
+    .notice-table th {
       background-color: #aaa; /* 연핑크 */
       color: white;
     }
@@ -85,30 +96,29 @@
   </style>
 </head>
 <body>
-
 <div>
-    <th:block th:replace="fragments/header :: header"></th:block>
+  <th:block th:replace="fragments/header :: header"></th:block>
 </div>
-
-<h1 class="header">FAQ 목록</h1>
+<h1 class="header">공지사항</h1>
 
 <div class="search-container">
-  <form th:action="@{/faq/search}" method="get">
+  <form th:action="@{/notice/search}" method="get">
     <label for="search">검색:</label>
     <input type="text" id="search" name="title" placeholder="제목으로 검색" />
     <button type="submit">검색</button>
   </form>
 </div>
 
+
 <div th:if="${errorMessage}" class="error-message">
   <p th:text="${errorMessage}" style="color: red;"></p>
 </div>
 
 
-<table class="faq-table">
+<table class="notice-table">
   <thead>
   <tr>
-    <th>글번호</th>
+    <th>공지</th>
     <th>작성일</th>
     <th>글제목</th>
     <th>작성자</th>
@@ -117,29 +127,30 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="faq , status:${faqlist}">
-    <!-- <td th:text="${status.index+1}"></td> -->
+  <tr th:each="notice : ${noticelist}">
 
-   <td th:text="${faq.faqId}">1</td>
-
-    <td th:text="${#temporals.format(faq.wDate, 'yyyy-MM-dd HH:mm')}">2024-12-20</td>
-    <td><a th:href="@{/faq/get/{faqId}(faqId=${faq.faqId})}" th:text="${faq.title}">제목 예시</a></td>
+    <td th:text="${notice.noticeType }">일반</td>
+<!--    <td th:text="${notice.wDate}">2024-12-20</td>-->
+    <td th:text="${#temporals.format(notice.wDate, 'yyyy-MM-dd HH:mm')}">2024-12-20</td>
+    <td><a th:href="@{/notice/get/{noticeId}(noticeId=${notice.noticeId})}" th:text="${notice.title}">제목 예시</a></td>
     <td th:text="'관리자'">작성자</td>
-    <td th:text="${faq.viewCnt}">100</td>
-    <td th:if="${faq.writer == '관리자'}">
-      <a th:if="${isAdmin}" th:href="@{/faq/modify/{faqId}(faqId=${faq.faqId})}">수정</a>
-      <a th:if="${isAdmin}" th:href="@{/faq/modify/{faqId}(faqId=${faq.faqId})}">삭제</a>
+    <td th:text="${notice.viewCnt}">100</td>
+    <td th:if="${notice.writer == '관리자'}">
+      <a th:if="${isAdmin}" th:href="@{/notice/controll/{noticeId}(noticeId=${notice.noticeId})}">삭제</a>
     </td>
   </tr>
   </tbody>
 </table>
 
 <div class="button-container">
-    <button th:if="${isAdmin}" onclick="window.location.href='/faq/write'">글쓰기</button>
+  <button th:if="${isAdmin}" onclick="window.location.href='/notice/write'">글쓰기</button>
 </div>
-
 
 </body>
 </html>
+
+
+
+
 
 

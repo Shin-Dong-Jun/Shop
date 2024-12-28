@@ -54,10 +54,13 @@ public class FaqService {
 
 
     //3.단일조회
+
     public Faq getFaqById(long faqId) {
+        log.info("Fetching FAQ with id: " + faqId);
         Faq faq = faqRepository.findById(faqId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 게시글 입니다."));
         faq.incrementViewCnt();
+        log.info("Incrementing view count for FAQ id: " + faqId);
         faqRepository.save(faq);
         return faq;
     }

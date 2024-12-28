@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ 수정</title>
+    <title>공지사항 삭제</title>
     <style>
         body {
             background-color: white;
@@ -54,22 +54,12 @@
     </style>
 </head>
 <body>
-<h1 class="header">FAQ 수정</h1>
+<h1 class="header">공지사항 삭제</h1>
 
 <div class="form-container">
-    <!-- 수정 폼 -->
-    <form th:action="@{/faq/modify/{faqId}(faqId=${faq.faqId})}" method="post">
-        <label for="title">글 제목:</label>
-        <input type="text" id="title" name="title" th:value="${faq.title}" required>
-
-        <label for="content">글 내용:</label>
-        <textarea id="content" name="content" rows="5" th:text="${faq.content}" required></textarea>
-
-        <button type="submit">수정</button>
-    </form>
 
     <!-- 삭제 버튼 -->
-    <form th:action="@{/faq/remove/{faqId}(faqId=${faq.faqId})}" method="post" style="margin-top: 10px;">
+    <form th:action="@{/notice/remove/{noticeId}(noticeId=${notice.noticeId})}" method="post" style="margin-top: 10px;">
         <button type="submit">삭제</button>
     </form>
 </div>

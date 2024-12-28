@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ 수정</title>
+    <title>글쓰기</title>
     <style>
         body {
             background-color: white;
@@ -27,51 +27,66 @@
         .form-container label {
             display: block;
             font-size: 1.2em;
-            color: #aaa; /* 연핑크 */
+            color: #a59898; /* 연핑크 */
             margin-bottom: 5px;
         }
-        .form-container input[type="text"], .form-container textarea {
+        .form-container input[type="text"]{
             width: 100%;
             padding: 10px;
-            border: 1px solid #aaa; /* 연핑크 */
+            border: 1px solid #a59898; /* 연핑크 */
             border-radius: 5px;
             margin-bottom: 15px;
         }
+
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #a59898; /* 연핑크 */
+            border-radius: 5px;
+            margin-bottom: 15px;
+            white-space: pre-wrap;  /* 줄바꿈을 제대로 처리 */
+            word-wrap: break-word;  /* 긴 단어도 자동으로 줄바꿈 */
+        }
+
         .form-container button {
             padding: 10px 20px;
-            background-color: #aaa; /* 연핑크 */
+            background-color: #a59898; /* 연핑크 */
             border: none;
             border-radius: 5px;
             color: white;
             cursor: pointer;
             display: block;
             width: 100%;
-            margin-bottom: 10px;
         }
         .form-container button:hover {
-            background-color: #aaa; /* 좀 더 어두운 연핑크 */
+            background-color: #a59898; /* 좀 더 어두운 연핑크 */
         }
     </style>
 </head>
 <body>
-<h1 class="header">FAQ 수정</h1>
+<h1 class="header">글쓰기</h1>
 
 <div class="form-container">
-    <!-- 수정 폼 -->
-    <form th:action="@{/faq/modify/{faqId}(faqId=${faq.faqId})}" method="post">
+    <form th:action="@{/notice/post}" method="post">
         <label for="title">글 제목:</label>
-        <input type="text" id="title" name="title" th:value="${faq.title}" required>
+        <input type="text" id="title" name="title" required>
 
         <label for="content">글 내용:</label>
-        <textarea id="content" name="content" rows="5" th:text="${faq.content}" required></textarea>
+        <textarea id="content" name="content" rows="30" required th:text="${content}"></textarea>
 
-        <button type="submit">수정</button>
-    </form>
+        <label for="urgent">긴급 공지로 설정:</label>
+        <input type="checkbox" id="urgent" name="noticeType" value="긴급">
 
-    <!-- 삭제 버튼 -->
-    <form th:action="@{/faq/remove/{faqId}(faqId=${faq.faqId})}" method="post" style="margin-top: 10px;">
-        <button type="submit">삭제</button>
+
+        <button type="submit">등록</button>
     </form>
 </div>
+
+<!--<div class="content-output">-->
+<!--    <h2>등록된 글 내용:</h2>-->
+<!--    <pre th:text="${content}"></pre>-->
+<!--</div>-->
+
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ 상세</title>
+  <title>공지사항 상세</title>
   <style>
     body {
       background-color: white;
@@ -35,10 +35,10 @@
   </style>
 </head>
 <body>
-<h1 class="header">FAQ 상세</h1>
+<h1 class="header">공지사항 상세</h1>
 
 <div class="content-container">
-  <h2 th:text="${faq.title}">제목 예시</h2>
+  <h2 th:text="${notice.title}">제목 예시</h2>
   <p th:utext="${contentWithBr}">내용 예시</p>
 </div>
 </body>
