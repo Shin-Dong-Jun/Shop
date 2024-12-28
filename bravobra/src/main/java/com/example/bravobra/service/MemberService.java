@@ -13,32 +13,39 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
 
+    public void join(MemberDto memberDto) {
+        Member member = memberDto.toEntity(); // DTO -> Entity 변환
+        memberRepository.save(member); // DB 저장
+    }
+
     // 회원 생성
-    @Transactional
-    public Long join(MemberDto memberDto) { // Controller에서 memberDto객체를 전달 받음.
-        // 1. dto의 이메일 중복체크 메서드.
-        validateDuplicateMember(memberDto.getEmail());
+//    @Transactional
+//    public Long join(MemberDto memberDto) { // Controller에서 memberDto객체를 전달 받음.
+//        // 1. dto의 이메일 중복체크 메서드.
+//        validateDuplicateMember(memberDto.getEmail());
 
         // 2. 중복이 아니면 member에 정보 저장.
-        Member member = Member.builder()
-                .email(memberDto.getEmail())
-                .password(memberDto.getPassword())
-                .nickName(memberDto.getNickname())
-                .phoneNumber(memberDto.getPhoneNumber())
-                .build();
-        // 확인용
-        System.out.println("member = " + member);
-
-        // 3. 리포지터리에 저장.
-        memberRepository.save(member);
-        return member.getId(); // member id 리턴.( id를 왜 리턴한다고 적었지?)
-
-    }
+//        Member member = Member.builder()
+//                .email(memberDto.getEmail())
+//                .password(memberDto.getPassword())
+//                .nickName(memberDto.getNickName())
+//                .phoneNumber(memberDto.getPhoneNumber())
+//                .build();
+//        Member member = memberDto.toEntity();
+//        // 확인용
+//        System.out.println("member = " + member);
+//
+//        // 3. 리포지터리에 저장.
+//        memberRepository.save(member);
+//        return member.getId(); // member id 리턴.( id를 왜 리턴한다고 적었지?)
+//
+//    }
 
     //중복체크 이메일
     private void validateDuplicateMember(String email) {
@@ -62,9 +69,10 @@ public class MemberService {
                 .map(member -> new MemberDto(
                         member.getEmail(),
                         member.getPassword(),
-                        member.getNickName(),
+                        member.getNickname(),
                         member.getPhoneNumber(),
-                        member.getRegisterDate()))
+                        member.getRegisterDate(),
+                        member.getMemberType()))
                 .collect(Collectors.toList());
     }
 

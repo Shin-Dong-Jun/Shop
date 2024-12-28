@@ -1,10 +1,19 @@
 package com.example.bravobra.entity;
 
 
+import com.example.bravobra.domain.Member;
+import com.example.bravobra.dto.request.RequestFaqDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Builder
@@ -16,12 +25,14 @@ import java.time.LocalDateTime;
 public class Faq {
 
     @Id
-    @Column(name ="faq_id")
+    @Column(name = "faq_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long faqId;
 
-    @Column(name = "member_id", nullable = false)
-    private Long memberId;
+    @JoinColumn
+    @ManyToOne
+    private Member member;
+
 
     @Column(nullable = false)
     private String title;
@@ -29,14 +40,31 @@ public class Faq {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String nickname;
 
-    @Column(name ="w_date", nullable = false)
+    @Column(name = "w_date", nullable = false)
     @CreationTimestamp
     private LocalDateTime wDate;
 
-    @Column(name ="view_cnt",columnDefinition = "integer default 0")
-    private Long viewCnt;
+
+    @Column(name = "view_cnt", columnDefinition = "integer default 0")
+    private long viewCnt;
+
+    @Column(nullable = false)
+    private String writer = "관리자";
+
+    public void incrementViewCnt() {
+        this.viewCnt++;
+    }
+
+
+
+
+//    @Builder
+//    public Faq(String title, String content) {
+//        this.title = title;
+//        this.content = content;
+//        this.writer = "관리자"; // 기본값 설정
+//        this.wDate = LocalDateTime.now(); // 작성 시간 설정
+//    }
 
 }

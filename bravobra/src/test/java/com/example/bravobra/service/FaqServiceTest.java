@@ -1,14 +1,19 @@
 package com.example.bravobra.service;
 
+import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
 import com.example.bravobra.repository.FaqRepository;
+import com.example.bravobra.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Optional;
@@ -27,6 +32,9 @@ import static org.mockito.Mockito.*;
 
     @InjectMocks
     FaqService faqService;
+
+    @Mock
+    private Member member;
 
 
     @DisplayName("1.등록 서비스 첫 테스트.....히히")
@@ -53,16 +61,18 @@ import static org.mockito.Mockito.*;
 
 
         // when
-        Faq result = faqService.postFaq(requestFaqDto, MemberId, Nickname);
-        Faq result2 = faqService.postFaq(requestFaqDto2, MemberId2, Nickname2);
+        Faq result = faqService.postFaq(requestFaqDto, MemberId);
+        Faq result2 = faqService.postFaq(requestFaqDto2, MemberId2);
 
 
         // then
-        assertTrue(true);
+
+
         assertNotNull(result);
         assertNotNull(result2);
-        assertEquals("림이", result.getNickname());
-        assertEquals("코기", result2.getNickname());
+        assertEquals("제목2입니다", result2.getTitle());
+        assertEquals("내용입니다", result.getContent());
+
 
     }
 
@@ -72,17 +82,15 @@ import static org.mockito.Mockito.*;
     void getAllFaq() throws Exception {
         // given
         Faq Faq1 = Faq.builder()
-                .memberId(1234l)
+                .member(Member.builder().build())
                 .title("제목입니다")
                 .content("내용입니다")
-                .nickname("림이")
                 .build();
 
         Faq Faq2 = Faq.builder()
-                .memberId(5678l)
+                .member(Member.builder().build())
                 .title("제목2입니다")
                 .content("내용2입니다")
-                .nickname("리미")
                 .build();
 
         List<Faq> allFaq = Arrays.asList(Faq1, Faq2);
@@ -96,66 +104,78 @@ import static org.mockito.Mockito.*;
         assertEquals(2, result.size());
     }
 
-    @DisplayName("부분 조회 테스트")
+    @DisplayName("검색 조회 테스트")
     @Test
     void getSearchFaq() throws Exception {
         // given
         Faq Faq1 = Faq.builder()
-                .memberId(1234l)
+                .member(Member.builder().build())
                 .title("제목입니다")
                 .content("내용입니다")
-                .nickname("림이")
                 .build();
 
         Faq Faq2 = Faq.builder()
-                .memberId(8888l)
-                .title("제목2입니다")
+                .member(Member.builder().build())
+                .title("제목3입니다")
                 .content("내용2입니다")
-                .nickname("림이2")
                 .build();
 
         Faq Faq3 = Faq.builder()
-                .memberId(5678l)
+                .member(Member.builder().build())
                 .title("제목3입니다")
                 .content("내용3입니다")
-                .nickname("코기")
                 .build();
 
+        List<Faq> faqList = new ArrayList<>();
+        faqList.add(Faq1);
+        faqList.add(Faq2);
+        faqList.add(Faq3);
+
+        List<Faq> titleList = new ArrayList<>();
+        for (Faq faq : faqList) {
+            if (faq.getTitle().contains("목3")){
+                titleList.add(faq);
+            }
+        }
+
         // when
-        when(faqRepository.findById(5678l)).thenReturn(Optional.of(Faq3));
-        Faq result = faqService.getFaq(5678l);
+        when(faqRepository.findByTitleContaining("목3")).thenReturn(titleList);
+        List<Faq> result = faqService.findByTitle("목3");
 
         // then
         assertNotNull(result);
-        assertEquals("코기", result.getNickname());
+        assertEquals(2, result.size());
+
     }
+
+
+
+
 
     @DisplayName("삭제 테스트")
     @Test
     void getRemoveFaq() throws Exception {
+
         // given
         Faq Faq1 = Faq.builder()
-                .memberId(1234l)
+                .member(Member.builder().build())
                 .title("제목입니다")
                 .content("내용입니다")
-                .nickname("림이")
                 .build();
 
         Faq Faq2 = Faq.builder()
-                .memberId(8888l)
+                .member(Member.builder().build())
                 .title("제목2입니다")
                 .content("내용2입니다")
-                .nickname("림이2")
                 .build();
 
         Faq Faq3 = Faq.builder()
-                .memberId(5678l)
+                .member(Member.builder().build())
                 .title("제목3입니다")
                 .content("내용3입니다")
-                .nickname("코기")
                 .build();
 
-        faqService.removeFaq(Faq3.getMemberId());
+        faqService.removeFaq(Faq3.getMember().getId());
 
     }
 

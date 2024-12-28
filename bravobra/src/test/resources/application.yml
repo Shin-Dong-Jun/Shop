@@ -9,26 +9,23 @@ spring:
     mode: HTML
     cache: false
 
-  h2:
-    console:
-      enabled: true  # H2 Console? ???? ?? (H2 Console? H2 Database? UI? ????? ??)
-      path: /h2-console  # H2 Console? Path
   datasource:
-    url: 'jdbc:h2:mem:testdb'
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/springboot_basic?useSSL=false&serverTimezone=UTC  # MySQL 연결 URL
+    username: root  # MySQL 사용자명
+    password: iotiot  # MySQL 비밀번호
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC 드라이버
 
   jpa:
     hibernate:
-      ddl-auto: create
-
+      ddl-auto: update  # create -> update로 변경, 기존 데이터가 유지되도록
     properties:
       hibernate:
         format_sql: true
+
   sql:
     init:
       mode: never
+
 logging:
   level:
     org.hibernate.SQL: debug

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/header.css"/>
+    <link rel="stylesheet" href="/css/addHelp.css">
+    <title>문의글 작성</title>
+</head>
+<body>
+<div>
+    <th:block th:replace="fragments/header :: header"></th:block>
+</div>
+<div class="container">
+    <h1>문의글 작성</h1>
+
+    <form th:action="@{/help/add}" th:object="${createHelpDto}" method="post" class="form-container">
+        <input type="hidden" th:field="*{memberId}" />
+        <input type="hidden" th:field="*{nickname}" />
+
+        <div class="form-group">
+            <label for="title">제목:</label>
+            <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력하세요" required />
+        </div>
+
+        <div class="form-group">
+            <label for="content">내용:</label>
+            <textarea id="content" th:field="*{content}" placeholder="내용을 입력하세요" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">작성</button>
+    </form>
+</div>
+</body>
+</html>
