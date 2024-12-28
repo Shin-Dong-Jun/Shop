@@ -403,17 +403,30 @@
     }
 
     function orderForm(actionUrl, cartId) {
-        const form = document.getElementById('cartForm');
-        form.method = 'POST'; // 폼의 메서드를 POST로 설정
-        form.action = actionUrl;
-
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'cartId';
-        hiddenInput.value = cartId;
-
-        form.appendChild(hiddenInput);
-        form.submit();
+        fetch('/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cartId: cartId })
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message); // "장바구니에 항목이 성공적으로 담겼습니다." 메시지 출력
+                location.href = '/cart/list';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        // const form = document.getElementById('cartForm');
+        // form.method = 'POST'; // 폼의 메서드를 POST로 설정
+        // form.action = actionUrl;
+        //
+        // const hiddenInput = document.createElement('input');
+        // hiddenInput.type = 'hidden';
+        // hiddenInput.name = 'cartId';
+        // hiddenInput.value = cartId;
+        //
+        // form.appendChild(hiddenInput);
+        // form.submit();
     }
 
     function deleteForm(actionUrl, cartId) {

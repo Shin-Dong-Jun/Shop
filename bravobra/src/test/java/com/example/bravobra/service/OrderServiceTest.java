@@ -3,6 +3,7 @@ package com.example.bravobra.service;
 import com.example.bravobra.domain.OptionId;
 import com.example.bravobra.domain.cart.Cart;
 import com.example.bravobra.domain.product.Option;
+import com.example.bravobra.dto.OrderDtoResponse;
 import com.example.bravobra.entity.Product;
 import com.example.bravobra.repository.CartRepository;
 import com.example.bravobra.repository.OrderRepository;
@@ -72,7 +73,8 @@ class OrderServiceTest {
                 .build();
 
 
-        when(cartRepository.findById(any(Long.class))).thenReturn(java.util.Optional.of(cart));
+
+        when(cartRepository.findByCartIdWithOptionAndProduct(eq(cartId))).thenReturn(java.util.Optional.of(cart));
 
 
         //when

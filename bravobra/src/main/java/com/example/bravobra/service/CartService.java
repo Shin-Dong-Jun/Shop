@@ -17,14 +17,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartService {
     private final CartRepository cartRepository;
-
     private final OptionRepository optionRepository;
 
     public void addCart(ItemCartDtoRequest itemCartDtoRequests, Long userId) {
 
-        Option option = optionRepository.findByOptionId(itemCartDtoRequests.color(), itemCartDtoRequests.size(), itemCartDtoRequests.itemId()).orElseThrow(() ->
-                new IllegalStateException("옵션이 없습니다.")
-        );
+        Option option = optionRepository.findByOptionId(itemCartDtoRequests.color(), itemCartDtoRequests.size(), itemCartDtoRequests.itemId())
+                .orElseThrow(() -> new IllegalStateException("옵션이 없습니다."));
+
         cartRepository.findByOptionIdAndUserId(option, userId).ifPresentOrElse(cart -> {
                     cart.increaseQnt(option);
                 },
@@ -40,13 +39,10 @@ public class CartService {
     }
 
     public void updateCart(int qnt, Long cartId, Long userId) {
-        Cart cart = cartRepository.findById(cartId).orElseThrow(() ->
-                new IllegalStateException("장바구니가 없습니다.")
-        );
-
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalStateException("장바구니가 없습니다."));
         cart.updateQnt(qnt);
     }
-
 
     public List<ItemCartDtoResponse> getCartList(Long userId) {
         var itemCartDtoResponses = cartRepository.findbyCartListDto(userId);

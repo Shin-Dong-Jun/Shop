@@ -13,7 +13,15 @@ import com.example.bravobra.repository.OrderRepository;
 import com.example.bravobra.utill.OrderNumberUtill;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
 @Transactional
@@ -24,9 +32,15 @@ public class OrderService {
 
     public void addCartOrder(Long cartId, Long userId) {
 
-        Cart cart = cartRepository.findByCartIdWithOptionAndProduct(cartId).orElseThrow(() -> new IllegalStateException("장바구니가 없습니다."));
-        Product product = cart.getOptionId().getProduct();
-        Option option = cart.getOptionId();
+        Cart cart = cartRepository.findByCartIdWithOptionAndProduct(cartId)
+                .orElseThrow(() -> new IllegalStateException("장바구니가 없습니다."));
+
+        Option option = Optional.ofNullable(cart.getOptionId())
+                .orElseThrow(() -> new IllegalStateException("옵션이 없습니다."));
+
+        Product product = Optional.ofNullable(option.getProduct())
+                .orElseThrow(() -> new IllegalStateException("상품이 없습니다."));
+
         int totalPrice = product.getSalePrice();
         int totalDiscountPrice = totalPrice * product.getDiscountRate() / 100;
         int totalOrderPrice = totalPrice - totalDiscountPrice;
@@ -49,11 +63,28 @@ public class OrderService {
                 .build();
 
         order.addOrderProduct(orderProduct);
-        Order  saveOrder = orderRepository.save(order);
         cartRepository.deleteById(cartId);
-        OrderProductDtoResponse orderProductDtoResponse = OrderProductDtoResponse.of(orderProduct, cart, option, product);
-
+        orderRepository.save(order);
 
     }
 
+    public PagedModel<OrderDtoResponse> getOrderList(Long userId, PageRequest pageable) {
+
+        var orders = orderRepository.findByUserIdWithOrderProduct(userId, pageable);
+
+        return new PagedModel<OrderDtoResponse>(orders.map(order -> {
+            List<OrderProductDtoResponse> orderProductDtoList = order.getOrderProduct().stream().map(
+                    orderProduct -> {
+                        Option option = Optional.ofNullable(orderProduct.getOption())
+                                .orElseThrow(() -> new IllegalStateException("옵션이 없습니다."));
+
+                        Product product = Optional.ofNullable(option.getProduct())
+                                .orElseThrow(() -> new IllegalStateException("상품이 없습니다."));
+                        return OrderProductDtoResponse.of(orderProduct, option, product);
+                    }
+            ).collect(Collectors.toList());
+
+            return OrderDtoResponse.of(order, orderProductDtoList);
+        }));
+    }
 }
