@@ -1,95 +1,200 @@
+/* Reset default styles for links */
+a {
+    all: unset;
+}
+
+/* Remove list styles and padding */
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* Align content to the left with some padding */
+.left {
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* Global font and letter-spacing */
+* {
+    font-family: "SUIT-Regular", "Montserrat", Verdana, Dotum, AppleGothic, "Sans-serif";
+    letter-spacing: -0.25px;
+}
+
 #wrap {
     width: 900px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
-form, button{
-    display: inline-block;
+/* Centered and bold paragraph styling */
+p {
+    margin: 50px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #707070;
+    display: block;
+}
+
+/* Table header styling */
+table th {
+    padding: 13px 0 12px;
+    background-color: #f8f8f8;
+    border-bottom: 3px solid #f2f2f2;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Align table text to center */
+table th, table td {
+    text-align: center;
 }
 
 button {
     padding: 10px 20px;
     font-size: 14px;
     cursor: pointer;
-    background-color: yellowgreen;
-    color: white;
-    border: none;
+    color: #222;
+    background-color: #fff;
+    border: 1px solid;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    margin-left: 10px; /* 버튼 사이에 간격 추가 */
 }
 
-button:hover {
+.buttons {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    margin-bottom: 20px; /* 버튼 위 아래에 여백 추가 */
+}
+
+/* Normal button style */
+.btnNormal {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 6px 12px;
+    border: 1px solid #d1d1d1;
+    font-size: 14px;
+    font-weight: normal;
+    text-decoration: none;
+    text-align: center;
+    color: #222;
+    background-color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.btnNormal:hover {
+    background-color: #eaeaea;
+}
+
+/* Submit button style */
+.btnSubmit {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    font-size: 14px;
+    text-align: center;
+    color: #fff;
+    background-color: #4CAF50;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.btnSubmit:hover {
     background-color: #45a049;
 }
 
-
-h1{
-    color:green;
-}
-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:15px;
-    line-height:25px;
-}
-table td, th{
-    border:1px solid black;
-}
-th{
-    background-color:yellowgreen;
-}
-img{
-    width:200px;
-    height:300px;
-}
-a{
-    text-decoration: none;
-    color:black;
-}
-a:hover{
-    text-decoration:underline;
-    color:green;
+/* Table input styling */
+.ec-base-qty input[type="text"] {
+    width: 40px;
+    height: 25px;
+    padding: 2px 5px;
+    line-height: 25px;
+    border: 1px solid #d4d8d9;
+    border-radius: 3px;
 }
 
-/* 페이지네이션 스타일 */
+/* Quantity controls */
+.ec-base-qty {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Pagination container */
 .pagination {
     text-align: center;
     margin-top: 20px;
 }
 
+/* Pagination list styling */
 .pagination ul {
-    list-style-type: none;
     padding: 0;
     display: inline-block;
 }
 
 .pagination ul li {
-    display: inline-block;
+    display: inline;
     margin: 0 5px;
 }
 
+/* Pagination links */
 .pagination ul li a {
-    text-decoration: none;
-    padding: 8px 12px;
+    padding: 6px 12px;
+    border-radius: 4px;
     background-color: #f0f0f0;
-    border-radius: 5px;
     color: #333;
+    text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .pagination ul li a:hover {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #bbd7bc;
+    color: #fff;
 }
 
 .pagination ul li a.active {
-    background-color: #4CAF50;
-    color: white;
-    pointer-events: none;
+    background-color: #bbd7bc;
+    color: #fff;
 }
 
-.pagination ul li a:disabled {
-    background-color: #d3d3d3;
-    cursor: not-allowed;
+/* Product table image styling */
+img {
+    width: 80px;
+    height: 106px;
+}
+
+/* Container layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* Product table layout */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
 }

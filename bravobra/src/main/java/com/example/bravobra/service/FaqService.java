@@ -4,6 +4,7 @@ import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
 import com.example.bravobra.repository.FaqRepository;
+import com.example.bravobra.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,19 +23,22 @@ import java.util.List;
 public class FaqService {
 
     private final FaqRepository faqRepository;
+    private final MemberRepository memberRepository;
 
     //1.쓰기 등록
     public Faq postFaq(RequestFaqDto requestFaqDto, Long memberId) {
 
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("Member not found"));
+
         Faq faq = Faq.builder()
-                .memberId(memberId)
+                .member(member)
                 .title(requestFaqDto.getTitle())
                 .content(requestFaqDto.getContent())
                 .wDate(LocalDateTime.now())
-                .viewCnt(0l)
+                .viewCnt(0L)
                 .writer("관리자")
                 .build();
-
+        System.out.println("Received memberId: " + memberId);
         Faq save = faqRepository.save(faq);
         System.out.println(save);
         return faq;
@@ -79,9 +83,11 @@ public class FaqService {
         Faq faq = faqRepository.findById(faqId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 게시글 입니다."));
 
+        Member member = memberRepository.findById(faqId).orElseThrow(() -> new IllegalArgumentException("Member not found"));
+
         faq = Faq.builder()
                 .faqId(faq.getFaqId())
-                .memberId(faq.getMemberId())
+                .member(member)
                 .title(requestFaqDto.getTitle())
                 .content(requestFaqDto.getContent())
                 .wDate(LocalDateTime.now())

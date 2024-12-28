@@ -15,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,7 +44,7 @@ public class HelpController {
 
       CreateHelpDto createHelpDto = CreateHelpDto.builder()
               .memberId(member.getId())
-              .nickname(member.getNickName())
+              .nickname(member.getNickname())
               .build();
 
       model.addAttribute("createHelpDto", createHelpDto);
@@ -92,14 +89,22 @@ public class HelpController {
     * @return
     */
    @GetMapping("/detail/{helpId}")
-   public String getHelp(@PathVariable Long helpId, Model model, HttpServletRequest request) {
+   public String getHelp(@PathVariable Long helpId, Model model
+           , HttpServletRequest request) {
       HttpSession session = request.getSession();
-      String sessionNickname = (String) session.getAttribute("nickName");
+      Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+      Long memberId = member.getId();
 
       Help help = helpService.getHelp(helpId);
-      helpService.increaseViewCnt(helpId);
 
-      boolean isAuthor = sessionNickname != null && sessionNickname.equals(help.getNickname());
+      String referer = request.getHeader("Referer");
+      boolean isRedirect = referer != null && referer.contains("/help/detail/" + helpId);
+
+      if (!isRedirect) {
+         helpService.increaseViewCnt(helpId);
+      }
+
+      boolean isAuthor = memberId == help.getMember().getId();
 
       model.addAttribute("help", help);
       model.addAttribute("isAuthor", isAuthor);

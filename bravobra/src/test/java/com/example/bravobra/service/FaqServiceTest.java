@@ -4,12 +4,14 @@ import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
 import com.example.bravobra.repository.FaqRepository;
+import com.example.bravobra.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,9 @@ import static org.mockito.Mockito.*;
 
     @InjectMocks
     FaqService faqService;
+
+    @Mock
+    private Member member;
 
 
     @DisplayName("1.등록 서비스 첫 테스트.....히히")

@@ -2,7 +2,6 @@ package com.example.bravobra.service;
 
 import com.example.bravobra.domain.Member;
 import com.example.bravobra.domain.MemberType;
-import com.example.bravobra.dto.MemberDto;
 import com.example.bravobra.repository.MemberRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberServiceTest {
@@ -28,15 +25,15 @@ class MemberServiceTest {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @BeforeEach
-    void setUp() {
-        memberRepository.deleteAll();
-    }
+//    @BeforeEach
+//    void setUp() {
+//        memberRepository.deleteAll();
+//    }
     @Test
     void getMember() {
 
         Member build = Member.builder()
-                .nickName("nickname")
+                .nickname("nickname")
                 .password("password")
                 .build();
         memberRepository.save(build);
@@ -44,6 +41,18 @@ class MemberServiceTest {
 
         Assertions.assertEquals(allMember.size(), 1);
 
+    }
+
+    @Test
+    public void joinMember(){
+        for(int i=0; i<1; i++){
+            Member member = Member.builder()
+                    .password("12341234")
+                    .email("admin@admin.com")
+                    .phoneNumber("010-1111-2222")
+                    .nickname("테스트닉네임"+i)
+                    .build();
+        }
     }
 
 
@@ -74,7 +83,7 @@ class MemberServiceTest {
         Member member = Member.builder()
                 .email("tlsehdwns147@naver.com")
                 .password(encodedPassword)
-                .nickName("fuck")
+                .nickname("fuck")
                 .phoneNumber("010-5590-3697")
                 .memberType(MemberType.MEMBER)
                 .build();
