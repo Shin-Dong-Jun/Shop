@@ -31,7 +31,7 @@ public class OrderController {
         PageRequest page = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "orderDatetime"));
         PagedModel<OrderDtoResponse> orderList = orderService.getOrderList(userId, page);
 
-        model.addAttribute("orderList", PageResponse.ofPageResponse("주문조회입니다.", orderList.getMetadata()));
+        model.addAttribute("orderList", orderList);
         return "order/list";
     }
     /*

@@ -9,9 +9,9 @@ import org.springframework.data.web.PagedModel;
 @JsonInclude(JsonInclude.Include.NON_NULL) // 널값은 전달하지 않는다
 public record PageResponse(
         String message,
-        PagedModel.PageMetadata data
+        PagedModel data
 ) {
-    public static PageResponse ofPageResponse(String message, PagedModel.PageMetadata page) {
+    public static PageResponse ofPageResponse(String message, PagedModel page) {
         return PageResponse.builder()
                 .message(message)
                 .data(page)
