@@ -13,7 +13,7 @@ class PageHandlerTest {
 
     @Test
     public void getPage(){
-        PageHandler ph = new PageHandler(250, 1);
+        PageHandler ph = new PageHandler(450, 1);
         ph.print();
         System.out.println("ph = " + ph);
 
@@ -23,7 +23,7 @@ class PageHandlerTest {
 
     @Test
     public void getPage2(){
-        PageHandler ph = new PageHandler(250, 11);
+        PageHandler ph = new PageHandler(1000, 11);
         ph.print();
         System.out.println("ph = " + ph);
 
@@ -33,11 +33,11 @@ class PageHandlerTest {
 
     @Test
     public void getPage3(){
-        PageHandler ph = new PageHandler(255, 25);
+        PageHandler ph = new PageHandler(2000, 111);
         ph.print();
         System.out.println("ph = " + ph);
 
-        assertTrue(ph.getBeginPage() ==20);
-        assertTrue(ph.getEndPage() ==26);
+        assertTrue(ph.getBeginPage() ==110);
+        assertTrue(ph.getEndPage() ==119);
     }
 }

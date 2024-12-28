@@ -44,7 +44,7 @@ public class HelpController {
 
       CreateHelpDto createHelpDto = CreateHelpDto.builder()
               .memberId(member.getId())
-              .nickname(member.getNickName())
+              .nickname(member.getNickname())
               .build();
 
       model.addAttribute("createHelpDto", createHelpDto);

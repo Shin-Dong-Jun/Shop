@@ -8,7 +8,8 @@
 </head>
     <body>
     <h1>상품 등록</h1>
-        <form id="form" method="post" action="/product/registerProduct">
+        <form id="form" method="post" action="/product/registerProduct" enctype="multipart/form-data">
+
             <input type="hidden" name="productId" th:value="${product.productId}">
             <!-- 상품명 -->
             <div>
@@ -30,26 +31,26 @@
             <!-- 썸네일 이미지 -->
             <div>
                 <label for="thumbnail">썸네일 이미지 URL</label>
-                <input type="text" id="thumbnail" th:field="${product.thumbnail}">
+                <input type="file" id="thumbnail" th:field="${product.thumbnail}">
             </div>
 
             <!-- 추가 이미지 -->
-            <div>
-                <label for="image1">이미지1</label>
-                <input type="text" id="image1" th:field="${product.image1}">
-            </div>
-            <div>
-                <label for="image2">이미지2</label>
-                <input type="text" id="image2" th:field="${product.image2}">
-            </div>
-            <div>
-                <label for="image3">이미지3</label>
-                <input type="text" id="image3" th:field="${product.image3}">
-            </div>
-            <div>
-                <label for="image4">이미지4</label>
-                <input type="text" id="image4" th:field="${product.image4}">
-            </div>
+<!--            <div>-->
+<!--                <label for="image1">이미지1</label>-->
+<!--                <input type="text" id="image1" th:field="${product.image1}">-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <label for="image2">이미지2</label>-->
+<!--                <input type="text" id="image2" th:field="${product.image2}">-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <label for="image3">이미지3</label>-->
+<!--                <input type="text" id="image3" th:field="${product.image3}">-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <label for="image4">이미지4</label>-->
+<!--                <input type="text" id="image4" th:field="${product.image4}">-->
+<!--            </div>-->
 
             <!-- 상품 정가 -->
             <div>

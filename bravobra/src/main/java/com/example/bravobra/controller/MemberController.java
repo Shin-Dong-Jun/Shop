@@ -31,7 +31,9 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String create(@Valid MemberDto memberDto, BindingResult result) { // @Valid로 Dto에 할당한 값의 유효성 검사.
+    public String create(@Valid @ModelAttribute("memberDto")MemberDto memberDto,
+                         BindingResult result,
+                         Model model) { // @Valid로 Dto에 할당한 값의 유효성 검사.
         // result에 오류 정보를 저장. // hasErrors() - 바인딩과정에서 오류가 발생했는지 확인.
 
         // 1. 오류가 발생했으면 다시 회원가입화면으로 이동.
@@ -49,6 +51,4 @@ public class MemberController {
         model.addAttribute("members", members); // 담은 다음 Form으로 전달.
         return "members/MemberListForm";
     }
-
-
 }

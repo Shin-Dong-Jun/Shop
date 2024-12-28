@@ -2,6 +2,7 @@ package com.example.bravobra.entity;
 
 
 import com.example.bravobra.domain.Member;
+import com.example.bravobra.dto.request.RequestFaqDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

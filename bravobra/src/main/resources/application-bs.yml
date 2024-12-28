@@ -6,9 +6,8 @@ spring:
     activate:
       on-profile: bs
 
-
   thymeleaf:
-    prefix: classpath:templates/
+    prefix: classpath:/templates/
     check-template-location: true
     suffix: .html
     mode: HTML
@@ -22,7 +21,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update # 데이터베이스 구조 자동 업데이트
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -32,7 +31,12 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
-      max-request-size: 10MB
+      max-request-size: 50MB
+      location: C:/upload
+
+  web:
+    resources:
+      static-locations: file:///C:/uploads/, classpath:/static/
 
 logging:
   level:

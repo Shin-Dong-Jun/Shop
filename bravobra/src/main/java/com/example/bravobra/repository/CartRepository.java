@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart, Long> {
     Optional<Cart> findByOptionIdAndUserId(Option optionId, long l);
 
-    @Query("select new com.example.bravobra.dto.ItemCartDtoResponse(o.color, c.id, o.optionId.optionId, o.optionId.productId, p.image1, c.qnt, p.productName, p.fixedPrice, c.optionValues) from Cart c join  c.optionId o join o.product p where c.userId = :userId")
+    @Query("select new com.example.bravobra.dto.ItemCartDtoResponse(o.color, c.id, o.optionId.optionId, o.optionId.productId, c.qnt, p.productName, p.fixedPrice, c.optionValues) from Cart c join  c.optionId o join o.product p where c.userId = :userId")
     List<ItemCartDtoResponse> findbyCartListDto(@Param("userId") Long userId);
 }
