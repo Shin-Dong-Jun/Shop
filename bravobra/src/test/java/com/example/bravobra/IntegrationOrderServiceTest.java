@@ -3,8 +3,6 @@ package com.example.bravobra;
 import com.example.bravobra.domain.OptionId;
 import com.example.bravobra.domain.cart.Cart;
 import com.example.bravobra.domain.product.Option;
-import com.example.bravobra.dto.OrderDtoResponse;
-import com.example.bravobra.dto.PageResponse;
 import com.example.bravobra.entity.Product;
 import com.example.bravobra.repository.CartRepository;
 import com.example.bravobra.repository.OptionRepository;
@@ -15,10 +13,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PagedModel;
 
 import java.time.LocalDateTime;
 
@@ -38,7 +34,7 @@ public class IntegrationOrderServiceTest {
     private OptionRepository optionRepository;
 
 
-    private Long productId = 4L;
+    private Long productId = 1L;
     private Long cartId = 1L;
     private Long userId = 1L;
 

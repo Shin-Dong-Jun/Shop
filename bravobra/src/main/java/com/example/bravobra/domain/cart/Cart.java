@@ -17,10 +17,10 @@ public class Cart {
     // 유저 fk
     private Long userId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "option_id", referencedColumnName = "optionId"),
-            @JoinColumn(name = "product_id", referencedColumnName ="p_id" )
+            @JoinColumn(name = "option_id", referencedColumnName = "optionId", unique = false),
+            @JoinColumn(name = "product_id", referencedColumnName ="p_id" ,unique = false)
     })
     private Option optionId;
 

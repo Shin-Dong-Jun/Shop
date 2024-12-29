@@ -20,7 +20,7 @@ public class Option {
     private OptionId optionId;
 
     @MapsId("productId")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "p_id")
     private Product product;
 

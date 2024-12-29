@@ -7,6 +7,8 @@ public record ItemCartDtoResponse(String color,
                                   int qnt,
                                   String productName,
                                   int salePrice,
-                                  String optionValues) {
+                                  String optionValues
+,int fixedPrice
+,int discountRate) {
 
 }
