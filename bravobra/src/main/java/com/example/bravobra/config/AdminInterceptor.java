@@ -1,5 +1,6 @@
 package com.example.bravobra.config;
 
+import com.example.bravobra.domain.MemberType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -21,10 +22,10 @@ public class AdminInterceptor  implements HandlerInterceptor {
             return false;
         }
 
-        Object member = session.getAttribute("memberType");
+        MemberType member = (MemberType) session.getAttribute("memberType");
 
         // member 값이 "ADMIN"이 아닌 경우 처리
-        if (!("ADMIN".equals(member))) {
+        if (!(MemberType.ADMIN.equals(member))) {
             log.info(">>>>>>>>>> Session memberType: {}", member);
             response.sendRedirect("/errorAccess");
             return false;

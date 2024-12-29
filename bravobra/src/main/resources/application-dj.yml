@@ -1,9 +1,9 @@
 server:
   port: 80
 spring:
-
-  profiles:
-    default: devh
+  config:
+    activate:
+      on-profile: dj
 
   thymeleaf:
     prefix: classpath:templates/
