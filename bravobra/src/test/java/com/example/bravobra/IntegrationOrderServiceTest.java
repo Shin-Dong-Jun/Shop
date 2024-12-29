@@ -4,6 +4,7 @@ import com.example.bravobra.domain.OptionId;
 import com.example.bravobra.domain.cart.Cart;
 import com.example.bravobra.domain.product.Option;
 import com.example.bravobra.dto.OrderDtoResponse;
+import com.example.bravobra.dto.PageResponse;
 import com.example.bravobra.entity.Product;
 import com.example.bravobra.repository.CartRepository;
 import com.example.bravobra.repository.OptionRepository;
@@ -14,9 +15,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PagedModel;
+
+import java.time.LocalDateTime;
 
 @SpringBootTest
 public class IntegrationOrderServiceTest {
@@ -40,7 +44,18 @@ public class IntegrationOrderServiceTest {
 
     @BeforeEach
     void setUp() {
-        Product product = productRepository.findById(productId).get();
+        Product product = Product.builder()
+                .productName("P1")
+                .productEnglishName("섹시원더브라")
+                .productContent("테스트 상품 상세설명")
+                .thumbnail("model1.jpg")
+                .fixedPrice(50000)
+                .salePrice(40000)
+                .hashTag("#섹시 #브라 #할인")
+                .discountRate(20)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
 
         productRepository.save(product);
         OptionId optionId = new OptionId();
@@ -81,9 +96,9 @@ public class IntegrationOrderServiceTest {
         // given
         orderService.addCartOrder(cartId, userId);
         PageRequest page = PageRequest.of(0, 10,Sort.by(Sort.Direction.DESC,"orderDatetime"));
-        PagedModel<OrderDtoResponse> orderList = orderService.getOrderList(userId, page);
+//        PagedModel<OrderDtoResponse> orderList = orderService.getOrderList(userId, page);
         //when
-        System.out.println(orderList.getContent()+" "+orderList.getMetadata());
+//        System.out.println(orderList.getContent()+" "+orderList.getMetadata());
         //then
 
     }

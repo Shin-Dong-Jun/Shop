@@ -10,14 +10,15 @@ spring:
     cache: false
 
   datasource:
-    url: jdbc:mysql://localhost:3306/springboot_basic?useSSL=false&serverTimezone=UTC  # MySQL 연결 URL
+    url: jdbc:mysql://localhost:3306/bravo?useSSL=false&serverTimezone=UTC  # MySQL 연결 URL
     username: root  # MySQL 사용자명
-    password: iotiot  # MySQL 비밀번호
+    password: 1234  # MySQL 비밀번호
     driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC 드라이버
 
   jpa:
     hibernate:
-      ddl-auto: update  # create -> update로 변경, 기존 데이터가 유지되도록
+      ddl-auto:  create # create -> update로 변경, 기존 데이터가 유지되도록
+
     properties:
       hibernate:
         format_sql: true

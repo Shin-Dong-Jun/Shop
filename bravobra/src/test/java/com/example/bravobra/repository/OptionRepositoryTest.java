@@ -33,7 +33,32 @@ class OptionRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        Product product = productRepository.findById(4L).get();
+        Product product1 = Product.builder()
+                .productName("P1")
+                .productEnglishName("섹시원더브라")
+                .productContent("테스트 상품 상세설명")
+                .thumbnail("model1.jpg")
+                .fixedPrice(50000)
+                .salePrice(40000)
+                .hashTag("#섹시 #브라 #할인")
+                .discountRate(20)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        Product product = Product.builder()
+                .productName("P2")
+                .productEnglishName("bravo")
+                .productContent("테스트 상품 상세설명")
+                .thumbnail("model1.jpg")
+                .fixedPrice(50000)
+                .salePrice(40000)
+                .hashTag("#섹시 #브라 #할인")
+                .discountRate(20)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        productRepository.save(product);
+        productRepository.save(product1);
         OptionId optionId = new OptionId();
         optionId.setOptionId(1L);
         optionId.setProductId(1L);
@@ -50,7 +75,7 @@ class OptionRepositoryTest {
                 .build();
 
         option1 = Option.builder()
-                .product(product)
+                .product(product1)
                 .qnt(100)
                 .color("red")
                 .type(Category.BRA)
