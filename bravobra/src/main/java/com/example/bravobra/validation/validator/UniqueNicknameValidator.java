@@ -14,13 +14,10 @@ public class UniqueNicknameValidator implements ConstraintValidator<UniqueNickna
 
     private final MemberRepository memberRepository;
 
-
     public boolean isValid(String nickname, ConstraintValidatorContext context) {
         if (nickname == null || nickname.isEmpty()) {
             return true;
-
         }
-
         return !memberRepository.existsByNickName(nickname);
     }
 

@@ -21,8 +21,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder; // BCryptPasswordEncoder 추가
 
-
-
     // 회원 생성
     @Transactional
     public Long join(MemberDto memberDto) { // Controller에서 memberDto객체를 전달 받음.
@@ -31,7 +29,6 @@ public class MemberService {
 
         // 비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(memberDto.getPassword());
-
 
         // 2. 중복이 아니면 member에 정보 저장.
         Member member = Member.builder()
@@ -51,7 +48,7 @@ public class MemberService {
 
     }
 
-    //중복체크 이메일
+    // 이메일, 휴대폰 번호 중복체크.
     private void validateDuplicateMember(String email, String phoneNumber) {
         if(memberRepository.existsByEmail(email)){
             throw new DuplicateMemberException("이미 등록된 이메일입니다"); // 이미등록된 이메일일때 예외처리 해주어야함.
@@ -73,15 +70,17 @@ public class MemberService {
         List<Member> members = memberRepository.findAll();
 
         return members.stream()
-                .map(member -> new MemberDto(
-                        member.getEmail(),
-                        member.getName(),
-                        member.getPassword(),
-                        member.getNickName(),
-                        member.getPhoneNumber(),
-                        member.getRegisterDate(),
-                        member.getMemberType()))
+                .map(member -> MemberDto.builder()
+                        .email(member.getEmail())
+                        .name(member.getName())
+                        .password(member.getPassword())
+                        .nickname(member.getNickName())
+                        .phoneNumber(member.getPhoneNumber())
+                        .registerDate(member.getRegisterDate())
+                        .memberType(member.getMemberType())
+                        .build())
                 .collect(Collectors.toList());
+
     }
 
 

@@ -4,10 +4,10 @@ body {
     background-color: #f9f9f9;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    flex-direction: column; /* 헤더와 컨테이너를 세로로 배치 */
+    min-height: 100vh;
 }
 
 /* 컨테이너 스타일 */
@@ -17,9 +17,16 @@ body {
     background-color: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    margin: auto; /* 중앙 정렬 */
+
     text-align: center;
+    margin-top: 120px; /* 헤더 높이(80px) + 여백(40px) */
+    position: relative; /* 헤더와 레이어 충돌 방지 */
+    z-index: 0; /* 헤더 위로 올라가지 않도록 설정 */
 }
 
+
+/* 제목 스타일 */
 .login-form h1.title {
     font-size: 24px;
     margin-bottom: 20px;
@@ -40,6 +47,7 @@ label {
     color: #333333;
 }
 
+/* 입력 필드 스타일 */
 input[type="text"],
 input[type="email"] {
     width: calc(100% - 20px);
@@ -72,3 +80,10 @@ input:focus {
 .login-btn:hover {
     background-color: #444444;
 }
+
+.error-message {
+    color: #d9534f; /* 빨간색 */
+    font-size: 12px;
+    margin-top: 5px;
+}
+

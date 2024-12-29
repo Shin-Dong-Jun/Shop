@@ -38,4 +38,9 @@ public class Member {
     @Enumerated(EnumType.STRING) // 문자열로 저장.
     private MemberType memberType; // 사용자 유형
 
+
+    // 비밀번호 찾거나 변경할 때 사용. setter가 없어서 메서드로.
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

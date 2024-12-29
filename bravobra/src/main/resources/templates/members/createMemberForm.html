@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <title>Create Member</title>
 
-    <!-- CSS 연결 -->
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/createMemberForm.css">
 </head>
 <body>
+<div>
+    <th:block th:replace="fragments/header :: header"></th:block>
+</div>
 <div class="container">
     <h1 class="title">회원 가입</h1>
+
+
+
     <form th:action="@{/members/join}" th:object="${memberDto}" method="post">
+
+<!--        &lt;!&ndash; 클래스 레벨(Global) 에러 출력 &ndash;&gt;-->
+<!--        <div th:if="${#fields.hasGlobalErrors()}" class="error">-->
+<!--            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>-->
+<!--        </div>-->
+
         <!-- 이메일 입력 -->
         <div class="form-group">
             <label for="email">이메일</label>
@@ -35,6 +47,15 @@
                    th:classappend="${#fields.hasErrors('password')} ? 'error-field' : ''"
                    placeholder="비밀번호를 입력하세요 (8~25자)">
             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="password">비밀번호 확인</label>
+            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}"
+                   th:classappend="${#fields.hasErrors('passwordConfirm')} ? 'error-field' : ''"
+                   placeholder="비밀번호를 확인하세요. (8~25자)">
+            <div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" class="error"></div>
         </div>
 
         <!-- 닉네임 입력 -->
