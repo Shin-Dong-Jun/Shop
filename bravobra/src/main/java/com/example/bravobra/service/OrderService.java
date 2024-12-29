@@ -68,11 +68,11 @@ public class OrderService {
 
     }
 
-    public PagedModel<OrderDtoResponse> getOrderList(Long userId, PageRequest pageable) {
+    public Page<OrderDtoResponse> getOrderList(Long userId, PageRequest pageable) {
 
         var orders = orderRepository.findByUserIdWithOrderProduct(userId, pageable);
 
-        return new PagedModel<OrderDtoResponse>(orders.map(order -> {
+        return orders.map(order -> {
             List<OrderProductDtoResponse> orderProductDtoList = order.getOrderProduct().stream().map(
                     orderProduct -> {
                         Option option = Optional.ofNullable(orderProduct.getOption())
@@ -85,6 +85,6 @@ public class OrderService {
             ).collect(Collectors.toList());
 
             return OrderDtoResponse.of(order, orderProductDtoList);
-        }));
+        });
     }
 }

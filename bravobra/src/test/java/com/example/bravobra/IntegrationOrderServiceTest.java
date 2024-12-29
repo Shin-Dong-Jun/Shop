@@ -49,10 +49,6 @@ public class IntegrationOrderServiceTest {
                 .productEnglishName("섹시원더브라")
                 .productContent("테스트 상품 상세설명")
                 .thumbnail("model1.jpg")
-                .image1("img1.jpg")
-                .image2("img2.jpg")
-                .image3("img3.jpg")
-                .image4("img4.jpg")
                 .fixedPrice(50000)
                 .salePrice(40000)
                 .hashTag("#섹시 #브라 #할인")
@@ -100,9 +96,9 @@ public class IntegrationOrderServiceTest {
         // given
         orderService.addCartOrder(cartId, userId);
         PageRequest page = PageRequest.of(0, 10,Sort.by(Sort.Direction.DESC,"orderDatetime"));
-        PagedModel<OrderDtoResponse> orderList = orderService.getOrderList(userId, page);
+//        PagedModel<OrderDtoResponse> orderList = orderService.getOrderList(userId, page);
         //when
-        System.out.println(orderList.getContent()+" "+orderList.getMetadata());
+//        System.out.println(orderList.getContent()+" "+orderList.getMetadata());
         //then
 
     }

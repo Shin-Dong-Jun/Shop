@@ -26,12 +26,15 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public String order(Model model) {
+    public String order(Model model
+    , @RequestParam(value = "page", defaultValue = "0") int pages) {
         Long userId = 1L;
-        PageRequest page = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "orderDatetime"));
-        PagedModel<OrderDtoResponse> orderList = orderService.getOrderList(userId, page);
+        PageRequest page = PageRequest.of(pages, 10, Sort.by(Sort.Direction.DESC, "orderDatetime"));
+        Page<OrderDtoResponse> orderList = orderService.getOrderList(userId, page);
 
-        model.addAttribute("orderList", orderList);
+        PageResponse pageResponse = PageResponse.of("주문 조회 완료", orderList);
+
+        model.addAttribute("pageResponse", pageResponse);
         return "order/list";
     }
     /*

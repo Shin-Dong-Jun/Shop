@@ -9,15 +9,25 @@ import org.springframework.data.web.PagedModel;
 @JsonInclude(JsonInclude.Include.NON_NULL) // 널값은 전달하지 않는다
 public record PageResponse(
         String message,
-        PagedModel data
+        Object data,
+        Integer totalPages,
+        Long totalElements,
+        Integer size,
+        Integer number
+
 ) {
-    public static PageResponse ofPageResponse(String message, PagedModel page) {
+    public static PageResponse of(String message, Page page) {
         return PageResponse.builder()
                 .message(message)
-                .data(page)
+                .data(page.getContent())
+                .number(page.getNumber())
+                .totalPages(page.getTotalPages())
+                .size(page.getSize())
+                .totalElements(page.getTotalElements())
                 .build();
     }
 }
+
 
 
 
