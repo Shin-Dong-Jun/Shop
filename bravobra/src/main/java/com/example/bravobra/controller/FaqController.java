@@ -107,6 +107,8 @@ public class FaqController {
         return "/faq/faq";  // 공지사항 게시판 뷰
     }
 
+
+
     //3.단일 조회
     @GetMapping("/get/{faqId}")
     public String getFaq(@PathVariable Long faqId, Model model) {
