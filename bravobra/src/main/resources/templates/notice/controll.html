@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>글쓰기</title>
+    <title>공지사항 삭제</title>
     <style>
         body {
             background-color: white;
@@ -46,6 +46,7 @@
             cursor: pointer;
             display: block;
             width: 100%;
+            margin-bottom: 10px;
         }
         .form-container button:hover {
             background-color: #aaa; /* 좀 더 어두운 연핑크 */
@@ -53,17 +54,13 @@
     </style>
 </head>
 <body>
-<h1 class="header">글쓰기</h1>
+<h1 class="header">공지사항 삭제</h1>
 
 <div class="form-container">
-    <form th:action="@{/faq/post}" method="post">
-        <input type="hidden" name="memberId" th:value="${faq.faqId}">
-        <label for="title">글 제목:</label>
-        <input type="text" id="title" name="title" required>
-        <label for="content">글 내용:</label>
-        <textarea id="content" name="content" rows="30" required></textarea>
 
-        <button type="submit">등록</button>
+    <!-- 삭제 버튼 -->
+    <form th:action="@{/notice/remove/{noticeId}(noticeId=${notice.noticeId})}" method="post" style="margin-top: 10px;">
+        <button type="submit">삭제</button>
     </form>
 </div>
 </body>

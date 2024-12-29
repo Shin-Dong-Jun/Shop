@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/header.css"/>
+    <link rel="stylesheet" href="../css/header.css"/>
   <title>FAQ 목록</title>
   <style>
     body {
@@ -24,16 +24,16 @@
     }
     .search-container label {
       font-size: 1.2em;
-      color: #f4c9cf; /* 연핑크 */
+      color: #aaa; /* 연핑크 */
     }
     .search-container input[type="text"] {
       padding: 5px;
-      border: 1px solid #f4c9cf; /* 연핑크 */
+      border: 1px solid #aaa; /* 연핑크 */
       border-radius: 5px;
     }
     .search-container button {
       padding: 5px 10px;
-      background-color: #f4c9cf; /* 연핑크 */
+      background-color: #aaa; /* 연핑크 */
       border: none;
       border-radius: 5px;
       color: white;
@@ -48,9 +48,10 @@
       border: 1px solid #ddd;
       padding: 8px;
       text-align: center;
+        min-width: 150px;
     }
     .faq-table th {
-      background-color: #f4c9cf; /* 연핑크 */
+      background-color: #aaa; /* 연핑크 */
       color: white;
     }
     .button-container {
@@ -59,34 +60,44 @@
     }
     .button-container button {
       padding: 10px 20px;
-      background-color:#f4c9cf; /* 연핑크 */
+      background-color:#aaa; /* 연핑크 */
       border: none;
       border-radius: 5px;
       color: white;
       cursor: pointer;
     }
     .pagination {
-      text-align: center;
-      margin: 20px 0;
+        display: flex;
+        justify-content: center; /* 중앙 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .pagination .page-item {
+        margin: 0 5px; /* 버튼 간격 */
     }
     .pagination button {
-      padding: 5px 10px;
-      background-color: #f4c9cf; /* 연핑크 */
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
+        padding: 5px 10px;
+        background-color: #aaa; /* 연핑크 */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
     }
     .pagination span {
-      padding: 5px 10px;
-      color: #f4c9cf; /* 연핑크 */
+        padding: 5px 10px;
+        color: #aaa; /* 연핑크 */
     }
   </style>
 </head>
 <body>
+
 <div>
-  <th:block th:replace="fragments/header :: header"></th:block>
+    <th:block th:replace="fragments/header :: header"></th:block>
 </div>
+
 <h1 class="header">FAQ 목록</h1>
 
 <div class="search-container">
@@ -97,6 +108,9 @@
   </form>
 </div>
 
+<div th:if="${errorMessage}" class="error-message">
+  <p th:text="${errorMessage}" style="color: red;"></p>
+</div>
 
 
 <table class="faq-table">
@@ -111,30 +125,56 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="faq : ${faqlist}">
-    <td th:text="${faq.faqId}">1</td>
+  <tr th:each="faq , status:${faqlist}">
+    <!-- <td th:text="${status.index+1}"></td> -->
 
-    <td th:text="${faq.wDate}">2024-12-20</td>
+   <td th:text="${faq.faqId}">1</td>
+
+    <td th:text="${#temporals.format(faq.wDate, 'yyyy-MM-dd HH:mm')}">2024-12-20</td>
     <td><a th:href="@{/faq/get/{faqId}(faqId=${faq.faqId})}" th:text="${faq.title}">제목 예시</a></td>
     <td th:text="'관리자'">작성자</td>
     <td th:text="${faq.viewCnt}">100</td>
     <td th:if="${faq.writer == '관리자'}">
-      <a th:href="@{/faq/modify/{faqId}(faqId=${faq.faqId})}">수정</a> |
-      <a th:href="@{/faq/modify/{faqId}(faqId=${faq.faqId})}">삭제</a>
+      <a th:if="${isAdmin}" th:href="@{/faq/modify/{faqId}(faqId=${faq.faqId})}">수정</a>
+      <a th:if="${isAdmin}" th:href="@{/faq/modify/{faqId}(faqId=${faq.faqId})}">삭제</a>
     </td>
   </tr>
   </tbody>
 </table>
 
 <div class="button-container">
-  <button onclick="window.location.href='/faq/write'">글쓰기</button>
+    <button th:if="${isAdmin}" onclick="window.location.href='/faq/write'">글쓰기</button>
 </div>
 
-<div class="pagination">
-  <button th:if="${pageNumber > 1}" th:onclick="'window.location.href=\'/faq/list?page=' + (${pageNumber} - 1) + '\''">이전</button>
-  <button th:if="${pageNumber < totalPages}" th:onclick="'window.location.href=\'/faq/list?page=' + (${pageNumber} + 1) + '\''">다음</button>
 
-</div>
+
+
+<nav aria-label="Page navigation">
+    <ul class="pagination" style="display: flex; justify-content: center; align-items: center;">
+        <li th:classappend="${currentPage == 0} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="@{/faq/list(page=${currentPage - 1})}" aria-label="Previous">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+        </li>
+
+        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == i} ? 'active'" class="page-item">
+            <a class="page-link" th:href="@{/faq/list(page=${i})}">[[${i + 1}]]</a>
+        </li>
+
+        <li th:classappend="${currentPage == totalPages - 1} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="@{/faq/list(page=${currentPage + 1})}" aria-label="Next">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>
+
+
+
+
+
 </body>
 </html>
 
