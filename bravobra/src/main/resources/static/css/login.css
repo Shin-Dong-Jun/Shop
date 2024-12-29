@@ -1,93 +1,123 @@
-/* styles.css */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+/* 공통 스타일 초기화 */
+body, h1, p, input, button {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    background-color: #f4f4f4; /* 배경색 통일 */
 }
 
+/* 컨테이너 스타일 */
 .login-container {
-    width: 350px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    padding: 2rem;
     border-radius: 8px;
-    text-align: center;
-}
-
-.hidden {
-    display: none;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-input[type="text"], input[type="password"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.login-btn {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    background-color: #333333;
-    color: #ffffff;
-    padding: 10px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
+    max-width: 400px;
 }
 
-.login-btn:hover {
-    background-color: #444444;
-}
-
-.options {
-    text-align: left;
-    margin-bottom: 15px;
-}
-
-.options label {
-    font-size: 14px;
+h1 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 1rem;
     color: #333;
 }
 
+/* 입력 필드 스타일 */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #000000; /* 포커스 시 검정 테두리 */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* 검정 그림자 */
+}
+
+/* 버튼 스타일 */
+button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background-color: #000000; /* 검정색 버튼 */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #333333; /* 버튼 호버 시 더 어두운 검정색 */
+}
+
+/* 에러 메시지 스타일 */
+.error-message {
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+/* 링크 스타일 */
 .links {
-    margin-top: 15px;
-    font-size: 14px;
+    margin-top: 1rem;
+    text-align: center;
 }
 
 .links a {
     text-decoration: none;
-    color: #666666;
-    margin: 0 5px;
+    font-size: 0.9rem;
+    color: #000000; /* 검정색 링크 */
+    transition: color 0.3s ease;
 }
 
 .links a:hover {
-    text-decoration: underline;
-    color: #333333;
+    color: #333333; /* 링크 호버 시 어두운 검정색 */
 }
 
-.guest {
-    margin-top: 20px;
-    font-size: 14px;
-}
+/*!* 체크박스 스타일 *!*/
+/*input[type="checkbox"] {*/
+/*    width: auto;*/
+/*    margin-right: 5px;*/
+/*}*/
 
-.guest a {
-    text-decoration: none;
-    color: #333333;
-}
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1.5rem;
+    }
 
-.guest a:hover {
-    text-decoration: underline;
+    h1 {
+        font-size: 1.5rem;
+    }
 }

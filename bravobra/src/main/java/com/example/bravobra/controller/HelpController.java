@@ -88,6 +88,7 @@ public class HelpController {
     * @param model
     * @return
     */
+
    @GetMapping("/detail/{helpId}")
    public String getHelp(@PathVariable Long helpId, Model model
            , HttpServletRequest request) {

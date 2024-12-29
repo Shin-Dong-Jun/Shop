@@ -5,6 +5,7 @@ import com.example.bravobra.domain.cart.Cart;
 import com.example.bravobra.domain.product.Option;
 import com.example.bravobra.domain.state.Category;
 import com.example.bravobra.dto.ItemCartDtoRequest;
+import com.example.bravobra.entity.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.rmi.NoSuchObjectException;
+import java.time.LocalDateTime;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -23,12 +25,15 @@ class OptionRepositoryTest {
 
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     private Option option;
     private Option option1;
 
     @BeforeEach
     void setUp() {
+        Product product = productRepository.findById(4L).get();
         OptionId optionId = new OptionId();
         optionId.setOptionId(1L);
         optionId.setProductId(1L);
@@ -36,6 +41,7 @@ class OptionRepositoryTest {
         optionId1.setOptionId(2L);
         optionId1.setProductId(2L);
         option = Option.builder()
+                .product(product)
                 .qnt(100)
                 .color("블랙")
                 .type(Category.BRA)
@@ -44,6 +50,7 @@ class OptionRepositoryTest {
                 .build();
 
         option1 = Option.builder()
+                .product(product)
                 .qnt(100)
                 .color("red")
                 .type(Category.BRA)

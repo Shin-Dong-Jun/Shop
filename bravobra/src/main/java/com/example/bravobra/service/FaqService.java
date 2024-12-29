@@ -3,11 +3,15 @@ package com.example.bravobra.service;
 import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
+import com.example.bravobra.entity.Notice;
 import com.example.bravobra.repository.FaqRepository;
 import com.example.bravobra.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -28,20 +32,18 @@ public class FaqService {
     //1.쓰기 등록
     public Faq postFaq(RequestFaqDto requestFaqDto, Long memberId) {
 
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("Member not found"));
+        Member member = memberRepository.findById(memberId).orElseThrow();
 
         Faq faq = Faq.builder()
                 .member(member)
                 .title(requestFaqDto.getTitle())
                 .content(requestFaqDto.getContent())
-                .wDate(LocalDateTime.now())
-                .viewCnt(0L)
+                .viewCnt(0)
                 .writer("관리자")
+                .wDate(LocalDateTime.now())
                 .build();
-        System.out.println("Received memberId: " + memberId);
-        Faq save = faqRepository.save(faq);
-        System.out.println(save);
-        return faq;
+
+           return faqRepository.save(faq);
     }
 
     //2.전체조회
@@ -50,10 +52,13 @@ public class FaqService {
     }
 
     //3.단일조회
+
     public Faq getFaqById(long faqId) {
+        log.info("Fetching FAQ with id: " + faqId);
         Faq faq = faqRepository.findById(faqId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 게시글 입니다."));
         faq.incrementViewCnt();
+        log.info("Incrementing view count for FAQ id: " + faqId);
         faqRepository.save(faq);
         return faq;
     }
@@ -78,11 +83,9 @@ public class FaqService {
         Faq faq = faqRepository.findById(faqId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 게시글 입니다."));
 
-        Member member = memberRepository.findById(faqId).orElseThrow(() -> new IllegalArgumentException("Member not found"));
-
         faq = Faq.builder()
                 .faqId(faq.getFaqId())
-                .member(member)
+                .member(faq.getMember())
                 .title(requestFaqDto.getTitle())
                 .content(requestFaqDto.getContent())
                 .wDate(LocalDateTime.now())
@@ -93,5 +96,21 @@ public class FaqService {
         faqRepository.save(faq);
         return faq;
     }
+
+
+    public Member findById(Long memberId){
+        return memberRepository.findById(memberId).orElseThrow();
+
+    }
+
+    //페이지네이션
+    public Page<Faq> getFaqWithPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("wDate")));
+        return faqRepository.findAll(pageable);  // Pageable을 이용해 공지사항 페이징 처리
+    }
+
+
+
+
 
 }

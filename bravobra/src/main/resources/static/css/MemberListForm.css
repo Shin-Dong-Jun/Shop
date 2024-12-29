@@ -1,0 +1,77 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 제목 스타일 */
+h1 {
+    color: #2c3e50;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 90%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #3498db;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* 짝수 줄 배경색 */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 행 hover 효과 */
+tbody tr:hover {
+    background-color: #ecf5ff;
+    cursor: pointer;
+}
+
+/* 테이블 데이터 텍스트 스타일 */
+td {
+    font-size: 14px;
+    color: #34495e;
+}
+
+/* 테이블 헤더 텍스트 스타일 */
+th {
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 긴 텍스트 처리 */
+td {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 테이블에 부드러운 곡선 모서리 추가 */
+table {
+    border-radius: 8px;
+    overflow: hidden;
+}

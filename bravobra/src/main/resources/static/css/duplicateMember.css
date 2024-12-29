@@ -1,0 +1,53 @@
+/* 공통 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    width: 450px; /* 컨테이너 너비 확장 */
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* 더 부드러운 그림자 */
+    border-radius: 12px; /* 모서리를 둥글게 */
+    text-align: center;
+}
+
+h1 {
+    font-size: 28px; /* 제목 크기 증가 */
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    color: #ff4d4d;
+    font-size: 18px; /* 에러 메시지 글자 크기 증가 */
+    margin-bottom: 30px; /* 텍스트와 버튼 사이 간격 추가 */
+}
+
+a.login-btn {
+    display: block; /* 버튼을 block 요소로 변경 */
+    width: 90%; /* 버튼을 컨테이너 안에 꽉 차게 */
+    max-width: 400px;
+    margin: 0 auto; /* 중앙 정렬 */
+    background-color: #333333;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px; /* 높이를 더 크게 */
+    border: none;
+    font-size: 18px; /* 텍스트 크기 증가 */
+    cursor: pointer;
+    border-radius: 6px; /* 버튼 모서리 둥글게 */
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+a.login-btn:hover {
+    background-color: #444444;
+}

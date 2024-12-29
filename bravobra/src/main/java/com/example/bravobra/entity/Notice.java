@@ -1,5 +1,6 @@
 package com.example.bravobra.entity;
 
+import com.example.bravobra.domain.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,13 +24,14 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long noticeId;
 
-    @Column(name = "member_id", nullable = false)
-    private long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "w_date", nullable = false)
@@ -39,26 +41,18 @@ public class Notice {
     @Column(name = "view_cnt", columnDefinition = "integer default 0")
     private long viewCnt;
 
-//    @ColumnDefault("N")
-//    @Column(name = "is_pin", columnDefinition = "varchar(1)")
-//    private String isPin;
+    @Column(name = "notice_type",nullable = false)
+    private String noticeType = "일반";
+
+    private Boolean fix;
 
 
     @Column(nullable = false)
     private String writer = "관리자";
 
-    void incrementViewCnt() {
+    public void incrementViewCnt() {
         this.viewCnt++;
     }
-
-//    void urgent(){
-//    if(this.getIsPin().equals('Y')){
-//
-//    }
-//
-//    }
-
-
 
 }
 

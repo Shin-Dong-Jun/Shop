@@ -25,11 +25,11 @@
       border-radius: 10px;
     }
     .content-container h2 {
-      color: #f4c9cf; /* 연핑크 */
+      color: #aaa; /* 연핑크 */
       margin-bottom: 20px;
     }
     .content-container p {
-      font-size: 1.2em;
+      font-size: 0.8em;
       line-height: 1.6;
     }
   </style>
@@ -39,7 +39,7 @@
 
 <div class="content-container">
   <h2 th:text="${faq.title}">제목 예시</h2>
-  <p th:text="${faq.content}">내용 예시</p>
+  <p th:utext="${contentWithBr}">내용 예시</p>
 </div>
 </body>
 </html>

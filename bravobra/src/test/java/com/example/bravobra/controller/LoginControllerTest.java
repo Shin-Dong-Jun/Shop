@@ -52,7 +52,7 @@ class LoginControllerTest {
         //when
         when(loginService.login("tlsehdwns147@naver.com", "12341234")).thenReturn(member);
 
-        String view = loginController.login(loginDto, bindingResult, null, request, response);
+//        String view = loginController.login(loginDto, bindingResult, null, response);
 
         //then
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디 찾기</title>
+    <link rel="stylesheet" href="/css/findIdForm.css">
+    <link rel="stylesheet" href="/css/header.css"> <!-- 헤더 전용 CSS 추가 -->
+</head>
+<body>
+<div>
+    <th:block th:replace="fragments/header :: header"></th:block>
+</div>
+<div class="login-container">
+    <div class="login-form">
+        <h1 class="title">아이디 찾기</h1>
+        <form action="/members/find-id" method="post" th:object="${findIdDto}">
+            <!-- 이름 입력 -->
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" th:field="*{name}" placeholder="이름을 입력하세요" required>
+                <!-- 이름 유효성 검증 메시지 -->
+                <p class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+
+            <!-- 휴대폰 번호 입력 -->
+            <div class="form-group">
+                <label for="phoneNumber">휴대폰 번호</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" placeholder="000-0000-0000" required>
+                <!-- 휴대폰 번호 유효성 검증 메시지 -->
+                <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="error"></div>
+            </div>
+
+            <!-- 제출 버튼 -->
+            <div class="form-group">
+                <button type="submit" class="login-btn">아이디 찾기</button>
+            </div>
+
+            <!-- 전역 에러 메시지 -->
+            <div class="error-message" th:if="${#fields.hasGlobalErrors()}">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

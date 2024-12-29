@@ -27,19 +27,19 @@
         .form-container label {
             display: block;
             font-size: 1.2em;
-            color: #f4c9cf; /* 연핑크 */
+            color: #aaa; /* 연핑크 */
             margin-bottom: 5px;
         }
         .form-container input[type="text"], .form-container textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid #f4c9cf; /* 연핑크 */
+            border: 1px solid #aaa; /* 연핑크 */
             border-radius: 5px;
             margin-bottom: 15px;
         }
         .form-container button {
             padding: 10px 20px;
-            background-color: #f4c9cf; /* 연핑크 */
+            background-color: #aaa; /* 연핑크 */
             border: none;
             border-radius: 5px;
             color: white;
@@ -48,7 +48,7 @@
             width: 100%;
         }
         .form-container button:hover {
-            background-color: #e1b2b7; /* 좀 더 어두운 연핑크 */
+            background-color: #aaa; /* 좀 더 어두운 연핑크 */
         }
     </style>
 </head>
@@ -57,12 +57,10 @@
 
 <div class="form-container">
     <form th:action="@{/faq/post}" method="post">
-        <input type="hidden" name="memberId" th:value="${faq.faqId}">
         <label for="title">글 제목:</label>
         <input type="text" id="title" name="title" required>
-
         <label for="content">글 내용:</label>
-        <textarea id="content" name="content" rows="5" required></textarea>
+        <textarea id="content" name="content" rows="30" required></textarea>
 
         <button type="submit">등록</button>
     </form>

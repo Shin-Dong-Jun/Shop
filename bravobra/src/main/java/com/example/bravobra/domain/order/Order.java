@@ -2,29 +2,31 @@ package com.example.bravobra.domain.order;
 
 import com.example.bravobra.domain.state.OrderState;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Getter
 @Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long userId;
 
+    @Builder.Default
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderProduct> orderProduct;
+    private List<OrderProduct> orderProduct = new ArrayList<>();
+
     @Column(name = "order_number", length = 40)
     private String orderNo;
 
@@ -43,4 +45,9 @@ public class Order {
     private LocalDateTime orderDatetime;
 
     private int qnt;
+
+    public void addOrderProduct(OrderProduct orderProduct){
+        this.orderProduct.add(orderProduct);
+        orderProduct.addOrder(this);
+    }
 }

@@ -54,7 +54,7 @@ public class ProductService {
 
         // DTO를 엔티티로 변환
         Product product = Product.builder()
-//                .productId(productDto.getProductId())
+                .productId(productDto.getProductId())
                 .productName(productDto.getProductName())
                 .productEnglishName(productDto.getProductEnglishName())
                 .productContent(productDto.getProductContent())

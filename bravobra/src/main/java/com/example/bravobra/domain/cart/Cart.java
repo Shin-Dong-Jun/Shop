@@ -29,6 +29,10 @@ public class Cart {
     private String optionValues;
 
     public void increaseQnt(Option option) {
-        qnt = option.getQnt();
+        qnt =+ option.getQnt();
+    }
+
+    public void updateQnt(int qnt) {
+        this.qnt = qnt;
     }
 }

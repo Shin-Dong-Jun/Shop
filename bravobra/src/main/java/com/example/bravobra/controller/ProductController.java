@@ -117,7 +117,7 @@ public class ProductController {
     public String productList(@RequestParam(defaultValue = "0") Integer page,
                               @RequestParam(defaultValue = "10") Integer pageSize,
                               Model model, HttpSession session) {
-        MemberDto member = new MemberDto();
+//        MemberDto member = new MemberDto();
         Object loginMember = session.getAttribute(SessionConst.LOGIN_MEMBER);
         model.addAttribute("loginMember", loginMember);
         try {

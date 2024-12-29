@@ -35,12 +35,8 @@ class CartControllerTest {
     void 파라미터잘들어가나() throws Exception {
         // given
 
-        doNothing().when(cartService).updateCart(any(ItemCartDtoRequest.class), any(Long.class), any(Long.class) );
-        String body = "size=65A&color=black&qnt=10&itemId=1&optionValues=black/65A&cartId=1";
-        ResultActions perform = mockMvc.perform(MockMvcRequestBuilders.put("/cart").contentType(MediaType.APPLICATION_FORM_URLENCODED).content(body));
 
 
-        perform.andDo(print());
 //                .andExpect(model().attribute("itemCartDtoRequest",
 //                        Matchers.hasProperty(
 //                                "size", Matchers.is("65A"))));

@@ -1,7 +1,5 @@
 package com.example.bravobra.dto.response;
 
-import com.example.bravobra.dto.request.RequestFaqDto;
-import com.example.bravobra.entity.Faq;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

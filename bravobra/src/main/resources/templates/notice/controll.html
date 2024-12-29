@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 삭제</title>
+    <style>
+        body {
+            background-color: white;
+            color: #333;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            color: #000000; /* 연핑크 */
+            margin: 20px 0;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .form-container label {
+            display: block;
+            font-size: 1.2em;
+            color: #aaa; /* 연핑크 */
+            margin-bottom: 5px;
+        }
+        .form-container input[type="text"], .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #aaa; /* 연핑크 */
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #aaa; /* 연핑크 */
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .form-container button:hover {
+            background-color: #aaa; /* 좀 더 어두운 연핑크 */
+        }
+    </style>
+</head>
+<body>
+<h1 class="header">공지사항 삭제</h1>
+
+<div class="form-container">
+
+    <!-- 삭제 버튼 -->
+    <form th:action="@{/notice/remove/{noticeId}(noticeId=${notice.noticeId})}" method="post" style="margin-top: 10px;">
+        <button type="submit">삭제</button>
+    </form>
+</div>
+</body>
+</html>

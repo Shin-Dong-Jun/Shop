@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 실패</title>
+    <link rel="stylesheet" href="/css/duplicateMember.css">
+</head>
+<body>
+<div class="login-container">
+    <h1>회원가입 실패</h1>
+    <p class="error-message"> <span th:text="${error}">이곳에 에러 메시지가 표시됩니다.</span></p>
+    <a href="/members/join" class="login-btn">회원가입 페이지로 돌아가기</a>
+</div>
+</body>
+</html>

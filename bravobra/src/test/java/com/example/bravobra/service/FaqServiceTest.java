@@ -4,14 +4,12 @@ import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
 import com.example.bravobra.repository.FaqRepository;
-import com.example.bravobra.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +30,6 @@ import static org.mockito.Mockito.*;
 
     @InjectMocks
     FaqService faqService;
-
-    @Mock
-    private Member member;
 
 
     @DisplayName("1.등록 서비스 첫 테스트.....히히")
@@ -77,18 +72,44 @@ import static org.mockito.Mockito.*;
     }
 
 
+//    @DisplayName("2.전체 조회 테스트")
+//    @Test
+//    void getAllFaq() throws Exception {
+//        // given
+//        Faq Faq1 = Faq.builder()
+//                .member(Member.builder().build())
+//                .title("제목입니다")
+//                .content("내용입니다")
+//                .build();
+//
+//        Faq Faq2 = Faq.builder()
+//                .member(Member.builder().build())
+//                .title("제목2입니다")
+//                .content("내용2입니다")
+//                .build();
+//
+//        List<Faq> allFaq = Arrays.asList(Faq1, Faq2);
+//
+//        // when
+//        when(faqRepository.findAll()).thenReturn(allFaq);
+//        List<Faq> result = faqService.getAllFaq();
+//
+//        // then
+//        assertNotNull(result);
+//        assertEquals(2, result.size());
+//    }
     @DisplayName("2.전체 조회 테스트")
     @Test
     void getAllFaq() throws Exception {
         // given
         Faq Faq1 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목입니다")
                 .content("내용입니다")
                 .build();
 
         Faq Faq2 = Faq.builder()
-                .member(Member.builder().build())
+//                .member(Member.builder().build())
                 .title("제목2입니다")
                 .content("내용2입니다")
                 .build();

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항 상세</title>
+  <style>
+    body {
+      background-color: white;
+      color: #333;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      text-align: center;
+      color: #000000; /* 연핑크 */
+      margin: 20px 0;
+    }
+    .content-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    .content-container h2 {
+      color: #aaa; /* 연핑크 */
+      margin-bottom: 20px;
+    }
+    .content-container p {
+      font-size: 0.8em;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+<h1 class="header">공지사항 상세</h1>
+
+<div class="content-container">
+  <h2 th:text="${notice.title}">제목 예시</h2>
+  <p th:utext="${contentWithBr}">내용 예시</p>
+</div>
+</body>
+</html>
