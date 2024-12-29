@@ -3,6 +3,8 @@ package com.example.bravobra.repository;
 import com.example.bravobra.entity.Faq;
 import com.example.bravobra.entity.Notice;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +21,5 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
     List<Faq> findAll(Sort sort);
 
 
+    Page<Faq> findAll(Pageable pageable);
 }

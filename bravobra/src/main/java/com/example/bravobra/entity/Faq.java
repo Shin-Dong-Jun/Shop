@@ -10,10 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 
 @Builder
@@ -29,15 +27,17 @@ public class Faq {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long faqId;
 
-    @JoinColumn
+
     @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
 
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
 
@@ -58,13 +58,12 @@ public class Faq {
 
 
 
-
-//    @Builder
-//    public Faq(String title, String content) {
-//        this.title = title;
-//        this.content = content;
-//        this.writer = "관리자"; // 기본값 설정
-//        this.wDate = LocalDateTime.now(); // 작성 시간 설정
-//    }
+    @Builder
+    public Faq(String title, String content) {
+        this.title = title;
+        this.content = content;
+        this.writer = "관리자"; // 기본값 설정
+        this.wDate = LocalDateTime.now(); // 작성 시간 설정
+    }
 
 }

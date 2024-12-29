@@ -13,13 +13,6 @@
   <body>
 <!--  관리자(admin@admin.com) 화면에만 상품등록, 전체선택, 수정, 삭제 가 보여야 한다.-->
     <div id="wrap">
-<!--      <div class="search-container">-->
-<!--        <form th:action="@{/product/productSearch}" method="get" >-->
-<!--          <label for="search">검색:</label>-->
-<!--          <input type="text" id="search" name="name" placeholder="검색어를 입력하세요" />-->
-<!--          <button type="submit">검색</button>-->
-<!--        </form>-->
-<!--      </div>-->
       <div>
         <th:block th:replace="fragments/header :: header"></th:block>
       </div>
@@ -99,12 +92,14 @@
         <li th:if="${ph.showPrev}">
           <a th:href="@{/product/list(page=${ph.beginPage - 1})}">이전</a>
         </li>
+
         <!-- 페이지 번호 -->
         <li th:each="i : ${#numbers.sequence(ph.beginPage, ph.endPage)}">
           <a th:href="@{/product/list(page=${i})}" th:classappend="${i == ph.page} ? 'active'">
             <span th:text="${i+1}"></span>
           </a>
         </li>
+
         <!-- 다음 버튼 -->
         <li th:if="${ph.showNext}">
           <a th:href="@{/product/list(page=${ph.endPage + 1})}">다음</a>
