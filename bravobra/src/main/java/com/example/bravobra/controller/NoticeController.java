@@ -72,6 +72,9 @@ public class NoticeController {
         } else if(member == null) {
             return "redirect:/notice";
         }
+
+
+
         List<Notice> noticelist = noticeService.getAllNotice();
         model.addAttribute("noticelist", noticelist);
         return "/notice/notice";
@@ -86,9 +89,7 @@ public class NoticeController {
         model.addAttribute("contentWithBr", contentWithBr);
         model.addAttribute("notice", notice);
         return "/notice/get";
-
     }
-
 
 
 
@@ -101,13 +102,13 @@ public class NoticeController {
 
     }
 
+
     //4-1 검색 예외.
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleIllegalArgumentException(IllegalArgumentException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
         return "notice/notice";
     }
-
 
 
     //5.삭제
@@ -153,10 +154,5 @@ public class NoticeController {
 
 
     }
-
-
-
-
-
 
 }

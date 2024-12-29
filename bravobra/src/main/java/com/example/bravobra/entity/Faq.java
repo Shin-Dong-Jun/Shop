@@ -56,7 +56,6 @@ public class Faq {
 
 
 
-
     @Builder
     public Faq(String title, String content) {
         this.title = title;

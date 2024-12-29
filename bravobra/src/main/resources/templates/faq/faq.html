@@ -67,20 +67,28 @@
       cursor: pointer;
     }
     .pagination {
-      text-align: center;
-      margin: 20px 0;
+        display: flex;
+        justify-content: center; /* 중앙 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .pagination .page-item {
+        margin: 0 5px; /* 버튼 간격 */
     }
     .pagination button {
-      padding: 5px 10px;
-      background-color: #aaa; /* 연핑크 */
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
+        padding: 5px 10px;
+        background-color: #aaa; /* 연핑크 */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
     }
     .pagination span {
-      padding: 5px 10px;
-      color: #aaa; /* 연핑크 */
+        padding: 5px 10px;
+        color: #aaa; /* 연핑크 */
     }
   </style>
 </head>
@@ -137,6 +145,40 @@
 <div class="button-container">
     <button th:if="${isAdmin}" onclick="window.location.href='/faq/write'">글쓰기</button>
 </div>
+
+
+
+
+<nav aria-label="Page navigation">
+    <ul class="pagination" style="display: flex; justify-content: center; align-items: center;">
+        <li th:classappend="${currentPage == 0} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="@{/faq/list(page=${currentPage - 1})}" aria-label="Previous">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+        </li>
+
+        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == i} ? 'active'" class="page-item">
+            <a class="page-link" th:href="@{/faq/list(page=${i})}">[[${i + 1}]]</a>
+        </li>
+
+        <li th:classappend="${currentPage == totalPages - 1} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="@{/faq/list(page=${currentPage + 1})}" aria-label="Next">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
 
 
 </body>

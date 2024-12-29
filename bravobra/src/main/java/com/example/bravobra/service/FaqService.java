@@ -3,7 +3,7 @@ package com.example.bravobra.service;
 import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestFaqDto;
 import com.example.bravobra.entity.Faq;
-import com.example.bravobra.entity.Product;
+import com.example.bravobra.entity.Notice;
 import com.example.bravobra.repository.FaqRepository;
 import com.example.bravobra.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -108,8 +108,11 @@ public class FaqService {
 
     }
 
-
-
+    //페이지네이션
+    public Page<Faq> getFaqWithPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("wDate")));
+        return faqRepository.findAll(pageable);  // Pageable을 이용해 공지사항 페이징 처리
+    }
 
 
 

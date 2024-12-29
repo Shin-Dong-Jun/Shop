@@ -16,7 +16,7 @@
       <div>
         <th:block th:replace="fragments/header :: header"></th:block>
       </div>
-        <form th:if="${isAdmin}" action="/product/write" method="get">
+        <form action="/product/write" method="get">
           <button type="submit" value="상품등록">상품등록</button>
         </form>
       <button type="submit" value="selectAll" id="selectAll">전체선택</button>
@@ -63,10 +63,10 @@
           <td th:text="${product.discountRate}"></td>
           <td th:text="${product.salePrice}"></td>
           <td th:text="${product.hashTag}"></td>
-          <td th:if="${isAdmin}">
+          <td>
             <a th:href="@{/product/modify(productId=${product.productId})}">수정</a>
           </td>
-          <td th:if="${isAdmin}">
+          <td>
             <a th:href="@{/product/delete(productId=${product.productId})}">삭제</a>
           </td>
           <td>

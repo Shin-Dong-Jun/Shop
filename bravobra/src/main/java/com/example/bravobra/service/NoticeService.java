@@ -2,13 +2,15 @@ package com.example.bravobra.service;
 
 import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.request.RequestNoticeDto;
-import com.example.bravobra.entity.Faq;
 import com.example.bravobra.entity.Notice;
 import com.example.bravobra.repository.MemberRepository;
 import com.example.bravobra.repository.NoticeRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.Session;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -32,15 +34,15 @@ public class NoticeService {
         String noticeType = requestNoticeDto.getNoticeType() != null ? requestNoticeDto.getNoticeType() : "일반";
 
         Notice notice = Notice.builder()
-                        .member(member)
-                        .title(requestNoticeDto.getTitle())
-                        .content(requestNoticeDto.getContent())
-                        .wDate(LocalDateTime.now())
-                        .viewCnt(0l)
-                        .writer("관리자")
-                        .noticeType(noticeType)
-                        .fix(noticeType.equals("긴급"))
-                        .build();
+                .member(member)
+                .title(requestNoticeDto.getTitle())
+                .content(requestNoticeDto.getContent())
+                .wDate(LocalDateTime.now())
+                .viewCnt(0l)
+                .writer("관리자")
+                .noticeType(noticeType)
+                .fix(noticeType.equals("긴급"))
+                .build();
 
         Notice save = noticeRepository.save(notice);
         return notice;
@@ -52,7 +54,6 @@ public class NoticeService {
         return noticeRepository.findUrgent();
 
     }
-
 
 
     //3.단일조회
@@ -82,6 +83,19 @@ public class NoticeService {
     }
 
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //    //6.긴급
 //    public Notice urgencyNotice(long noticeId) {
 //
@@ -103,6 +117,5 @@ public class NoticeService {
 //        return urgencyNotice;
 //    }
 
-}
 
 
