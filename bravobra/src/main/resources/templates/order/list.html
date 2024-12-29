@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/header.css"/>
+    <title>Document</title>
+</head>
+<div>
+    <th:block th:replace="fragments/header :: header"></th:block>
+</div>
+<body>
+<h1>order list</h1>
+<table>
+    <tr>
+        <th>order id</th>
+        <th>order date</th>
+        <th>order status</th>
+        <th>order price</th>
+    </tr>
+</table>
+</body>
+</html>

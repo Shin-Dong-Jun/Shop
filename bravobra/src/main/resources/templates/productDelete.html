@@ -2,47 +2,98 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/css/productDelete.css">
+    <title>상품 삭제 페이지</title>
+    <link rel="stylesheet" href="../css/header.css"/>
+    <style>
+        #wrap {
+            margin: 0 auto;
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'SUIT-Regular', 'Montserrat', Verdana, Dotum, AppleGothic, Sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f9f9f9;
+        }
+        td img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100px;
+            max-height: 100px;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .buttons input {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .buttons input[type="submit"] {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+        .buttons input[type="button"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+        }
+        .buttons input:hover {
+            opacity: 0.8;
+        }
+    </style>
 </head>
-    <body>
-        <div id="wrap">
-            <h1>상품 삭제</h1>
-            <form method="post" name="form" action="/product/delete">
-                <input type="hidden" name="productId" th:value="${product.productId}"/>
-                <!--            <input type="hidden" />         -->
-                <table>
-                    <tr>
-                        <td>
-                            <span th:if="${product.thumbnail == null}">이미지가 없습니다.</span>
-                            <img th:if="${product.thumbnail != null}" th:src="@{/images/${product.thumbnail}}" alt="상품 이미지">
-                        </td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <th>상품명</th>
-                                    <td th:text="${product.productName}"></td>
-                                </tr>
-                                <tr>
-                                    <th>가격</th>
-                                    <td th:text="${product.salePrice}"></td>
-                                </tr>
-                                <tr>
-                                    <th>설명</th>
-                                    <td th:text="${product.productContent}"></td>
-                                </tr>
-                                <tr>
-                                    <th>상품담당자</th>
-                                    <td>상품담당자이름</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-                <br>
-                <input type="submit" value="삭제">
-                <input type="button" value="목록" onclick="location.href='/product/list'">
-            </form>
+<body>
+<div class="header">
+    <div th:replace="fragments/header :: header"></div>
+</div>
+<div id="wrap">
+    <h1>상품 삭제 페이지</h1>
+    <h2>삭제할 상품을 확인해주세요.</h2>
+    <form method="post" action="/product/delete">
+        <input type="submit" value="삭제">
+        <input type="button" value="목록" onclick="location.href='/product/list'">
+        <div th:each="product : ${product}">
+            <input type="hidden" name="productId" th:value="${product.productId}"/>
+            <table>
+                <tr>
+                    <td>
+                        <img th:src="@{../uploads/{filename}(filename=${product.thumbnail})}"
+                             alt="Thumbnail Image"
+                             style="width:100px;">
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th>상품명</th>
+                                <td th:text="${product.productName}"></td>
+                            </tr>
+                            <tr>
+                                <th>가격</th>
+                                <td th:text="${product.salePrice}"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
-    </body>
+        <input type="submit" value="삭제">
+        <input type="button" value="목록" onclick="location.href='/product/list'">
+    </form>
+</div>
+</body>
 </html>

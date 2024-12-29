@@ -44,7 +44,7 @@ public class HelpController {
 
       CreateHelpDto createHelpDto = CreateHelpDto.builder()
               .memberId(member.getId())
-              .nickname(member.getNickName())
+              .nickname(member.getNickname())
               .build();
 
       model.addAttribute("createHelpDto", createHelpDto);
@@ -92,17 +92,22 @@ public class HelpController {
    public String getHelp(@PathVariable Long helpId, Model model
            , HttpServletRequest request) {
       HttpSession session = request.getSession();
-      String sessionNickname = (String) session.getAttribute("nickName");
+      Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+      Long memberId = member.getId();
 
       Help help = helpService.getHelp(helpId);
-      //TODO : 수정완료로 넘어오는건 조회수증가 안되게
-      helpService.increaseViewCnt(helpId);
 
-      boolean isAuthor = sessionNickname != null && sessionNickname.equals(help.getNickname());
+      String referer = request.getHeader("Referer");
+      boolean isRedirect = referer != null && referer.contains("/help/detail/" + helpId);
+
+      if (!isRedirect) {
+         helpService.increaseViewCnt(helpId);
+      }
+
+      boolean isAuthor = memberId == help.getMember().getId();
 
       model.addAttribute("help", help);
       model.addAttribute("isAuthor", isAuthor);
-      //TODO : isAuthor로 수정및삭제버튼 보이기 여부
 
       return "help/getHelp";
    }

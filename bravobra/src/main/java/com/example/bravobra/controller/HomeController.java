@@ -15,7 +15,8 @@ public class HomeController {
     @RequestMapping("/")
     public String main(HttpSession session, Model model) {
         Object loginMember = session.getAttribute(SessionConst.LOGIN_MEMBER);
-        model.addAttribute("loginMember", loginMember !=null);
+        model.addAttribute("loginMember", loginMember);
         return "index"; // main 화면
     }
+
 }

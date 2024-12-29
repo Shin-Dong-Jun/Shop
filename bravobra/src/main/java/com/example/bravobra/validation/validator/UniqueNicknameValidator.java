@@ -18,7 +18,7 @@ public class UniqueNicknameValidator implements ConstraintValidator<UniqueNickna
         if (nickname == null || nickname.isEmpty()) {
             return true;
         }
-        return !memberRepository.existsByNickName(nickname);
+        return !memberRepository.existsByNickname(nickname);
     }
 
 }

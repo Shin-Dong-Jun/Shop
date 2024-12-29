@@ -28,7 +28,7 @@ public class Member {
 
     private String phoneNumber;
 
-    private String nickName;
+    private String nickname;
 
     @CreationTimestamp()
     private LocalDateTime registerDate; // 계정 생성일시

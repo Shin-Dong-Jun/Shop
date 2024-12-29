@@ -35,10 +35,10 @@ public class FaqService {
                 .title(requestFaqDto.getTitle())
                 .content(requestFaqDto.getContent())
                 .wDate(LocalDateTime.now())
-                .viewCnt(0l)
+                .viewCnt(0L)
                 .writer("관리자")
                 .build();
-
+        System.out.println("Received memberId: " + memberId);
         Faq save = faqRepository.save(faq);
         System.out.println(save);
         return faq;
@@ -84,7 +84,6 @@ public class FaqService {
                 .orElseThrow(() -> new IllegalArgumentException("없는 게시글 입니다."));
 
         Member member = memberRepository.findById(faqId).orElseThrow(() -> new IllegalArgumentException("Member not found"));
-
 
         faq = Faq.builder()
                 .faqId(faq.getFaqId())

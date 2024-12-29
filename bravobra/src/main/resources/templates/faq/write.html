@@ -57,6 +57,7 @@
 
 <div class="form-container">
     <form th:action="@{/faq/post}" method="post">
+        <input type="hidden" name="memberId" th:value="${faq.faqId}">
         <label for="title">글 제목:</label>
         <input type="text" id="title" name="title" required>
 

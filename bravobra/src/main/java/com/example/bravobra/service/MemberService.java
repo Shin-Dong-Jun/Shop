@@ -35,7 +35,7 @@ public class MemberService {
                 .email(memberDto.getEmail())
                 .name(memberDto.getName())
                 .password(encryptedPassword)
-                .nickName(memberDto.getNickname())
+                .nickname(memberDto.getNickname())
                 .phoneNumber(memberDto.getPhoneNumber())
                 .memberType(MemberType.MEMBER)
                 .build();
@@ -74,7 +74,7 @@ public class MemberService {
                         .email(member.getEmail())
                         .name(member.getName())
                         .password(member.getPassword())
-                        .nickname(member.getNickName())
+                        .nickname(member.getNickname())
                         .phoneNumber(member.getPhoneNumber())
                         .registerDate(member.getRegisterDate())
                         .memberType(member.getMemberType())

@@ -2,15 +2,17 @@ package com.example.bravobra.controller;
 
 import com.example.bravobra.dto.ItemCartDtoRequest;
 import com.example.bravobra.dto.ItemCartDtoResponse;
+import com.example.bravobra.dto.UpdateCartDto;
+import com.example.bravobra.exception.SuccessResponseEntity;
 import com.example.bravobra.service.CartService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -31,7 +33,8 @@ public class CartController {
     }
 
     @PostMapping
-    public String addCart(ItemCartDtoRequest itemCartDtoRequests, HttpServletRequest httpServletRequest) {
+    public String addCart(@Valid ItemCartDtoRequest itemCartDtoRequests, HttpServletRequest httpServletRequest) {
+
 //        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
         Long userId = 1L;
         if (userId == null) return "redirect:/cart/list";
@@ -42,11 +45,12 @@ public class CartController {
     }
 
     @PutMapping
-    public String updateCart(ItemCartDtoRequest itemCartDtoRequests, @RequestParam("cartId") Long cartId, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<?> updateCart(@RequestBody @Valid UpdateCartDto updateCartDto, HttpServletRequest httpServletRequest) {
 //        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
         Long userId = 1L;
-        cartService.updateCart(itemCartDtoRequests, cartId, userId);
-        return "redirect:/";
+        System.out.println(updateCartDto);
+        cartService.updateCart(updateCartDto.quantity(), updateCartDto.cartId(), userId);
+        return SuccessResponseEntity.toResponseEntity("수량 업데이트 성공했습니다.", "{}");
     }
 
     @DeleteMapping
@@ -57,7 +61,6 @@ public class CartController {
 
     @DeleteMapping("/list")
     public  ResponseEntity<?> deleteCart(@RequestBody List<Long> cartIds) {
-        System.out.println(Arrays.toString(cartIds.toArray()));
         cartService.deleteListCart(cartIds);
         return ResponseEntity.ok().body("{}");
     }

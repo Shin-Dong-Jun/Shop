@@ -25,7 +25,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     boolean existsByPhoneNumber(String phoneNumber); // 휴대폰 번호 중복 체크
 
-    boolean existsByNickName(String nickName);
+    boolean existsByNickname(String nickname);
 
     boolean existsByMemberType(MemberType memberType);
 

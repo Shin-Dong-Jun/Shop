@@ -58,8 +58,9 @@
 
 <div class="form-container">
     <!-- 수정 폼 -->
-    <form th:action="@{/faq/modify/{faqId}(faqId=${faq.faqId})}" method="post">
+    <form th:action="@{/faq/modify/faqId=${faq.faqId}}" method="post">
         <label for="title">글 제목:</label>
+        <input type="hidden" name="memberId" th:value="${faq.faqId}">
         <input type="text" id="title" name="title" th:value="${faq.title}" required>
 
         <label for="content">글 내용:</label>
@@ -69,7 +70,7 @@
     </form>
 
     <!-- 삭제 버튼 -->
-    <form th:action="@{/faq/remove/{faqId}(faqId=${faq.faqId})}" method="post" style="margin-top: 10px;">
+    <form th:action="@{/faq/remove/faqId=${faq.faqId}}" method="post" style="margin-top: 10px;">
         <button type="submit">삭제</button>
     </form>
 </div>
