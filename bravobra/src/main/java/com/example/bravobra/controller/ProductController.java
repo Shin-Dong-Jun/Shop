@@ -3,6 +3,7 @@ import com.example.bravobra.dto.MemberDto;
 import com.example.bravobra.dto.PageHandler;
 import com.example.bravobra.dto.ProductDto;
 import com.example.bravobra.entity.Product;
+import com.example.bravobra.repository.OptionRepository;
 import com.example.bravobra.service.ProductService;
 import com.example.bravobra.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
@@ -31,6 +32,8 @@ import java.util.*;
 public class ProductController {
 
     private final ProductService productService;
+
+    private final OptionRepository optionRepository;
 
     // 상품 등록 페이지 이동
     @GetMapping("/write")
@@ -132,5 +135,4 @@ public class ProductController {
         }
         return "productList";
     }
-
 }

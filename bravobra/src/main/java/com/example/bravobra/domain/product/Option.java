@@ -15,32 +15,18 @@ import org.hibernate.annotations.ColumnDefault;
 @AllArgsConstructor
 @Table(name = "options")
 public class Option {
-
     @EmbeddedId
     private OptionId optionId;
-
     @MapsId("productId")
     @ManyToOne
     @JoinColumn(name = "p_id")
     private Product product;
-
     private String color;
     private String size;
-// 브라, 팬티
     @Enumerated(EnumType.STRING)
     private Category type;
-
     private int qnt;
-
     @ColumnDefault("'N'")
     @Column(name = "is_soldout", columnDefinition = "varchar(1)")
     private String soldout;
-
-//    @PrePersist
-//    public void prePersist() {
-//        if (soldout == null) {
-//            soldout = "N";
-//        }
-//
-//    }
 }

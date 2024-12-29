@@ -2,6 +2,7 @@ package com.example.bravobra.service;
 
 import com.example.bravobra.dto.ProductDto;
 import com.example.bravobra.entity.Product;
+import com.example.bravobra.repository.OptionRepository;
 import com.example.bravobra.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,6 +23,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final OptionRepository optionRepository;
 
     // 이미지 수정용 상품아이디 가져오는 메서드
 
@@ -55,7 +54,7 @@ public class ProductService {
 
         // DTO를 엔티티로 변환
         Product product = Product.builder()
-                .productId(productDto.getProductId())
+//                .productId(productDto.getProductId())
                 .productName(productDto.getProductName())
                 .productEnglishName(productDto.getProductEnglishName())
                 .productContent(productDto.getProductContent())
@@ -70,8 +69,6 @@ public class ProductService {
         log.info("등록! {}", product);
         productRepository.save(product);
     }
-
-
 
     //  상품을 수정하는 메서드 // Update
     public void modify(ProductDto newProduct) {
@@ -113,6 +110,5 @@ public class ProductService {
         }
         return products;
     }
-
 
 }

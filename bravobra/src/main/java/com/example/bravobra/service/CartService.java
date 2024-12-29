@@ -44,7 +44,6 @@ public class CartService {
         addCart(request, userId);
     }
 
-
     public List<ItemCartDtoResponse> getCartList(Long userId) {
         var itemCartDtoResponses = cartRepository.findbyCartListDto(userId);
 

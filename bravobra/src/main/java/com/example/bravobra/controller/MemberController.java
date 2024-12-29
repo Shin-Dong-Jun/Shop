@@ -22,7 +22,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
     @GetMapping("/join")
     public String createForm(Model model) {
         // 1. model에 MemberDto객체를 생성해서 보냄.(빈객체)

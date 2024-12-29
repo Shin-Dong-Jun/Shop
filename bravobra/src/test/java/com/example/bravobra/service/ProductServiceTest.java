@@ -67,8 +67,9 @@ class ProductServiceTest {
     @Test
     @DisplayName("Registration Product Test")
     public void registerProductTest() {
-        IntStream.rangeClosed(1, 1000) // 1부터 1000까지
+        IntStream.rangeClosed(1, 400000) // 1부터 1000까지
                 .mapToObj(i -> ProductDto.builder()
+//                        .productId(Long.valueOf(i))
                         .productName("섹시원더브라 " + i)
                         .productEnglishName("Product English Name " + i)
                         .productContent("Content " + i)

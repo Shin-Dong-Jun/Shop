@@ -1,10 +1,12 @@
 package com.example.bravobra.entity;
 
+import com.example.bravobra.domain.OptionId;
+import com.example.bravobra.domain.product.Option;
 import com.example.bravobra.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Entity

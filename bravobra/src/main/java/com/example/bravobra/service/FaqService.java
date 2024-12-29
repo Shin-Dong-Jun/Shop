@@ -44,12 +44,10 @@ public class FaqService {
         return faq;
     }
 
-
     //2.전체조회
     public List<Faq> getAllFaq() {
         return faqRepository.findAll(Sort.by(Sort.Direction.DESC, "faqId"));
     }
-
 
     //3.단일조회
     public Faq getFaqById(long faqId) {
@@ -60,7 +58,6 @@ public class FaqService {
         return faq;
     }
 
-
     //4.검색 조회
     public List<Faq> findByTitle(String title) {
         List<Faq> faq = faqRepository.findByTitleContaining(title);
@@ -70,12 +67,10 @@ public class FaqService {
         return faq;
     }
 
-
     //5.삭제
     public void removeFaq(Long faqId) {
         faqRepository.deleteById(faqId);
     }
-
 
     //6.수정
     public Faq modifyFaq(RequestFaqDto requestFaqDto, long faqId) {

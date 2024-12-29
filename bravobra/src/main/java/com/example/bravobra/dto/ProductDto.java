@@ -18,6 +18,7 @@ public class ProductDto {
     private String hashTag; // 상품해시태그
     private Boolean isSoldOut; // 품절여부
     private Integer discountRate; // 할인율
+    private Integer productCnt;
 
     public ProductDtoBuilder toBuilder() {
         return new ProductDtoBuilder()
@@ -31,6 +32,7 @@ public class ProductDto {
                 .fixedPrice(this.fixedPrice)
                 .salePrice(this.salePrice)
                 .hashTag(this.hashTag)
+                .productCnt(this.productCnt)
                 .isSoldOut(this.isSoldOut)
                 .discountRate(this.discountRate);
     }

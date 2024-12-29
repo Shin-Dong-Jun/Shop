@@ -33,7 +33,6 @@ public class Faq {
     @ManyToOne
     private Member member;
 
-
     @Column(nullable = false)
     private String title;
 
@@ -45,7 +44,6 @@ public class Faq {
     @CreationTimestamp
     private LocalDateTime wDate;
 
-
     @Column(name = "view_cnt", columnDefinition = "integer default 0")
     private long viewCnt;
 
@@ -55,8 +53,6 @@ public class Faq {
     public void incrementViewCnt() {
         this.viewCnt++;
     }
-
-
 
 
 //    @Builder

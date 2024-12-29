@@ -19,7 +19,7 @@ public class PageHandler {
         this.totalCnt = totalCnt;
         this.page = page;
         this.pageSize = pageSize;
-        totalPage = (int)Math.ceil(totalCnt / (double)pageSize); // 남는 페이지가 있을 수 있기 때문에 올림처리
+        totalPage = (int)Math.ceil(totalCnt / pageSize); // 남는 페이지가 있을 수 있기 때문에 올림처리
         beginPage = this.page / naviSize * naviSize;
         endPage = Math.min(beginPage + naviSize -1,  totalPage); // endPage가 totalPage보다 작을 수 있기 때문에
         showPrev = beginPage != 0; // 시작 페이지가 0일 때만 안 나오면 된다.

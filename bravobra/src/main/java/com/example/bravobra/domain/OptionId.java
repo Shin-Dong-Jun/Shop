@@ -13,7 +13,7 @@ import java.util.Objects;
 public class OptionId implements Serializable {
     private Long optionId;
 
-    @Column(name = "p_id")
+    @Column(name = "product_id")
     private Long productId;
     
 
