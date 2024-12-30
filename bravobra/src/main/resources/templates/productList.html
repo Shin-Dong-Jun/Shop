@@ -110,6 +110,7 @@
       let selectAll = document.getElementById('selectAll'); // 전체 선택
       let deselectAll = document.getElementById('deselectAll'); // 선택 해제
       let checkBox = document.getElementsByName('checkbox'); // 체크박스들
+
       let arr = [];
       selectAll.onclick = function() {
         for (let i = 0; i < checkBox.length; i++) {
@@ -141,7 +142,9 @@
         // 상품ID들을 URL 파라미터로 전달
         let url = '/product/delete?productId=' + arr.join('&productId=');
         window.location.href = url;
+        // window.location.assign
       }
+
     </script>
   </body>
 </html>

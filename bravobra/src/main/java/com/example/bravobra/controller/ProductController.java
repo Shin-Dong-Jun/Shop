@@ -50,7 +50,7 @@ public class ProductController {
 
         if (!thumbnail.isEmpty()) {
             // 상품 이미지 들어가는 경로
-            String uploadDirectory = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "uploads").toString();
+            String uploadDirectory = Paths.get(System.getProperty("user.dir"), "bravobra","src", "main", "resources", "static", "uploads").toString();
             try {
                 // static에 폴더 없으면 만든다.
                 File directory = new File(uploadDirectory);

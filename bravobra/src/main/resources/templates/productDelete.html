@@ -70,6 +70,10 @@
         <div th:each="product : ${product}">
             <input type="hidden" name="productId" th:value="${product.productId}"/>
             <table>
+                <colgroup>
+                    <col style="width:20%">
+                    <col style="width:80%">
+                </colgroup>
                 <tr>
                     <td>
                         <img th:src="@{../uploads/{filename}(filename=${product.thumbnail})}"
@@ -78,6 +82,10 @@
                     </td>
                     <td>
                         <table>
+                            <colgroup>
+                                <col style="width:20%">
+                                <col style="width:80%">
+                            </colgroup>
                             <tr>
                                 <th>상품명</th>
                                 <td th:text="${product.productName}"></td>

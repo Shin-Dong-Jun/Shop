@@ -26,14 +26,13 @@ public class OrderController {
     @GetMapping
     public String order(Model model
             , @RequestParam(value = "page", defaultValue = "0") int pages, HttpServletRequest request) {
-//        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
-//        if(member == null){
-//            model.addAttribute("pageResponse", null);
-//            return "order/list";
-//        }
-//        Long userId = member.getId();
-        Long userId = 1L;
-        PageRequest page = PageRequest.of(pages, 10, Sort.by(Sort.Direction.DESC, "orderDatetime"));
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        if(member == null){
+            model.addAttribute("pageResponse", null);
+            return "order/list";
+        }
+        Long userId = member.getId();
+        PageRequest page = PageRequest.of(pages, 2, Sort.by(Sort.Direction.DESC, "orderDatetime"));
         Page<OrderDtoResponse> orderList = orderService.getOrderList(userId, page);
 
         PagedModel pagedModel = new PagedModel(orderList);

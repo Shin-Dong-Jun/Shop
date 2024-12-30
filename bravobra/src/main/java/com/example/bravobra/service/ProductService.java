@@ -50,7 +50,6 @@ public class ProductService {
 
     // 상품 등록 메서드 // Create
     public void register(ProductDto productDto, String thumbnailPath) {
-//        Product product = productRepository.findById(productDto.getProductId()).orElseThrow(() -> new IllegalStateException("Product not found"));
 
         // DTO를 엔티티로 변환
         Product product = Product.builder()

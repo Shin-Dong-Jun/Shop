@@ -77,7 +77,11 @@
       color: white;
       cursor: pointer;
     }
-
+    td a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -130,12 +134,6 @@
 <div class="button-container">
   <button th:if="${isAdmin}" onclick="window.location.href='/notice/write'">글쓰기</button>
 </div>
-
-
-
-
-
-
 
 </body>
 </html>
