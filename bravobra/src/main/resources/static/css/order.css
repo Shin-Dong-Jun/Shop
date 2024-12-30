@@ -104,6 +104,20 @@ nav ul {
     margin-top: 20px;
 }
 
+p {
+    margin: 50px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #707070;
+    isplay: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
+
+
 nav ul li {
     margin: 0 5px;
 }

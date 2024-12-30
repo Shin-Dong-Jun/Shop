@@ -17,7 +17,6 @@ import java.rmi.NoSuchObjectException;
 import java.time.LocalDateTime;
 
 @DataJpaTest
-@ActiveProfiles("test")
 class OptionRepositoryTest {
 
     @Autowired

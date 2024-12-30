@@ -41,8 +41,8 @@ public class OrderService {
         Product product = Optional.ofNullable(option.getProduct())
                 .orElseThrow(() -> new IllegalStateException("상품이 없습니다."));
 
-        int totalPrice = product.getSalePrice();
-        int totalDiscountPrice = totalPrice * product.getDiscountRate() / 100;
+        int totalPrice = product.getSalePrice()*cart.getQnt();
+        int totalDiscountPrice = product.getFixedPrice() * product.getDiscountRate() / 100 * cart.getQnt();
         int totalOrderPrice = totalPrice - totalDiscountPrice;
 
         OrderProduct orderProduct = OrderProduct.builder()

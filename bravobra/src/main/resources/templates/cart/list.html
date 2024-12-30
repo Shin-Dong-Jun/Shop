@@ -189,7 +189,8 @@
 </div>
 <div class="container">
     <h1>장바구니</h1>
-    <form id="cartForm" th:if="${!cartlist.isEmpty()}">
+    <form id="cartForm" th:if="${cartlist!=null}">
+        <button type="button" class="btnSubmit" onclick="selectFormDelete()">선택삭제</button>
         <table>
             <colgroup>
                 <col style="width: 27px"/>
@@ -234,11 +235,8 @@
                 </td>
 
                 <td class="thumb gClearLine">
+                    <img th:src="@{../uploads/{filename}(filename=${item.image()})}"alt="상품 이미지">
                     <!--                <a href="/product/detail.html?product_no=2874&cate_no=24">-->
-                    <img
-                            th:src="@{${item.image()}}"
-                            onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';"
-                    />
                     <!--                </a>-->
                 </td>
 
@@ -260,29 +258,25 @@
               <input th:id="'quantity_id_0-' + ${itemStat.index}" name="quantity_name_0" class="quantity_cnt" size="2"
                      th:value="${item.qnt()}" type="type"/>
               <div style="display: flex; flex-direction: column; gap:0;justify-content: flex-start; align-items: stretch">
-                  <a class="up" th:onclick="|increase(${itemStat.index},${item.fixedPrice()})|">
+                  <a class="up" th:onclick="|increase(${itemStat.index},${item.salePrice()})|">
                     <img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_up.gif" alt="수량증가"/>
                   </a>
-                  <a class="down" th:onclick="|decrease(${itemStat.index},${item.fixedPrice()})|">
+                  <a class="down" th:onclick="|decrease(${itemStat.index},${item.salePrice()})|">
                     <img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_down.gif" alt="수량감소"/>
                   </a>
               </div>
             </span>
-            <button class="btnNormal" id="updateBtn">변경</button>
+            <button class="btnNormal updateBtn" type="button">변경</button>
       </span>
                 </td>
                 <td>
                     <strong th:id="'totalPrice-' + ${itemStat.index}"
-                            th:text="|${item.fixedPrice()*item.qnt()}원|"></strong>
+                            th:text="|${#numbers.formatInteger(item.salePrice()*item.qnt(), 3, 'COMMA') + '원'}|"></strong>
                 </td>
                 <td rowspan="1" class="">
-                    <span>-</span>
-                    <div id="" class="displaynone">
-                        <strong
-                        >-<span id="product_discount_price_front0">0</span>원</strong
-                        >
-                        <p class="displaynone"></p>
-                    </div>
+                        <strong>
+                            <span id="product_discount_price_front0"> 0원</span>
+                        </strong>
                 </td>
                 <td class="right">
                     <div class="txtInfo">기본배송<br/></div>
@@ -295,62 +289,57 @@
                 </td>
 
                 <td class="button">
-                    <button type="submit" class="btnSubmit" th:onclick="|orderForm('/order', ${item.cartId()})|">주문하기
+                    <button type="button" class="btnSubmit" th:onclick="|orderForm('/order', ${item.cartId()})|">주문하기
                     </button>
-                    <button type="submit" class="btnNormal" th:onclick="|deleteForm('/cart', ${item.cartId()})|">삭제
+                    <button type="button" class="btnNormal" th:onclick="|deleteForm('/cart', ${item.cartId()})|">삭제
                     </button>
                 </td>
             </tr>
             </tbody>
 
         </table>
-        <button type="button" class="btnSubmit" onclick="selectFormDelete()">선택삭제</button>
     </form>
 
-    <p th:if="${cartlist.isEmpty()}">장바구니가 비었습니다.</p>
+    <p th:if="${cartlist == null or cartlist.isEmpty()}">장바구니가 비었습니다.</p>
 </div>
 
 <script th:inline="javascript">
-    // document.querySelectorAll('.updateBtn').forEach(button => {
-    //     button.addEventListener('click', function () {
-    //         // 클릭된 버튼의 부모 행(row) 찾기
-    //         const row = this.closest('tr');
-    //
-    //         console.log(row)
-            // 행에서 필요한 값 추출
-            // const quantity = row.querySelector('#quantity_cnt').value;          // 수량
-            // const cartId = row.querySelector('.cartIds').value;
-            // console.log(cartId);
-            // console.log(quantity);
- // // 데이터 준비/
- //            const data = {
- //                productName: productName,
- //                quantity: quantity,
- //                price: price
- //            };
- //
- //            // Ajax 요청 보내기
- //            fetch('/updateProductQuantity', {
- //                method: 'POST',
- //                headers: {
- //                    'Content-Type': 'application/json'
- //                },
- //                body: JSON.stringify(data)
- //            })
- //                .then(response => response.json())
- //                .then(result => {
- //                    if (result.success) {
- //                        alert(`${productName}의 수량이 성공적으로 변경되었습니다.`);
- //                    } else {
- //                        alert(`${productName}의 수량 변경에 실패했습니다.`);
- //                    }
- //                })
- //                .catch(error => {
- //                    console.error('에러 발생:', error);
- //                    alert('서버와 통신 중 문제가 발생했습니다.');
- //                });
- //        });
- //    });
+    document.querySelectorAll('.updateBtn').forEach(button => {
+        button.addEventListener('click', function () {
+            // 클릭된 버튼의 부모 행(row) 찾기
+            const row = this.closest('tr');
+
+            const quantity = row.querySelector('.quantity_cnt').value;          // 수량
+            const cartId = row.querySelector('#cartIds').value;
+
+ // 데이터 준비/
+            const data = {
+                quantity: quantity,
+                cartId : cartId
+            };
+
+            // Ajax 요청 보내기
+            fetch('/cart', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        alert(`${result.message}의 수량이 성공적으로 변경되었습니다.`);
+                    } else {
+                        alert(`${result.message}의 수량 변경에 실패했습니다.`);
+                    }
+                })
+                .catch(error => {
+                    console.error('에러 발생:', error);
+                    alert('서버와 통신 중 문제가 발생했습니다.');
+                });
+        });
+    });
 
     function increase(index, money) {
         var input = document.getElementById('quantity_id_0-' + index);
@@ -406,16 +395,19 @@
     }
 
     function orderForm(actionUrl, cartId) {
-        const form = document.getElementById('cartForm');
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'cartId';
-        hiddenInput.value = cartId;
-        hiddenInput.formMethod = 'post';
-        form.appendChild(hiddenInput);
-        form.setAttribute('action', actionUrl);
-        alert(actionUrl);
-        form.submit();
+        $.ajax({
+            type: 'POST',  // 'delete' should be 'DELETE' (uppercase for HTTP method)
+            url: actionUrl,
+            data: { cartId: cartId },
+            success: function (data) {
+                location.href = '/order';  // Redirect to homepage upon success
+                console.log("성공적으로 처리되었습니다.");
+            },
+            error: function (xhr, status, error) {  // Add parameters for error handling
+                console.error("Error: " + status + " - " + error);
+                alert("Request failed: " + error);  // Show alert or other error handling actions
+            }
+        });
     }
 
     function deleteForm(actionUrl, cartId) {

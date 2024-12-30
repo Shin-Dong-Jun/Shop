@@ -1,10 +1,12 @@
 package com.example.bravobra.controller;
 
+import com.example.bravobra.domain.Member;
 import com.example.bravobra.dto.ItemCartDtoRequest;
 import com.example.bravobra.dto.ItemCartDtoResponse;
 import com.example.bravobra.dto.UpdateCartDto;
 import com.example.bravobra.exception.SuccessResponseEntity;
 import com.example.bravobra.service.CartService;
+import com.example.bravobra.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +25,13 @@ public class CartController {
 
     @GetMapping("/list")
     public String getCartList(Model model, HttpServletRequest request) {
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        if(member == null) {
+            model.addAttribute("cartlist", null);
+            return "cart/list";
+        }
 
-        Long userId = 1L;
-//        Long userId = (Long) request.getSession().getAttribute("userId");
+        Long userId = member.getId();
         List<ItemCartDtoResponse> cartlist = cartService.getCartList(userId);
         model.addAttribute("cartlist", cartlist);
 
@@ -33,10 +39,9 @@ public class CartController {
     }
 
     @PostMapping
-    public String addCart(@Valid ItemCartDtoRequest itemCartDtoRequests, HttpServletRequest httpServletRequest) {
-
-//        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
-        Long userId = 1L;
+    public String addCart(@Valid ItemCartDtoRequest itemCartDtoRequests, HttpServletRequest request) {
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        Long userId = member.getId();
         if (userId == null) return "redirect:/cart/list";
 
         cartService.addCart(itemCartDtoRequests, userId);
@@ -45,16 +50,15 @@ public class CartController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateCart(@RequestBody @Valid UpdateCartDto updateCartDto, HttpServletRequest httpServletRequest) {
-//        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
-        Long userId = 1L;
-        System.out.println(updateCartDto);
+    public ResponseEntity<?> updateCart(@RequestBody @Valid UpdateCartDto updateCartDto, HttpServletRequest request) {
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        Long userId = member.getId();
         cartService.updateCart(updateCartDto.quantity(), updateCartDto.cartId(), userId);
         return SuccessResponseEntity.toResponseEntity("수량 업데이트 성공했습니다.", "{}");
     }
 
     @DeleteMapping
-    public String deleteCart(@RequestBody Long cartId, HttpServletRequest httpServletRequest) {
+    public String deleteCart(@RequestBody Long cartId) {
         cartService.deleteCart(cartId);
         return "redirect:/cart/list";
     }
