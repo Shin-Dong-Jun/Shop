@@ -97,10 +97,12 @@ public class ProductController {
 
     // 상품 삭제 페이지 이동
     @GetMapping("/delete")
-    public String delete(@RequestParam(required = false) List<Long> productId, Model model) {
+    public String delete(@RequestParam(required = false) List<Long> productId, Model model, HttpSession session) {
+        Object loginMember = session.getAttribute(SessionConst.LOGIN_MEMBER);
         if(productId != null && !productId.isEmpty()){
             List<Product> product = productService.readAllById(productId);
             model.addAttribute("product", product);
+            model.addAttribute("loginMember", loginMember);
         }
         return "productDelete";
     }
